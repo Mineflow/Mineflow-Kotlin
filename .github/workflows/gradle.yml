@@ -29,3 +29,5 @@ jobs:
       run: ./gradlew shadowJar
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.3
+      with:
+        path: build/libs
