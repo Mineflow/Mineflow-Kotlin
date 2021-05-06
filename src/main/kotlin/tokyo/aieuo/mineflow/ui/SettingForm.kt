@@ -25,9 +25,15 @@ object SettingForm {
     fun selectLanguageForm(player: Player) {
         val languages = Language.getAvailableLanguages()
         (CustomForm("@setting.language"))
-            .setContents(mutableListOf(
-                Dropdown("@setting.language", languages.toList(), languages.indexOf(Language.language)),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Dropdown(
+                        "@setting.language",
+                        languages.toList(),
+                        languages.indexOf(Language.language)
+                    ),
+                )
+            ).onReceive { data ->
                 val language = languages[data.getInt(0)]
                 Server.getInstance().dispatchCommand(player, "mineflow language $language")
             }.show(player)

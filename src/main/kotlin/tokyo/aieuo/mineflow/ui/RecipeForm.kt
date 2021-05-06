@@ -38,16 +38,22 @@ object RecipeForm {
         val defaultName = manager.getNotDuplicatedName("recipe")
 
         (CustomForm("@form.recipe.addRecipe.title"))
-            .setContents(mutableListOf(
-                Input("@form.recipe.recipeName", defaultName, inputDefaultName),
-                Input("@form.recipe.groupName", "", inputDefaultGroup),
-                CancelToggle { sendMenu(player) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@form.recipe.recipeName", defaultName, inputDefaultName),
+                    Input("@form.recipe.groupName", "", inputDefaultGroup),
+                    CancelToggle { sendMenu(player) },
+                )
+            ).onReceive { data ->
                 val name = data.getString(0).let { if (it.isEmpty()) defaultName else it }
                 val group = data.getString(1)
 
-                if (name.contains(Regex("[.¥/:?<>|*\"]"))) throw InvalidFormValueException("@form.recipe.invalidName", 0)
-                if (group.contains(Regex("[.¥:?<>|*\"]"))) throw InvalidFormValueException("@form.recipe.invalidName", 1)
+                if (name.contains(Regex("[.¥/:?<>|*\"]"))) throw InvalidFormValueException(
+                    "@form.recipe.invalidName", 0
+                )
+                if (group.contains(Regex("[.¥:?<>|*\"]"))) throw InvalidFormValueException(
+                    "@form.recipe.invalidName", 1
+                )
 
                 if (manager.exists(name, group)) {
                     val newName = manager.getNotDuplicatedName(name, group)
@@ -164,11 +170,13 @@ object RecipeForm {
                     3 -> recipe.executeAllTargets(player)
                     4 -> sendTriggerList(player, recipe)
                     5 -> (ListForm("@form.recipe.args.return.set"))
-                            .setButtons(mutableListOf(
+                        .setButtons(
+                            mutableListOf(
                                 Button("@form.back") { sendRecipeMenu(player, recipe) },
                                 Button("@form.recipe.args.set") { sendSetArgs(player, recipe) },
                                 Button("@form.recipe.returnValue.set") { sendSetReturns(player, recipe) },
-                            )).show(player)
+                            )
+                        ).show(player)
                     6 -> sendChangeTarget(player, recipe)
                     7 -> {
                         recipe.save(Main.recipeManager.saveDir)
@@ -176,14 +184,14 @@ object RecipeForm {
                     }
                     8 -> ExportForm.sendRecipeListByRecipe(player, recipe)
                     9 -> (ModalForm(Language.get("form.recipe.delete.title", listOf(recipe.name))))
-                            .setContent(Language.get("form.delete.confirm", listOf(recipe.name)))
-                            .onYes {
-                                recipe.removeTriggerAll()
-                                Main.recipeManager.remove(recipe.name, recipe.group)
-                                sendRecipeList(player, recipe.group, listOf("@form.deleted"))
-                            }.onNo {
-                                sendRecipeMenu(player, recipe, listOf("@form.cancelled"))
-                            }.show(player)
+                        .setContent(Language.get("form.delete.confirm", listOf(recipe.name)))
+                        .onYes {
+                            recipe.removeTriggerAll()
+                            Main.recipeManager.remove(recipe.name, recipe.group)
+                            sendRecipeList(player, recipe.group, listOf("@form.deleted"))
+                        }.onNo {
+                            sendRecipeMenu(player, recipe, listOf("@form.cancelled"))
+                        }.show(player)
                 }
             }.addMessages(messages).show(player)
     }
@@ -270,19 +278,33 @@ object RecipeForm {
     }
 
     fun sendChangeTarget(player: Player, recipe: Recipe) {
-        val default1 = if (recipe.targetType == Recipe.TARGET_SPECIFIED) recipe.getTargetOption("specified", listOf<String>()).joinToString(",") else ""
-        val default2 = if (recipe.targetType == Recipe.TARGET_RANDOM) recipe.getTargetOption("random", 1).toString() else ""
+        val default1 = if (recipe.targetType == Recipe.TARGET_SPECIFIED) {
+            recipe.getTargetOption("specified", listOf<String>()).joinToString(",")
+        } else {
+            ""
+        }
+        val default2 = if (recipe.targetType == Recipe.TARGET_RANDOM) {
+            recipe.getTargetOption("random", 1).toString()
+        } else {
+            ""
+        }
         (CustomForm(Language.get("form.recipe.changeTarget.title", listOf(recipe.name)))).setContents(mutableListOf(
-            Dropdown("@form.recipe.changeTarget.type", listOf(
-                Language.get("form.recipe.target.none"),
-                Language.get("form.recipe.target.default"),
-                Language.get("form.recipe.target.specified"),
-                Language.get("form.recipe.target.onWorld"),
-                Language.get("form.recipe.target.all"),
-                Language.get("form.recipe.target.random"),
-            ), recipe.targetType),
+            Dropdown(
+                "@form.recipe.changeTarget.type", listOf(
+                    Language.get("form.recipe.target.none"),
+                    Language.get("form.recipe.target.default"),
+                    Language.get("form.recipe.target.specified"),
+                    Language.get("form.recipe.target.onWorld"),
+                    Language.get("form.recipe.target.all"),
+                    Language.get("form.recipe.target.random"),
+                ), recipe.targetType
+            ),
             Input("@form.recipe.changeTarget.name", "@form.recipe.changeTarget.name.placeholder", default1),
-            NumberInput("@form.recipe.changeTarget.random", "@form.recipe.changeTarget.random.placeholder", default2),
+            NumberInput(
+                "@form.recipe.changeTarget.random",
+                "@form.recipe.changeTarget.random.placeholder",
+                default2
+            ),
             CancelToggle { sendRecipeMenu(player, recipe, listOf("@form.cancelled")) }
         )).onReceive { data ->
             val type = data.getInt(0)
@@ -296,12 +318,16 @@ object RecipeForm {
             }
 
             when (type) {
-                Recipe.TARGET_SPECIFIED -> recipe.setTargetSetting(type, mapOf(
-                    "specified" to data.getString(1).split(",")
-                ))
-                Recipe.TARGET_RANDOM -> recipe.setTargetSetting(type, mapOf(
-                    "random" to (data.getIntOrNull(2) ?: 1)
-                ))
+                Recipe.TARGET_SPECIFIED -> recipe.setTargetSetting(
+                    type, mapOf(
+                        "specified" to data.getString(1).split(",")
+                    )
+                )
+                Recipe.TARGET_RANDOM -> recipe.setTargetSetting(
+                    type, mapOf(
+                        "random" to (data.getIntOrNull(2) ?: 1)
+                    )
+                )
                 else -> recipe.setTargetSetting(type)
             }
             sendRecipeMenu(player, recipe, listOf("@form.changed"))
@@ -320,7 +346,11 @@ object RecipeForm {
             .onYes {
                 val manager = Main.recipeManager
                 val result = manager.deleteGroup(path)
-                sendRecipeList(player, manager.getParentPath(path), listOf(if(result) "@form.deleted" else "@recipe.group.delete.not.empty"))
+                sendRecipeList(
+                    player,
+                    manager.getParentPath(path),
+                    listOf(if (result) "@form.deleted" else "@recipe.group.delete.not.empty")
+                )
             }.onNo {
                 sendRecipeList(player, path, listOf("@form.cancelled"))
             }.show(player)

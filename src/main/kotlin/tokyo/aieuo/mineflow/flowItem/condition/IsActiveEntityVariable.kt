@@ -9,11 +9,11 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
 @Suppress("LeakingThis")
-open class IsActiveEntityVariable(entity: String = ""): FlowItem(), Condition, EntityFlowItem {
+open class IsActiveEntityVariable(entity: String = "") : FlowItem(), Condition, EntityFlowItem {
 
     override val id = FlowItemIds.IS_ACTIVE_ENTITY_VARIABLE
 
@@ -48,7 +48,7 @@ open class IsActiveEntityVariable(entity: String = ""): FlowItem(), Condition, E
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables),
         )

@@ -8,11 +8,13 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class GetDistance(pos1: String = "", pos2: String = "", var resultName: String = "distance"): FlowItem(), PositionFlowItem {
+class GetDistance(pos1: String = "", pos2: String = "", var resultName: String = "distance") :
+    FlowItem(), PositionFlowItem {
 
     override val id = FlowItemIds.GET_DISTANCE
 
@@ -35,7 +37,10 @@ class GetDistance(pos1: String = "", pos2: String = "", var resultName: String =
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getPositionVariableName("pos1"), getPositionVariableName("pos2"), resultName))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getPositionVariableName("pos1"), getPositionVariableName("pos2"), resultName)
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -51,7 +56,7 @@ class GetDistance(pos1: String = "", pos2: String = "", var resultName: String =
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.getDistance.form.pos1", "pos1", getPositionVariableName("pos1"), true),
             ExampleInput("@action.getDistance.form.pos2", "pos2", getPositionVariableName("pos2"), true),
@@ -69,7 +74,7 @@ class GetDistance(pos1: String = "", pos2: String = "", var resultName: String =
         return listOf(getPositionVariableName("pos1"), getPositionVariableName("pos2"), resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER)
         )

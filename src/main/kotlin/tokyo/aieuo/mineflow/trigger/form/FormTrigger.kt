@@ -10,9 +10,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.trigger.Trigger
 import tokyo.aieuo.mineflow.trigger.Triggers
 import tokyo.aieuo.mineflow.utils.Language
+import tokyo.aieuo.mineflow.utils.VariableMap
 import tokyo.aieuo.mineflow.variable.*
 
-class FormTrigger(key: String, subKey: String = ""): Trigger(Triggers.FORM, key, subKey) {
+class FormTrigger(key: String, subKey: String = "") : Trigger(Triggers.FORM, key, subKey) {
 
     companion object {
         fun create(key: String, subKey: String = ""): FormTrigger {
@@ -20,30 +21,38 @@ class FormTrigger(key: String, subKey: String = ""): Trigger(Triggers.FORM, key,
         }
     }
 
-    fun getVariables(form: ModalForm, data: Boolean): Map<String, Variable<Any>> {
-        val variable = MapVariable(mapOf(
-            "data" to BoolVariable(data),
-            "button1" to MapVariable(mapOf(
-                "selected" to BoolVariable(data),
-                "text" to StringVariable(form.getButton1Text()),
-            ),  form.getButton1Text()),
-            "button2" to MapVariable(mapOf(
-                "selected" to BoolVariable(!data),
-                "text" to StringVariable(form.getButton2Text()),
-            ), form.getButton2Text()),
-        ))
+    fun getVariables(form: ModalForm, data: Boolean): VariableMap {
+        val variable = MapVariable(
+            mapOf(
+                "data" to BoolVariable(data),
+                "button1" to MapVariable(
+                    mapOf(
+                        "selected" to BoolVariable(data),
+                        "text" to StringVariable(form.getButton1Text()),
+                    ), form.getButton1Text()
+                ),
+                "button2" to MapVariable(
+                    mapOf(
+                        "selected" to BoolVariable(!data),
+                        "text" to StringVariable(form.getButton2Text()),
+                    ), form.getButton2Text()
+                ),
+            )
+        )
         return mapOf("form" to variable)
     }
 
-    fun getVariables(form: ListForm, data: Int): Map<String, Variable<Any>> {
-        val variable = MapVariable(mapOf(
-            "data" to NumberVariable(data),
-            "button" to StringVariable(form.getButton(data)?.text ?: ""),
-        ))
+    fun getVariables(form: ListForm, data: Int): VariableMap {
+        val variable = MapVariable(
+            mapOf(
+                "data" to NumberVariable(data),
+                "button" to StringVariable(form.getButton(data)?.text ?: ""),
+            )
+        )
         return mapOf("form" to variable)
     }
 
-    fun getVariables(form: CustomForm, data: List<*>): Map<String, Variable<Any>> {
+    fun getVariables(form: CustomForm, data: List<*>): VariableMap {
         val dataVariables = mutableListOf<Variable<Any>>()
         val dropdownVariables = mutableListOf<Variable<Any>>()
         for ((i, content) in form.contents.withIndex()) {
@@ -61,10 +70,12 @@ class FormTrigger(key: String, subKey: String = ""): Trigger(Triggers.FORM, key,
                 dropdownVariables.add(StringVariable(selected))
             }
         }
-        val variable = MapVariable(mapOf(
-            "data" to ListVariable(dataVariables),
-            "selected" to ListVariable(dropdownVariables),
-        ))
+        val variable = MapVariable(
+            mapOf(
+                "data" to ListVariable(dataVariables),
+                "selected" to ListVariable(dropdownVariables),
+            )
+        )
         return mapOf("form" to variable)
     }
 
@@ -75,7 +86,10 @@ class FormTrigger(key: String, subKey: String = ""): Trigger(Triggers.FORM, key,
             else -> Main.formManager.getForm(key)?.let { form ->
                 if (form is ListForm) {
                     val button = form.getButtonById(subKey)
-                    Language.get("trigger.form.string.button", listOf(key, if (button is Button) button.text else ""))
+                    Language.get(
+                        "trigger.form.string.button",
+                        listOf(key, if (button is Button) button.text else "")
+                    )
                 } else {
                     key
                 }

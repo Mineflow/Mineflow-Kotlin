@@ -1,12 +1,12 @@
 package tokyo.aieuo.mineflow.flowItem.action.common
 
-import tokyo.aieuo.mineflow.flowItem.action.player.TypeMessage
-import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.Main
+import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
+import tokyo.aieuo.mineflow.flowItem.action.player.TypeMessage
 import tokyo.aieuo.mineflow.utils.Category
 
-class SendMessageToConsole(message: String = ""): TypeMessage(message) {
+class SendMessageToConsole(message: String = "") : TypeMessage(message) {
 
     override val id = FlowItemIds.SEND_MESSAGE_TO_CONSOLE
 

@@ -7,11 +7,11 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
 @Suppress("LeakingThis")
-abstract class TypePlayerMessage(player: String = "", var message: String = ""): FlowItem(), PlayerFlowItem {
+abstract class TypePlayerMessage(player: String = "", var message: String = "") : FlowItem(), PlayerFlowItem {
 
     override val detailDefaultReplaces = listOf("player", "message")
 
@@ -32,7 +32,7 @@ abstract class TypePlayerMessage(player: String = "", var message: String = ""):
         return Language.get(detailTranslationKey, listOf(getPlayerVariableName(), message))
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleInput("@action.message.form.message", "aieuo", message, true),

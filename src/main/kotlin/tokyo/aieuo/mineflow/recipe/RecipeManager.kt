@@ -28,7 +28,7 @@ class RecipeManager(val saveDir: String) {
         for (file in files) {
             if (file.isDirectory) {
                 result.addAll(getRecipeFiles(file))
-            } else if(file.extension == "json") {
+            } else if (file.extension == "json") {
                 result.add(file)
             }
         }
@@ -57,7 +57,12 @@ class RecipeManager(val saveDir: String) {
             }
 
             if (!data.contains("name") || !data.contains("actions")) {
-                Logger.warning(Language.get("recipe.json.decode.failed", listOf(pathname, Language.get("recipe.json.key.missing"))))
+                Logger.warning(
+                    Language.get(
+                        "recipe.json.decode.failed",
+                        listOf(pathname, Language.get("recipe.json.key.missing"))
+                    )
+                )
                 continue
             }
 

@@ -29,10 +29,14 @@ interface EntityFlowItem {
             return variable.value
         }
 
-        throw InvalidFlowValueException(Language.get("action.target.not.valid", listOf(
-            Language.get("action.target.require.entity"),
-            rawName
-        )))
+        throw InvalidFlowValueException(
+            Language.get(
+                "action.target.not.valid", listOf(
+                    Language.get("action.target.require.entity"),
+                    rawName
+                )
+            )
+        )
     }
 
     fun throwIfInvalidEntity(entity: Entity, checkOnline: Boolean = true) {

@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.action.entity
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class SetMaxHealth(entity: String = "", health: String = ""): SetHealth(entity, health) {
+class SetMaxHealth(entity: String = "", health: String = "") : SetHealth(entity, health) {
 
     override val id = FlowItemIds.SET_MAX_HEALTH
 

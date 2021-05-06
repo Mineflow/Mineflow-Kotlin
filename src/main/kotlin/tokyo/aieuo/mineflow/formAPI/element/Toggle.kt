@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.formAPI.element
 
 import tokyo.aieuo.mineflow.utils.Language
 
-open class Toggle(text: String, var default: Boolean = false): ElementBase(text) {
+open class Toggle(text: String, var default: Boolean = false) : ElementBase(text) {
 
     override val type = Element.Type.TOGGLE
 

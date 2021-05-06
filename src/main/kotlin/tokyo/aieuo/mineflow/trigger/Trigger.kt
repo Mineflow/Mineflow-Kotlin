@@ -1,12 +1,12 @@
 package tokyo.aieuo.mineflow.trigger
 
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.JsonSerializable
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-open class Trigger(val type: String, var key: String, var subKey: String = ""): JsonSerializable {
+open class Trigger(val type: String, var key: String, var subKey: String = "") : JsonSerializable {
 
-    open fun getVariablesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
+    open fun getVariablesDummy(): DummyVariableMap {
         return mapOf()
     }
 

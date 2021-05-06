@@ -5,7 +5,8 @@ import cn.nukkit.Player
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponse
 import tokyo.aieuo.mineflow.utils.Language
 
-class CancelToggle(val onCancel: (() -> Unit)? = null, text: String = "@form.cancelAndBack", default: Boolean = false): Toggle(text, default) {
+class CancelToggle(val onCancel: (() -> Unit)? = null, text: String = "@form.cancelAndBack", default: Boolean = false) :
+    Toggle(text, default) {
 
     constructor(onCancel: (() -> Unit)) : this(onCancel, "@form.cancelAndBack", false)
 

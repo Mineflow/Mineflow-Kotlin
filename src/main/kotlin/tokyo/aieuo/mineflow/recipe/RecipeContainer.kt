@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.recipe
 
 import cn.nukkit.entity.Entity
 import cn.nukkit.event.Event
-import tokyo.aieuo.mineflow.variable.Variable
+import tokyo.aieuo.mineflow.utils.VariableMap
 
 class RecipeContainer(val recipes: MutableMap<String, Recipe> = mutableMapOf()) {
 
@@ -33,7 +33,7 @@ class RecipeContainer(val recipes: MutableMap<String, Recipe> = mutableMapOf()) 
         return getAllRecipe().size
     }
 
-    fun executeAll(target: Entity? = null, variables: Map<String, Variable<Any>> = mapOf(), event: Event? = null) {
+    fun executeAll(target: Entity? = null, variables: VariableMap = mapOf(), event: Event? = null) {
         for ((_, recipe) in getAllRecipe()) {
             recipe.executeAllTargets(target, variables, event)
         }

@@ -5,20 +5,21 @@ import cn.nukkit.entity.Entity
 import cn.nukkit.event.Event
 import cn.nukkit.event.entity.EntityDamageByEntityEvent
 import cn.nukkit.event.player.PlayerDeathEvent
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
+import tokyo.aieuo.mineflow.utils.VariableMap
 import tokyo.aieuo.mineflow.variable.DefaultVariables
 import tokyo.aieuo.mineflow.variable.DummyVariable
-import tokyo.aieuo.mineflow.variable.Variable
 
-class PlayerDeathEventTrigger(subKey: String = ""): EventTrigger(PlayerDeathEvent::class, subKey) {
+class PlayerDeathEventTrigger(subKey: String = "") : EventTrigger(PlayerDeathEvent::class, subKey) {
 
     override fun getTargetEntity(event: Event): Entity? = getTargetEntity(event as PlayerDeathEvent)
-    override fun getVariables(event: Event): Map<String, Variable<Any>> = getVariables(event as PlayerDeathEvent)
+    override fun getVariables(event: Event): VariableMap = getVariables(event as PlayerDeathEvent)
 
     fun getTargetEntity(event: PlayerDeathEvent): Entity? {
         return event.entity
     }
 
-    fun getVariables(event: PlayerDeathEvent): Map<String, Variable<Any>> {
+    fun getVariables(event: PlayerDeathEvent): VariableMap {
         val target = event.entity
         var variables = DefaultVariables.getPlayerVariables(target)
         val cause = target.lastDamageCause
@@ -31,7 +32,7 @@ class PlayerDeathEventTrigger(subKey: String = ""): EventTrigger(PlayerDeathEven
         return variables
     }
 
-    override fun getVariablesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getVariablesDummy(): DummyVariableMap {
         return mapOf(
             "target" to DummyVariable(DummyVariable.Type.PLAYER),
             "killer" to DummyVariable(DummyVariable.Type.PLAYER),

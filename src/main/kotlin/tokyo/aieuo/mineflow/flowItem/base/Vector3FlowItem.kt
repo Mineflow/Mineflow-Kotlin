@@ -27,9 +27,13 @@ interface Vector3FlowItem {
             return variable.value
         }
 
-        throw InvalidFlowValueException(Language.get("action.target.not.valid", listOf(
-            Language.get("action.target.require.vector3"),
-            rawName
-        )))
+        throw InvalidFlowValueException(
+            Language.get(
+                "action.target.not.valid", listOf(
+                    Language.get("action.target.require.vector3"),
+                    rawName
+                )
+            )
+        )
     }
 }

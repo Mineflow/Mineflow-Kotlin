@@ -8,10 +8,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class ClearInventory(player: String = ""): FlowItem(), PlayerFlowItem {
+class ClearInventory(player: String = "") : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.CLEAR_INVENTORY
 
@@ -46,7 +46,7 @@ class ClearInventory(player: String = ""): FlowItem(), PlayerFlowItem {
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
         )

@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.condition
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-open class ORScript: AndScript() {
+open class ORScript : AndScript() {
 
     override val id = FlowItemIds.CONDITION_OR
 

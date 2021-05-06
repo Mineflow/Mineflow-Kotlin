@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.variable
 
 import tokyo.aieuo.mineflow.variable.obj.*
 
-class DummyVariable<T: DummyVariable.Type>(val valueType: T, val description: String = "") : Variable<T> {
+class DummyVariable<T : DummyVariable.Type>(val valueType: T, val description: String = "") : Variable<T> {
 
     override val type = Variable.DUMMY
 
@@ -27,7 +27,7 @@ class DummyVariable<T: DummyVariable.Type>(val valueType: T, val description: St
         SCOREBOARD;
     }
 
-    constructor(valueType: T, description: T): this(valueType, description.name.toLowerCase())
+    constructor(valueType: T, description: T) : this(valueType, description.name.toLowerCase())
 
     override fun toString(): String {
         return "dummy"

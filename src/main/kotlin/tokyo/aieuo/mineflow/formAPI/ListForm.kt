@@ -4,7 +4,7 @@ import cn.nukkit.Player
 import tokyo.aieuo.mineflow.formAPI.element.Button
 import tokyo.aieuo.mineflow.utils.Language
 
-class ListForm(title: String = ""): Form(title) {
+class ListForm(title: String = "") : Form(title) {
 
     override val type: String = LIST_FORM
 
@@ -24,8 +24,8 @@ class ListForm(title: String = ""): Form(title) {
         return _content
     }
 
-	fun appendContent(content: String, newLine: Boolean = true) = apply {
-		_content += (if (newLine) "\n" else "") + content
+    fun appendContent(content: String, newLine: Boolean = true) = apply {
+        _content += (if (newLine) "\n" else "") + content
     }
 
     fun addButton(button: Button) = apply {

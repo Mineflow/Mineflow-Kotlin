@@ -10,10 +10,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class Gamemode(player: String = "", var gamemode: Int = Player.SURVIVAL): FlowItem(), Condition, PlayerFlowItem {
+class Gamemode(player: String = "", var gamemode: Int = Player.SURVIVAL) : FlowItem(), Condition, PlayerFlowItem {
 
     override val id = FlowItemIds.GAMEMODE
 
@@ -55,7 +55,7 @@ class Gamemode(player: String = "", var gamemode: Int = Player.SURVIVAL): FlowIt
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             Dropdown("@condition.gamemode.form.gamemode", gamemodes.map { Language.get(it) }, gamemode),

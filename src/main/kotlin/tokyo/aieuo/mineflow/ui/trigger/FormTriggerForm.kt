@@ -13,7 +13,7 @@ import tokyo.aieuo.mineflow.ui.RecipeForm
 import tokyo.aieuo.mineflow.ui.customForm.CustomFormForm
 import tokyo.aieuo.mineflow.utils.Language
 
-object FormTriggerForm: TriggerForm {
+object FormTriggerForm : TriggerForm {
 
     override fun sendAddedTriggerMenu(player: Player, recipe: Recipe, trigger: Trigger, messages: List<String>) {
         (ListForm(Language.get("form.trigger.addedTriggerMenu.title", listOf(recipe.name, trigger.key))))
@@ -34,10 +34,12 @@ object FormTriggerForm: TriggerForm {
 
     fun sendSelectForm(player: Player, recipe: Recipe) {
         (CustomForm(Language.get("trigger.form.select.title", listOf(recipe.name))))
-            .setContents(mutableListOf(
-                Input("@trigger.form.select.input", required = true),
-                CancelToggle { BaseTriggerForm.sendSelectTriggerType(player, recipe) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@trigger.form.select.input", required = true),
+                    CancelToggle { BaseTriggerForm.sendSelectTriggerType(player, recipe) },
+                )
+            ).onReceive { data ->
                 val name = data.getString(0)
                 val manager = Main.formManager
                 val form = manager.getForm(name)
@@ -113,7 +115,8 @@ object FormTriggerForm: TriggerForm {
                     .onReceive { data ->
                         val trigger = FormTrigger.create(form.getName())
                         when (data) {
-                            1 -> {}
+                            1 -> {
+                            }
                             2 -> trigger.subKey = "close"
                             else -> {
                                 val button = form.getButton(data - 3) ?: return@onReceive

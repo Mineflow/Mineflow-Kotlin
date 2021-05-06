@@ -8,7 +8,7 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponse
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Language
 
-class CustomForm(title: String): Form(title) {
+class CustomForm(title: String) : Form(title) {
 
     override val type: String = CUSTOM_FORM
 
@@ -74,7 +74,12 @@ class CustomForm(title: String): Form(title) {
         return form
     }
 
-    fun resend(errors: List<FormError> = listOf(), messages: List<String> = listOf(), responseOverrides: Map<Int, Any> = mapOf(), elementOverrides: Map<Int, Element> = mapOf()) {
+    fun resend(
+        errors: List<FormError> = listOf(),
+        messages: List<String> = listOf(),
+        responseOverrides: Map<Int, Any> = mapOf(),
+        elementOverrides: Map<Int, Element> = mapOf()
+    ) {
         val lastResponse = lastResponse ?: return
         if (!lastResponse.first.isOnline) return
 

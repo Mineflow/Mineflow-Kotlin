@@ -10,10 +10,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SetNameTag(var entity: String = "", var newName: String = ""): FlowItem(), EntityFlowItem {
+class SetNameTag(var entity: String = "", var newName: String = "") : FlowItem(), EntityFlowItem {
 
     override val id = FlowItemIds.SET_NAME
 
@@ -51,7 +51,7 @@ class SetNameTag(var entity: String = "", var newName: String = ""): FlowItem(),
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             ExampleInput("@action.setNameTag.form.name", "aieuo", newName, true),

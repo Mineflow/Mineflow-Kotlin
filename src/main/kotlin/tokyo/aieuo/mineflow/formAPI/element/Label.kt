@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.formAPI.element
 
 import tokyo.aieuo.mineflow.utils.Language
 
-class Label(text: String): ElementBase(text) {
+class Label(text: String) : ElementBase(text) {
 
     override val type = Element.Type.LABEL
 

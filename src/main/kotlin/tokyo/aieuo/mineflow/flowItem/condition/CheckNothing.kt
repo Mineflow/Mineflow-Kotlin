@@ -6,7 +6,7 @@ import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
 
-class CheckNothing: FlowItem(), Condition {
+class CheckNothing : FlowItem(), Condition {
 
     override val id = FlowItemIds.CHECK_NOTHING
 

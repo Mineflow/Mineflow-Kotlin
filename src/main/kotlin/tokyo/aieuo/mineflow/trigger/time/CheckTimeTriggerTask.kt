@@ -5,7 +5,7 @@ import cn.nukkit.scheduler.Task
 import tokyo.aieuo.mineflow.trigger.TriggerHolder
 import tokyo.aieuo.mineflow.utils.date
 
-class CheckTimeTriggerTask: Task() {
+class CheckTimeTriggerTask : Task() {
 
     override fun onRun(currentTick: Int) {
         val trigger = TimeTrigger.create(date("HH"), date("mm"))
@@ -19,7 +19,11 @@ class CheckTimeTriggerTask: Task() {
     companion object {
         fun start() {
             val seconds = date("ss").toInt()
-            Server.getInstance().scheduler.scheduleDelayedRepeatingTask(CheckTimeTriggerTask(), 20 * (60 - seconds), 20 * 60)
+            Server.getInstance().scheduler.scheduleDelayedRepeatingTask(
+                CheckTimeTriggerTask(),
+                20 * (60 - seconds),
+                20 * 60
+            )
         }
     }
 }

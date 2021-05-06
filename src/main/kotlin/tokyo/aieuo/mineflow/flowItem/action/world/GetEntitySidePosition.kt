@@ -14,11 +14,17 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.PositionObjectVariable
 
-class GetEntitySidePosition(entity: String = "", var direction: String = "", var steps: String = "1", var resultName: String = "pos"): FlowItem(), EntityFlowItem {
+class GetEntitySidePosition(
+    entity: String = "",
+    var direction: String = "",
+    var steps: String = "1",
+    var resultName: String = "pos"
+) : FlowItem(), EntityFlowItem {
 
     override val id = FlowItemIds.GET_ENTITY_SIDE
 
@@ -56,7 +62,8 @@ class GetEntitySidePosition(entity: String = "", var direction: String = "", var
         SIDE_RIGHT,
     )
 
-    private val vector3SideMap = mapOf( // TODO: check
+    private val vector3SideMap = mapOf(
+        // TODO: check
         SIDE_DOWN to BlockFace.DOWN,
         SIDE_UP to BlockFace.UP,
         SIDE_NORTH to BlockFace.NORTH,
@@ -106,14 +113,19 @@ class GetEntitySidePosition(entity: String = "", var direction: String = "", var
             SIDE_BEHIND -> entityPos.getSide(directionSideMap[(direction + 2) % 4], step.toInt())
             SIDE_RIGHT -> entityPos.getSide(directionSideMap[(direction + 1) % 4], step.toInt())
             SIDE_FRONT -> entityPos.getSide(directionSideMap[(direction) % 4], step.toInt())
-            else -> throw InvalidFlowValueException(Language.get("action.getEntitySide.direction.notFound", listOf(side)))
+            else -> throw InvalidFlowValueException(
+                Language.get(
+                    "action.getEntitySide.direction.notFound",
+                    listOf(side)
+                )
+            )
         }
 
         source.addVariable(resultName, PositionObjectVariable(Position.fromObject(pos, entity.level)))
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             Dropdown("@action.getEntitySide.form.direction", directions, directions.indexOf(direction)),
@@ -137,7 +149,7 @@ class GetEntitySidePosition(entity: String = "", var direction: String = "", var
         return listOf(getEntityVariableName(), direction, steps, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.POSITION)
         )

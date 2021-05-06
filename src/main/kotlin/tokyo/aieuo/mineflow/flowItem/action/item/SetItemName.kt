@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ItemVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SetItemName(item: String = "", var itemName: String = ""): FlowItem(), ItemFlowItem {
+class SetItemName(item: String = "", var itemName: String = "") : FlowItem(), ItemFlowItem {
 
     override val id = FlowItemIds.SET_ITEM_NAME
 
@@ -48,7 +48,7 @@ class SetItemName(item: String = "", var itemName: String = ""): FlowItem(), Ite
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ItemVariableDropdown(variables, getItemVariableName()),
             ExampleInput("@action.createItemVariable.form.name", "aieuo", itemName, true),

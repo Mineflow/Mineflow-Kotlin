@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SetScale(entity: String = "", var scale: String = ""): FlowItem(), EntityFlowItem {
+class SetScale(entity: String = "", var scale: String = "") : FlowItem(), EntityFlowItem {
 
     override val id = FlowItemIds.SET_SCALE
 
@@ -51,7 +51,7 @@ class SetScale(entity: String = "", var scale: String = ""): FlowItem(), EntityF
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             ExampleNumberInput("@action.setScale.form.scale", "1", scale, true, 0.0, excludes = listOf(0.0)),

@@ -28,9 +28,13 @@ interface BlockFlowItem {
             return variable.value
         }
 
-        throw InvalidFlowValueException(Language.get("action.target.not.valid", listOf(
-            Language.get("action.target.require.block"),
-            rawName
-        )))
+        throw InvalidFlowValueException(
+            Language.get(
+                "action.target.not.valid", listOf(
+                    Language.get("action.target.require.block"),
+                    rawName
+                )
+            )
+        )
     }
 }

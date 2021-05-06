@@ -1,12 +1,14 @@
 package tokyo.aieuo.mineflow.variable.obj
 
 import cn.nukkit.entity.Entity
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 import tokyo.aieuo.mineflow.variable.Variable
 
-open class EntityObjectVariable<T: Entity>(value: T, showString: String? = null): PositionObjectVariable<T>(value, showString) {
+open class EntityObjectVariable<T : Entity>(value: T, showString: String? = null) :
+    PositionObjectVariable<T>(value, showString) {
 
     override fun getValueFromIndex(index: String): Variable<Any>? {
         super.getValueFromIndex(index).let { if (it !== null) return it }
@@ -24,16 +26,18 @@ open class EntityObjectVariable<T: Entity>(value: T, showString: String? = null)
     }
 
     companion object {
-        fun getValuesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
-            return PositionObjectVariable.getValuesDummy().plus(mapOf(
-                "id" to DummyVariable(DummyVariable.Type.NUMBER),
-                "nameTag" to DummyVariable(DummyVariable.Type.STRING),
-                "health" to DummyVariable(DummyVariable.Type.NUMBER),
-                "maxHealth" to DummyVariable(DummyVariable.Type.NUMBER),
-                "yaw" to DummyVariable(DummyVariable.Type.NUMBER),
-                "pitch" to DummyVariable(DummyVariable.Type.NUMBER),
-                "direction" to DummyVariable(DummyVariable.Type.NUMBER),
-            ))
+        fun getValuesDummy(): DummyVariableMap {
+            return PositionObjectVariable.getValuesDummy().plus(
+                mapOf(
+                    "id" to DummyVariable(DummyVariable.Type.NUMBER),
+                    "nameTag" to DummyVariable(DummyVariable.Type.STRING),
+                    "health" to DummyVariable(DummyVariable.Type.NUMBER),
+                    "maxHealth" to DummyVariable(DummyVariable.Type.NUMBER),
+                    "yaw" to DummyVariable(DummyVariable.Type.NUMBER),
+                    "pitch" to DummyVariable(DummyVariable.Type.NUMBER),
+                    "direction" to DummyVariable(DummyVariable.Type.NUMBER),
+                )
+            )
         }
     }
 }

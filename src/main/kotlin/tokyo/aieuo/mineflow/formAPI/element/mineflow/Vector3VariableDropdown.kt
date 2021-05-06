@@ -1,9 +1,10 @@
 package tokyo.aieuo.mineflow.formAPI.element.mineflow
 
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 
 class Vector3VariableDropdown(
-    variables: Map<String, DummyVariable<DummyVariable.Type>> = mapOf(),
+    variables: DummyVariableMap = mapOf(),
     default: String = "",
     text: String = "@action.form.target.position",
     optional: Boolean = false

@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.trigger.TriggerHolder
 import tokyo.aieuo.mineflow.trigger.custom.CustomTrigger
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class CallCustomTrigger(var triggerName: String = ""): FlowItem() {
+class CallCustomTrigger(var triggerName: String = "") : FlowItem() {
 
     override val id = FlowItemIds.CALL_CUSTOM_TRIGGER
 
@@ -41,7 +41,7 @@ class CallCustomTrigger(var triggerName: String = ""): FlowItem() {
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.callTrigger.form.identifier", "aieuo", triggerName, true),
         )

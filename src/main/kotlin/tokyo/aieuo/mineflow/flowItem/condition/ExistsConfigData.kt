@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ConfigVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class ExistsConfigData(config: String = "", var key: String = ""): FlowItem(), Condition, ConfigFileFlowItem {
+class ExistsConfigData(config: String = "", var key: String = "") : FlowItem(), Condition, ConfigFileFlowItem {
 
     override val id = FlowItemIds.EXISTS_CONFIG_DATA
 
@@ -48,7 +48,7 @@ class ExistsConfigData(config: String = "", var key: String = ""): FlowItem(), C
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ConfigVariableDropdown(variables, getConfigVariableName()),
             ExampleInput("@condition.existsConfigData.form.key", "aieuo", key, true),

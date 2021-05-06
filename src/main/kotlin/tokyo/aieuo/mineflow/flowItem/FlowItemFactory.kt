@@ -226,7 +226,12 @@ object FlowItemFactory {
         return all[id]?.clone()
     }
 
-    fun getByFilter(category: String? = null, permission: Int? = null, getAction: Boolean = true, getCondition: Boolean = true): List<FlowItem> {
+    fun getByFilter(
+        category: String? = null,
+        permission: Int? = null,
+        getAction: Boolean = true,
+        getCondition: Boolean = true
+    ): List<FlowItem> {
         val items = mutableListOf<FlowItem>()
         for ((_, item) in all) {
             if (category !== null && item.category !== category) continue

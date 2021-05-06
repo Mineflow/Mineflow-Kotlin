@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class IsFlying(player: String = ""): FlowItem(), Condition, PlayerFlowItem {
+class IsFlying(player: String = "") : FlowItem(), Condition, PlayerFlowItem {
 
     override val id = FlowItemIds.IS_FLYING
 
@@ -47,7 +47,7 @@ class IsFlying(player: String = ""): FlowItem(), Condition, PlayerFlowItem {
         yield(if (flying) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
         )

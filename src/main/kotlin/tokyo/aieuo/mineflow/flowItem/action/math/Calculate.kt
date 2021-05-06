@@ -9,12 +9,13 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 import kotlin.math.*
 
-class Calculate(var value: String = "", var operator: Int = SQUARE, var resultName: String = "result"): FlowItem() {
+class Calculate(var value: String = "", var operator: Int = SQUARE, var resultName: String = "result") : FlowItem() {
 
     override val id = FlowItemIds.CALCULATE
 
@@ -43,7 +44,24 @@ class Calculate(var value: String = "", var operator: Int = SQUARE, var resultNa
         const val CALC_CEIL = 15
     }
 
-    private val operatorSymbols = listOf("x^2", "√x", "x!", "abs(x)", "log(x)", "sin(x)", "cos(x)", "tan(x)", "asin(x)", "acos(x)", "atan(x)", "deg2rad(x)", "rad2deg(x)", "floor(x)", "round(x)", "ceil(x)")
+    private val operatorSymbols = listOf(
+        "x^2",
+        "√x",
+        "x!",
+        "abs(x)",
+        "log(x)",
+        "sin(x)",
+        "cos(x)",
+        "tan(x)",
+        "asin(x)",
+        "acos(x)",
+        "atan(x)",
+        "deg2rad(x)",
+        "rad2deg(x)",
+        "floor(x)",
+        "round(x)",
+        "ceil(x)"
+    )
 
     override fun isDataValid(): Boolean {
         return value != ""
@@ -86,14 +104,19 @@ class Calculate(var value: String = "", var operator: Int = SQUARE, var resultNa
             CALC_FLOOR -> floor(value)
             CALC_ROUND -> round(value)
             CALC_CEIL -> ceil(value)
-            else -> throw InvalidFlowValueException(Language.get("action.calculate.operator.unknown", listOf(operator.toString())))
+            else -> throw InvalidFlowValueException(
+                Language.get(
+                    "action.calculate.operator.unknown",
+                    listOf(operator.toString())
+                )
+            )
         }
 
         source.addVariable(resultName, NumberVariable(result))
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.calculate.form.value", "10", value, true),
             Dropdown("@action.fourArithmeticOperations.form.operator", operatorSymbols, operator),
@@ -111,7 +134,7 @@ class Calculate(var value: String = "", var operator: Int = SQUARE, var resultNa
         return listOf(value, operator, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER)
         )

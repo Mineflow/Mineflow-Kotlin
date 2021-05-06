@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.variable
 
 import tokyo.aieuo.mineflow.utils.JsonSerializable
 
-class NumberVariable(var value: Number): Variable<Number>, JsonSerializable {
+class NumberVariable(var value: Number) : Variable<Number>, JsonSerializable {
 
     override val type = Variable.NUMBER
 

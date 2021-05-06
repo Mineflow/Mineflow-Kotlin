@@ -6,7 +6,7 @@ import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.ui.RecipeForm
 import tokyo.aieuo.mineflow.utils.Language
 
-class RecipeCommand: MineflowSubcommand {
+class RecipeCommand : MineflowSubcommand {
     override fun execute(sender: CommandSender, args: Array<String>) {
         if (sender !is Player) return
         if (args.isEmpty()) {

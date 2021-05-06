@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.action.player
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class SendMessage(player: String = "", message: String = ""): TypePlayerMessage(player, message) {
+class SendMessage(player: String = "", message: String = "") : TypePlayerMessage(player, message) {
 
     override val id = FlowItemIds.SEND_MESSAGE
 

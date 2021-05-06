@@ -12,10 +12,21 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ItemVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class RegisterCraftingRecipe(i1: String = "", i2: String = "", i3: String = "", i4: String = "", i5: String = "", i6: String = "", i7: String = "", i8: String = "", i9: String = "", o: String = ""): FlowItem(), ItemFlowItem {
+class RegisterCraftingRecipe(
+    i1: String = "",
+    i2: String = "",
+    i3: String = "",
+    i4: String = "",
+    i5: String = "",
+    i6: String = "",
+    i7: String = "",
+    i8: String = "",
+    i9: String = "",
+    o: String = ""
+) : FlowItem(), ItemFlowItem {
 
     override val id = FlowItemIds.REGISTER_SHAPED_RECIPE
 
@@ -156,17 +167,62 @@ class RegisterCraftingRecipe(i1: String = "", i2: String = "", i3: String = "", 
         }
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
-            ItemVariableDropdown(variables, getItemVariableName("input0"), "@action.registerRecipe.ingredients A", true),
-            ItemVariableDropdown(variables, getItemVariableName("input1"), "@action.registerRecipe.ingredients B", true),
-            ItemVariableDropdown(variables, getItemVariableName("input2"), "@action.registerRecipe.ingredients C", true),
-            ItemVariableDropdown(variables, getItemVariableName("input3"), "@action.registerRecipe.ingredients D", true),
-            ItemVariableDropdown(variables, getItemVariableName("input4"), "@action.registerRecipe.ingredients E", true),
-            ItemVariableDropdown(variables, getItemVariableName("input5"), "@action.registerRecipe.ingredients F", true),
-            ItemVariableDropdown(variables, getItemVariableName("input6"), "@action.registerRecipe.ingredients G", true),
-            ItemVariableDropdown(variables, getItemVariableName("input7"), "@action.registerRecipe.ingredients H", true),
-            ItemVariableDropdown(variables, getItemVariableName("input8"), "@action.registerRecipe.ingredients I", true),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input0"),
+                "@action.registerRecipe.ingredients A",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input1"),
+                "@action.registerRecipe.ingredients B",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input2"),
+                "@action.registerRecipe.ingredients C",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input3"),
+                "@action.registerRecipe.ingredients D",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input4"),
+                "@action.registerRecipe.ingredients E",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input5"),
+                "@action.registerRecipe.ingredients F",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input6"),
+                "@action.registerRecipe.ingredients G",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input7"),
+                "@action.registerRecipe.ingredients H",
+                true
+            ),
+            ItemVariableDropdown(
+                variables,
+                getItemVariableName("input8"),
+                "@action.registerRecipe.ingredients I",
+                true
+            ),
             ItemVariableDropdown(variables, getItemVariableName("output"), "@action.registerRecipe.results RESULT"),
         )
     }

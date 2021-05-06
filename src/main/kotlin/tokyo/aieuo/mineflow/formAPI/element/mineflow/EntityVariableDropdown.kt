@@ -1,10 +1,11 @@
 package tokyo.aieuo.mineflow.formAPI.element.mineflow
 
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 
 class EntityVariableDropdown(
-    variables: Map<String, DummyVariable<DummyVariable.Type>> = mapOf(),
+    variables: DummyVariableMap = mapOf(),
     default: String = "",
     text: String = "@action.form.target.entity",
     optional: Boolean = false

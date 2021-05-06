@@ -28,9 +28,13 @@ interface ScoreboardFlowItem {
             return variable.value
         }
 
-        throw InvalidFlowValueException(Language.get("action.target.not.valid", listOf(
-            Language.get("action.target.require.scoreboard"),
-            rawName
-        )))
+        throw InvalidFlowValueException(
+            Language.get(
+                "action.target.not.valid", listOf(
+                    Language.get("action.target.require.scoreboard"),
+                    rawName
+                )
+            )
+        )
     }
 }

@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.condition
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class CanAddItem(player: String = "", item: String = ""): TypeItem(player, item) {
+class CanAddItem(player: String = "", item: String = "") : TypeItem(player, item) {
 
     override val id = FlowItemIds.CAN_ADD_ITEM
 

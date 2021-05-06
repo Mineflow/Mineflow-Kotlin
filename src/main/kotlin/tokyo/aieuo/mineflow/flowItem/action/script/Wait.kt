@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class Wait(var time: String = ""): FlowItem() {
+class Wait(var time: String = "") : FlowItem() {
 
     override val id = FlowItemIds.ACTION_WAIT
 
@@ -37,7 +37,7 @@ class Wait(var time: String = ""): FlowItem() {
         val time = source.replaceVariables(time)
         throwIfInvalidNumber(time, 1.0 / 20)
 
-        object: NukkitRunnable() {
+        object : NukkitRunnable() {
             override fun run() {
                 source.resume()
             }
@@ -45,7 +45,7 @@ class Wait(var time: String = ""): FlowItem() {
         yield(FlowItemExecutor.Result.AWAIT)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.wait.form.time", "10", time, true),
         )

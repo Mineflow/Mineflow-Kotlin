@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class IsPlayerOnlineByName(var playerName: String = "target"): FlowItem(), Condition {
+class IsPlayerOnlineByName(var playerName: String = "target") : FlowItem(), Condition {
 
     override val id = FlowItemIds.IS_PLAYER_ONLINE_BY_NAME
 
@@ -42,7 +42,7 @@ class IsPlayerOnlineByName(var playerName: String = "target"): FlowItem(), Condi
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@condition.isPlayerOnline.form.name", "target", playerName, true),
         )

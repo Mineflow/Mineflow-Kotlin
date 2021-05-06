@@ -7,11 +7,12 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class StringLength(var value: String = "", var resultName: String = "length"): FlowItem() {
+class StringLength(var value: String = "", var resultName: String = "length") : FlowItem() {
 
     override val id = FlowItemIds.STRING_LENGTH
 
@@ -41,7 +42,7 @@ class StringLength(var value: String = "", var resultName: String = "length"): F
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.strlen.form.value", "aieuo", value, true),
             ExampleInput("@action.form.resultVariableName", "length", resultName, true),
@@ -57,7 +58,7 @@ class StringLength(var value: String = "", var resultName: String = "length"): F
         return listOf(value, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER, value)
         )

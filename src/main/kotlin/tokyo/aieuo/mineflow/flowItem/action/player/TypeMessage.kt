@@ -5,10 +5,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-abstract class TypeMessage(var message: String = ""): FlowItem() {
+abstract class TypeMessage(var message: String = "") : FlowItem() {
 
     override val detailDefaultReplaces = listOf("message")
 
@@ -23,7 +23,7 @@ abstract class TypeMessage(var message: String = ""): FlowItem() {
         return Language.get(detailTranslationKey, listOf(message))
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.message.form.message", "aieuo", message, true),
         )

@@ -2,7 +2,8 @@ package tokyo.aieuo.mineflow.variable
 
 import tokyo.aieuo.mineflow.utils.JsonSerializable
 
-class ListVariable(var value: List<Variable<Any>>, val showString: String? = null): Variable<List<Variable<Any>>>, JsonSerializable {
+class ListVariable(var value: List<Variable<Any>>, val showString: String? = null) :
+    Variable<List<Variable<Any>>>, JsonSerializable {
 
     override val type = Variable.LIST
 

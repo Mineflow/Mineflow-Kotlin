@@ -1,10 +1,10 @@
 package tokyo.aieuo.mineflow.flowItem.action.player
 
-import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import cn.nukkit.Server
+import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class SendMessageToOp(message: String = ""): TypeMessage(message) {
+class SendMessageToOp(message: String = "") : TypeMessage(message) {
 
     override val id = FlowItemIds.SEND_MESSAGE_TO_OP
 

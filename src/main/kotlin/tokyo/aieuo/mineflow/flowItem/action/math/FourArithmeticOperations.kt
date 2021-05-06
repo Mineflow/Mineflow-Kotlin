@@ -10,11 +10,17 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class FourArithmeticOperations(var value1: String = "", var operator: Int = ADDITION, var value2: String = "", var resultName: String = "result"): FlowItem() {
+class FourArithmeticOperations(
+    var value1: String = "",
+    var operator: Int = ADDITION,
+    var value2: String = "",
+    var resultName: String = "result"
+) : FlowItem() {
 
     override val id = FlowItemIds.FOUR_ARITHMETIC_OPERATIONS
 
@@ -40,7 +46,10 @@ class FourArithmeticOperations(var value1: String = "", var operator: Int = ADDI
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(value1, operatorSymbols.getOrElse(operator) { "?" }, value2, resultName))
+        return Language.get(
+            detailTranslationKey,
+            listOf(value1, operatorSymbols.getOrElse(operator) { "?" }, value2, resultName)
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -61,14 +70,19 @@ class FourArithmeticOperations(var value1: String = "", var operator: Int = ADDI
             MULTIPLICATION -> value1 * value2
             DIVISION -> if (value2 == 0.0) throw InvalidFlowValueException(Language.get("variable.number.div.0")) else value1 / value2
             MODULO -> if (value2 == 0.0) throw InvalidFlowValueException(Language.get("variable.number.div.0")) else value1 % value2
-            else -> throw InvalidFlowValueException(Language.get("action.calculate.operator.unknown", listOf(operator.toString())))
+            else -> throw InvalidFlowValueException(
+                Language.get(
+                    "action.calculate.operator.unknown",
+                    listOf(operator.toString())
+                )
+            )
         }
 
         source.addVariable(resultName, NumberVariable(result))
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleNumberInput("@action.fourArithmeticOperations.form.value1", "10", value1, true),
             Dropdown("@action.fourArithmeticOperations.form.operator", operatorSymbols, operator),
@@ -88,7 +102,7 @@ class FourArithmeticOperations(var value1: String = "", var operator: Int = ADDI
         return listOf(value1, operator, value2, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER)
         )

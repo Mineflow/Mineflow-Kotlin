@@ -4,7 +4,7 @@ import tokyo.aieuo.mineflow.exception.FlowItemLoadException
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Language
 
-abstract class FlowItem: IFlowItem, Cloneable {
+abstract class FlowItem : IFlowItem, Cloneable {
 
     override val detailDefaultReplaces: List<String> = listOf()
 

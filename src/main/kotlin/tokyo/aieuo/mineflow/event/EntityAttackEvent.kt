@@ -5,4 +5,4 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent
 import cn.nukkit.event.plugin.PluginEvent
 import tokyo.aieuo.mineflow.Main
 
-class EntityAttackEvent(plugin: Main, val damageEvent: EntityDamageByEntityEvent): PluginEvent(plugin), Cancellable
+class EntityAttackEvent(plugin: Main, val damageEvent: EntityDamageByEntityEvent) : PluginEvent(plugin), Cancellable

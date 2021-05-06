@@ -9,12 +9,13 @@ import tokyo.aieuo.mineflow.formAPI.element.Toggle
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.MapVariable
 
-class ExistsListVariableKey(var variableName: String = "", var variableKey: String = "", var isLocal: Boolean = true): FlowItem(), Condition {
+class ExistsListVariableKey(var variableName: String = "", var variableKey: String = "", var isLocal: Boolean = true) :
+    FlowItem(), Condition {
 
     override val id = FlowItemIds.EXISTS_LIST_VARIABLE_KEY
 
@@ -23,7 +24,7 @@ class ExistsListVariableKey(var variableName: String = "", var variableKey: Stri
     override val detailDefaultReplaces = listOf("scope", "name", "key")
 
     override val category = Category.VARIABLE
-    
+
     override fun isDataValid(): Boolean {
         return variableName != "" && variableKey != ""
     }
@@ -47,7 +48,7 @@ class ExistsListVariableKey(var variableName: String = "", var variableKey: Stri
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.variable.form.name", "aieuo", variableName, true),
             ExampleInput("@action.variable.form.key", "auieo", variableKey, true),

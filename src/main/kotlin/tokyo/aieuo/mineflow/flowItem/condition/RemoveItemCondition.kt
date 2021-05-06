@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.condition
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class RemoveItemCondition(player: String = "", item: String = ""): TypeItem(player, item) {
+class RemoveItemCondition(player: String = "", item: String = "") : TypeItem(player, item) {
 
     override val id = FlowItemIds.REMOVE_ITEM_CONDITION
 

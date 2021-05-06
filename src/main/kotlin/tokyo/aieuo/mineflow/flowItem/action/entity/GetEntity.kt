@@ -10,6 +10,7 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.EntityHolder
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
@@ -17,7 +18,7 @@ import tokyo.aieuo.mineflow.variable.obj.EntityObjectVariable
 import tokyo.aieuo.mineflow.variable.obj.HumanObjectVariable
 import tokyo.aieuo.mineflow.variable.obj.PlayerObjectVariable
 
-class GetEntity(var entityId: String = "", var resultName: String = "entity"): FlowItem() {
+class GetEntity(var entityId: String = "", var resultName: String = "entity") : FlowItem() {
 
     override val id = FlowItemIds.GET_ENTITY
 
@@ -58,7 +59,7 @@ class GetEntity(var entityId: String = "", var resultName: String = "entity"): F
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.getEntity.form.target", "aieuo", entityId, true),
             ExampleInput("@action.form.resultVariableName", "entity", resultName, true),
@@ -74,7 +75,7 @@ class GetEntity(var entityId: String = "", var resultName: String = "entity"): F
         return listOf(entityId, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.PLAYER, entityId)
         )

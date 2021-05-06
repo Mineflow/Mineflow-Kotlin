@@ -4,7 +4,8 @@ import cn.nukkit.Player
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponse
 import tokyo.aieuo.mineflow.utils.Language
 
-open class Input(text: String, var placeholder: String = "", var default: String = "", var required: Boolean = false): ElementBase(text) {
+open class Input(text: String, var placeholder: String = "", var default: String = "", var required: Boolean = false) :
+    ElementBase(text) {
 
     override val type = Element.Type.INPUT
 

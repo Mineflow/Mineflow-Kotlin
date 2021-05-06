@@ -9,7 +9,7 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.utils.Category
 
-class ElseAction(actions: List<FlowItem> = listOf()): FlowItem(), FlowItemContainer {
+class ElseAction(actions: List<FlowItem> = listOf()) : FlowItem(), FlowItemContainer {
 
     override val id = FlowItemIds.ACTION_ELSE
 

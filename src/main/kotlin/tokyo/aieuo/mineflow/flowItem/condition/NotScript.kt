@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.flowItem.condition
 
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class NotScript: NandScript() {
+class NotScript : NandScript() {
 
     override val id = FlowItemIds.CONDITION_NOT
 

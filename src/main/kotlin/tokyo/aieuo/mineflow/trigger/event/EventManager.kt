@@ -41,7 +41,7 @@ class EventManager(val setting: Config) {
         addTrigger(LevelLoadEventTrigger(), LevelLoadEvent::class, false)
         addTrigger(PlayerBedEnterEventTrigger(), PlayerBedEnterEvent::class, false)
         addTrigger(PlayerChatEventTrigger(), PlayerChatEvent::class, true)
-        addTrigger(PlayerCommandPreprocessEventTrigger(), PlayerCommandPreprocessEvent::class,  true)
+        addTrigger(PlayerCommandPreprocessEventTrigger(), PlayerCommandPreprocessEvent::class, true)
         addTrigger(PlayerDeathEventTrigger(), PlayerDeathEvent::class, true)
         addTrigger(EntityDeathEventTrigger(), EntityDeathEvent::class, false)
         addTrigger(PlayerDropItemEventTrigger(), PlayerDropItemEvent::class, false)

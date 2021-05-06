@@ -1,10 +1,10 @@
 package tokyo.aieuo.mineflow.flowItem.condition
 
-import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import cn.nukkit.entity.EntityCreature
+import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class IsCreatureVariable(entity: String = ""): IsActiveEntityVariable(entity) {
+class IsCreatureVariable(entity: String = "") : IsActiveEntityVariable(entity) {
 
     override val id = FlowItemIds.IS_CREATURE_VARIABLE
 

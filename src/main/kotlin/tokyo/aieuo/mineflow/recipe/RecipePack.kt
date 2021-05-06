@@ -24,7 +24,7 @@ class RecipePack(
     forms: MutableMap<String, Form>? = null,
     configs: MutableMap<String, Map<String, *>>? = null,
     val version: String = Main.pluginVersion
-): JsonSerializable {
+) : JsonSerializable {
 
     val commands: MutableMap<String, CustomCommandData> = commands ?: getLinkedCommands()
     val forms: MutableMap<String, Form> = forms ?: getLinkedForms()

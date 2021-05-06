@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class CommandConsole(var command: String = ""): FlowItem() {
+class CommandConsole(var command: String = "") : FlowItem() {
 
     override val id = FlowItemIds.COMMAND_CONSOLE
 
@@ -42,7 +42,7 @@ class CommandConsole(var command: String = ""): FlowItem() {
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.command.form.command", "mineflow", command, true),
         )

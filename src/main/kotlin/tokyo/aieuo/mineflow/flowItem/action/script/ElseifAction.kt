@@ -4,7 +4,8 @@ import tokyo.aieuo.mineflow.flowItem.FlowItem
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class ElseifAction(conditions: List<FlowItem> = listOf(), actions: List<FlowItem> = listOf()): IFAction(conditions, actions) {
+class ElseifAction(conditions: List<FlowItem> = listOf(), actions: List<FlowItem> = listOf()) :
+    IFAction(conditions, actions) {
 
     override val id = FlowItemIds.ACTION_ELSEIF
 

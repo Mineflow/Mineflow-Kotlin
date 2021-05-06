@@ -12,7 +12,7 @@ import tokyo.aieuo.mineflow.ui.RecipeForm
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.Session
 
-object BlockTriggerForm: TriggerForm {
+object BlockTriggerForm : TriggerForm {
 
     override fun sendAddedTriggerMenu(player: Player, recipe: Recipe, trigger: Trigger, messages: List<String>) {
         (ListForm(Language.get("form.trigger.addedTriggerMenu.title", listOf(recipe.name, trigger.key))))

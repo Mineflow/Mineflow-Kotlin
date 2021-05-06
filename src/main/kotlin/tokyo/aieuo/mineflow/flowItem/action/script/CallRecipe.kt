@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.action.script
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class CallRecipe(recipeName: String = "", args: List<String> = listOf()): ExecuteRecipe(recipeName, args) {
+class CallRecipe(recipeName: String = "", args: List<String> = listOf()) : ExecuteRecipe(recipeName, args) {
 
     override val id = FlowItemIds.CALL_RECIPE
 

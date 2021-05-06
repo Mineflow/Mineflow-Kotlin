@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ScoreboardVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class RemoveScoreboardScoreName(scoreboard: String = "", var score: String = ""): FlowItem(), ScoreboardFlowItem {
+class RemoveScoreboardScoreName(scoreboard: String = "", var score: String = "") : FlowItem(), ScoreboardFlowItem {
 
     override val id = FlowItemIds.REMOVE_SCOREBOARD_SCORE_NAME
 
@@ -50,7 +50,7 @@ class RemoveScoreboardScoreName(scoreboard: String = "", var score: String = "")
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ScoreboardVariableDropdown(variables, getScoreboardVariableName()),
             ExampleNumberInput("@action.setScore.form.score", "100", score, true),

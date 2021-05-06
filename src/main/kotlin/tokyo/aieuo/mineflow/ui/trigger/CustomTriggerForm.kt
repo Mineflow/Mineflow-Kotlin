@@ -13,7 +13,7 @@ import tokyo.aieuo.mineflow.trigger.custom.CustomTrigger
 import tokyo.aieuo.mineflow.ui.RecipeForm
 import tokyo.aieuo.mineflow.utils.Language
 
-object CustomTriggerForm: TriggerForm {
+object CustomTriggerForm : TriggerForm {
 
     override fun sendAddedTriggerMenu(player: Player, recipe: Recipe, trigger: Trigger, messages: List<String>) {
         (ListForm(Language.get("form.trigger.addedTriggerMenu.title", listOf(recipe.name, trigger.toString()))))
@@ -26,17 +26,19 @@ object CustomTriggerForm: TriggerForm {
 
     override fun sendMenu(player: Player, recipe: Recipe) {
         (CustomForm(Language.get("form.trigger.triggerMenu.title", listOf(recipe.name, Triggers.CUSTOM))))
-            .addContents(mutableListOf(
-                ExampleInput("@trigger.custom.name", "aieuo", required = true),
-                CancelToggle { BaseTriggerForm.sendSelectTriggerType(player, recipe) },
-            )).onReceive { data ->
+            .addContents(
+                mutableListOf(
+                    ExampleInput("@trigger.custom.name", "aieuo", required = true),
+                    CancelToggle { BaseTriggerForm.sendSelectTriggerType(player, recipe) },
+                )
+            ).onReceive { data ->
                 val trigger = CustomTrigger.create(data.getString(0))
                 if (recipe.existsTrigger(trigger)) {
                     sendAddedTriggerMenu(player, recipe, trigger, listOf("@trigger.alreadyExists"))
                     return@onReceive
                 }
                 recipe.addTrigger(trigger)
-            sendAddedTriggerMenu(player, recipe, trigger, listOf("@trigger.add.success"))
-        }.show(player)
+                sendAddedTriggerMenu(player, recipe, trigger, listOf("@trigger.add.success"))
+            }.show(player)
     }
 }

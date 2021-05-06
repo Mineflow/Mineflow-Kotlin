@@ -9,12 +9,17 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 
-class JoinListVariableToString(var variableName: String = "", var separator: String = "", var resultName: String = "result"): FlowItem() {
+class JoinListVariableToString(
+    var variableName: String = "",
+    var separator: String = "",
+    var resultName: String = "result"
+) : FlowItem() {
 
     override val id = FlowItemIds.JOIN_LIST_VARIABLE_TO_STRING
 
@@ -46,7 +51,12 @@ class JoinListVariableToString(var variableName: String = "", var separator: Str
             throw InvalidFlowValueException(Language.get("variable.notFound", listOf(name)))
         }
         if (variable !is ListVariable) {
-            throw InvalidFlowValueException(Language.get("action.addListVariable.error.existsOtherType", listOf(name, variable.toString())))
+            throw InvalidFlowValueException(
+                Language.get(
+                    "action.addListVariable.error.existsOtherType",
+                    listOf(name, variable.toString())
+                )
+            )
         }
 
         val strings = mutableListOf<String>()
@@ -57,7 +67,7 @@ class JoinListVariableToString(var variableName: String = "", var separator: Str
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.variable.form.name", "aieuo", variableName, true),
             ExampleInput("@action.joinToString.form.separator", ", ", separator, false),
@@ -75,7 +85,7 @@ class JoinListVariableToString(var variableName: String = "", var separator: Str
         return listOf(variableName, separator, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.STRING)
         )

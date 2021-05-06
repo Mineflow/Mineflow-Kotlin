@@ -1,11 +1,11 @@
 package tokyo.aieuo.mineflow.flowItem.condition
 
-import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
-import tokyo.aieuo.mineflow.utils.Category
 import cn.nukkit.Player
+import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
+import tokyo.aieuo.mineflow.utils.Category
 
-class IsPlayerVariable(entity: String = ""): IsActiveEntityVariable(entity) {
+class IsPlayerVariable(entity: String = "") : IsActiveEntityVariable(entity) {
 
     override val id = FlowItemIds.IS_PLAYER_VARIABLE
 

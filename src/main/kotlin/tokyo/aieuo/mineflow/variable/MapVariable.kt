@@ -1,9 +1,9 @@
 package tokyo.aieuo.mineflow.variable
 
 import tokyo.aieuo.mineflow.utils.JsonSerializable
+import tokyo.aieuo.mineflow.utils.VariableMap
 
-class MapVariable(var value: Map<String, Variable<Any>>, val showString: String? = null)
-    : Variable<Map<String, Variable<Any>>>, JsonSerializable {
+class MapVariable(var value: VariableMap, val showString: String? = null) : Variable<VariableMap>, JsonSerializable {
 
     override val type = Variable.MAP
 

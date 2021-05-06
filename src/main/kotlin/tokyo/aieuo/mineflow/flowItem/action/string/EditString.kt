@@ -9,12 +9,18 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 
-class EditString(var value1: String = "", var operator: String = TYPE_JOIN, var value2: String = "", var resultName: String = "result"): FlowItem() {
+class EditString(
+    var value1: String = "",
+    var operator: String = TYPE_JOIN,
+    var value2: String = "",
+    var resultName: String = "result"
+) : FlowItem() {
 
     override val id = FlowItemIds.EDIT_STRING
 
@@ -45,7 +51,10 @@ class EditString(var value1: String = "", var operator: String = TYPE_JOIN, var 
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(value1, Language.get("action.editString.${operator}"), value2, resultName))
+        return Language.get(
+            detailTranslationKey,
+            listOf(value1, Language.get("action.editString.${operator}"), value2, resultName)
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -72,10 +81,11 @@ class EditString(var value1: String = "", var operator: String = TYPE_JOIN, var 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.fourArithmeticOperations.form.value1", "10", value1, true),
-            Dropdown("@action.fourArithmeticOperations.form.operator",
+            Dropdown(
+                "@action.fourArithmeticOperations.form.operator",
                 operators.map { Language.get("action.editString.$it") },
                 operators.indexOf(operator)
             ),
@@ -99,7 +109,7 @@ class EditString(var value1: String = "", var operator: String = TYPE_JOIN, var 
         return listOf(value1, operator, value2, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.STRING, "$value1 (${operator}) $value2")
         )

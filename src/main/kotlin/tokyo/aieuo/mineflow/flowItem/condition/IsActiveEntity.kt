@@ -7,11 +7,11 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.EntityHolder
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-open class IsActiveEntity(var entityId: String = ""): FlowItem(), Condition {
+open class IsActiveEntity(var entityId: String = "") : FlowItem(), Condition {
 
     override val id = FlowItemIds.IS_ACTIVE_ENTITY
 
@@ -40,7 +40,7 @@ open class IsActiveEntity(var entityId: String = ""): FlowItem(), Condition {
         yield(if (active) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@condition.isActiveEntity.form.entityId", "aieuo", entityId, true),
         )

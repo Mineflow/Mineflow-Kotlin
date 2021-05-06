@@ -7,10 +7,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class ExecuteRecipeWithEntity(name: String = "", entity: String = ""): ExecuteRecipe(name), EntityFlowItem {
+class ExecuteRecipeWithEntity(name: String = "", entity: String = "") : ExecuteRecipe(name), EntityFlowItem {
 
     override val id = FlowItemIds.EXECUTE_RECIPE_WITH_ENTITY
 
@@ -45,7 +45,7 @@ class ExecuteRecipeWithEntity(name: String = "", entity: String = ""): ExecuteRe
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.executeRecipe.form.name", "aieuo", recipeName, true),
             EntityVariableDropdown(variables, getEntityVariableName()),

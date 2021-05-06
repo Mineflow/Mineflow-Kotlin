@@ -11,10 +11,11 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class AddParticle(position: String = "", var particle: String = "", var amount: String = "1"): FlowItem(), PositionFlowItem {
+class AddParticle(position: String = "", var particle: String = "", var amount: String = "1") :
+    FlowItem(), PositionFlowItem {
 
     override val id = FlowItemIds.ADD_PARTICLE
 
@@ -38,7 +39,10 @@ class AddParticle(position: String = "", var particle: String = "", var amount: 
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getPositionVariableName(), particle, amount, if (amount == "1") "" else "s"))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getPositionVariableName(), particle, amount, if (amount == "1") "" else "s")
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -63,7 +67,7 @@ class AddParticle(position: String = "", var particle: String = "", var amount: 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PositionVariableDropdown(variables, getPositionVariableName()),
             ExampleInput("@action.addParticle.form.particle", "minecraft:explosion_particle", particle, true),

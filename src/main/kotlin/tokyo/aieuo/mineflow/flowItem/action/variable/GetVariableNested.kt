@@ -9,10 +9,11 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class GetVariableNested(var variableName: String = "", var resultName: String = "var"): FlowItem() {
+class GetVariableNested(var variableName: String = "", var resultName: String = "var") : FlowItem() {
 
     override val id = FlowItemIds.GET_VARIABLE_NESTED
 
@@ -46,7 +47,7 @@ class GetVariableNested(var variableName: String = "", var resultName: String = 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.getVariableNested.form.target", "target.hand", variableName, true),
             ExampleInput("@action.form.resultVariableName", "item", resultName, true),
@@ -62,7 +63,7 @@ class GetVariableNested(var variableName: String = "", var resultName: String = 
         return listOf(variableName, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.UNKNOWN)
         )

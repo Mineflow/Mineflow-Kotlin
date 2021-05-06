@@ -65,13 +65,14 @@ object Language {
         if (exists(key, language)) {
             var message = messages[language]?.get(key) ?: return key
 
-            replaces.withIndex().forEach { (cnt, value) -> message = message.replace("{%$cnt}", value) }
+            replaces.withIndex()
+                .forEach { (cnt, value) -> message = message.replace("{%$cnt}", value) }
             message = message.replace("\\n", "\n").replace("\\q", "'").replace("\\dq", "\"")
             return message
         }
 
         if (language !== fallbackLanguage) {
-            return get(key, replaces, fallbackLanguage);
+            return get(key, replaces, fallbackLanguage)
         }
 
         return key
@@ -83,13 +84,21 @@ object Language {
 
     fun replace(text: String): String {
         val regex = Regex("@([a-zA-Z.0-9]+)")
-        return text.replace(regex) { result -> result.groups[1]?.let { get(it.value) } ?: result.value }
+        return text.replace(regex) { result ->
+            result.groups[1]?.let { get(it.value) } ?: result.value
+        }
     }
 
     fun getLoadErrorMessage(language: String): Array<String> {
-        return when(language) {
-            "jpn" -> arrayOf("言語ファイルの読み込みに失敗しました", "[${getAvailableLanguages().joinToString(", ")}]が使用できます")
-            else -> arrayOf("Failed to load language file.", "Available languages are: [${getAvailableLanguages().joinToString(", ")}]")
+        return when (language) {
+            "jpn" -> arrayOf(
+                "言語ファイルの読み込みに失敗しました",
+                "[${getAvailableLanguages().joinToString(", ")}]が使用できます"
+            )
+            else -> arrayOf(
+                "Failed to load language file.",
+                "Available languages are: [${getAvailableLanguages().joinToString(", ")}]"
+            )
         }
     }
 }

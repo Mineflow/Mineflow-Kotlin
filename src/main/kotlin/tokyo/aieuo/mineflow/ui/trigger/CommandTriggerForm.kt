@@ -15,7 +15,7 @@ import tokyo.aieuo.mineflow.ui.CommandForm
 import tokyo.aieuo.mineflow.ui.RecipeForm
 import tokyo.aieuo.mineflow.utils.Language
 
-object CommandTriggerForm: TriggerForm {
+object CommandTriggerForm : TriggerForm {
 
     override fun sendAddedTriggerMenu(player: Player, recipe: Recipe, trigger: Trigger, messages: List<String>) {
         (ListForm(Language.get("form.trigger.addedTriggerMenu.title", listOf(recipe.name, trigger.key))))
@@ -37,10 +37,12 @@ object CommandTriggerForm: TriggerForm {
 
     fun sendSelectCommand(player: Player, recipe: Recipe) {
         (CustomForm(Language.get("trigger.command.select.title", listOf(recipe.name))))
-            .setContents(mutableListOf(
-                Input("@trigger.command.select.input", "@trigger.command.select.placeholder", required = true),
-                CancelToggle { BaseTriggerForm.sendSelectTriggerType(player, recipe) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@trigger.command.select.input", "@trigger.command.select.placeholder", required = true),
+                    CancelToggle { BaseTriggerForm.sendSelectTriggerType(player, recipe) },
+                )
+            ).onReceive { data ->
                 val command = data.getString(0)
 
                 val manager = Main.commandManager

@@ -9,7 +9,13 @@ import tokyo.aieuo.mineflow.utils.BossBar
 import tokyo.aieuo.mineflow.utils.Category
 import tokyo.aieuo.mineflow.utils.Language
 
-class ShowBossBar(player: String = "", var title: String = "", var max: String = "", var value: String = "", var barId: String = ""): FlowItem(), PlayerFlowItem {
+class ShowBossBar(
+    player: String = "",
+    var title: String = "",
+    var max: String = "",
+    var value: String = "",
+    var barId: String = ""
+) : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.SHOW_BOSSBAR
 

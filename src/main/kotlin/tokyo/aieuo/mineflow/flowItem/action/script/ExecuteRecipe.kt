@@ -10,12 +10,12 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.recipe.Recipe
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 import tokyo.aieuo.mineflow.variable.Variable
 
-open class ExecuteRecipe(var recipeName: String = "", var args: List<String> = listOf()): FlowItem() {
+open class ExecuteRecipe(var recipeName: String = "", var args: List<String> = listOf()) : FlowItem() {
 
     override val id = FlowItemIds.EXECUTE_RECIPE
 
@@ -80,7 +80,7 @@ open class ExecuteRecipe(var recipeName: String = "", var args: List<String> = l
         return args
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.executeRecipe.form.name", "aieuo", recipeName, true),
             ExampleInput("@action.callRecipe.form.args", "{target}, 1, aieuo", args.joinToString(", "), false),

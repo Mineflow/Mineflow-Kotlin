@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.formAPI.element
 
 import tokyo.aieuo.mineflow.utils.Language
 
-class Slider(text: String, min: Float, max: Float, var step: Float = 1f, default: Float? = null): ElementBase(text) {
+class Slider(text: String, min: Float, max: Float, var step: Float = 1f, default: Float? = null) : ElementBase(text) {
 
     override val type = Element.Type.SLIDER
 

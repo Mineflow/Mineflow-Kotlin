@@ -9,13 +9,15 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.obj.ItemObjectVariable
 
 @Suppress("LeakingThis")
-open class GetInventoryContents(player: String = "", var resultName: String = "inventory"): FlowItem(), PlayerFlowItem {
+open class GetInventoryContents(player: String = "", var resultName: String = "inventory") : FlowItem(),
+    PlayerFlowItem {
 
     override val id = FlowItemIds.GET_INVENTORY_CONTENTS
 
@@ -54,7 +56,7 @@ open class GetInventoryContents(player: String = "", var resultName: String = "i
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleInput("@action.form.resultVariableName", "inventory", resultName, true),
@@ -70,7 +72,7 @@ open class GetInventoryContents(player: String = "", var resultName: String = "i
         return listOf(getPlayerVariableName(), resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.LIST, DummyVariable.Type.ITEM)
         )

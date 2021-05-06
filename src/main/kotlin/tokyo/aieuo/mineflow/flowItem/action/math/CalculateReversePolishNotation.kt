@@ -8,12 +8,13 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.is_numeric
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class CalculateReversePolishNotation(var formula: String = "", var resultName: String = "result"): FlowItem() {
+class CalculateReversePolishNotation(var formula: String = "", var resultName: String = "result") : FlowItem() {
 
     override val id = FlowItemIds.REVERSE_POLISH_NOTATION
 
@@ -53,7 +54,12 @@ class CalculateReversePolishNotation(var formula: String = "", var resultName: S
                 "*" -> value1 * value2
                 "/" -> value1 / value2
                 "%" -> value1 % value2
-                else -> throw InvalidFlowValueException(Language.get("action.calculate.operator.unknown", listOf(token)))
+                else -> throw InvalidFlowValueException(
+                    Language.get(
+                        "action.calculate.operator.unknown",
+                        listOf(token)
+                    )
+                )
             }
             stack.addLast(res)
         }
@@ -63,7 +69,7 @@ class CalculateReversePolishNotation(var formula: String = "", var resultName: S
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.calculateRPN.form.value", "1 2 + 3 -", formula, true),
             ExampleInput("@action.form.resultVariableName", "result", resultName, true),
@@ -79,7 +85,7 @@ class CalculateReversePolishNotation(var formula: String = "", var resultName: S
         return listOf(formula, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER)
         )

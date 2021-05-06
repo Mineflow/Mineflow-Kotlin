@@ -9,10 +9,11 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class ComparisonString(var value1: String = "", var operator: Int = EQUALS, var value2: String = ""): FlowItem(), Condition {
+class ComparisonString(var value1: String = "", var operator: Int = EQUALS, var value2: String = "") :
+    FlowItem(), Condition {
 
     override val id = FlowItemIds.COMPARISON_STRING
 
@@ -39,10 +40,10 @@ class ComparisonString(var value1: String = "", var operator: Int = EQUALS, var 
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(
-            value1, operatorSymbols[operator],
-            value2
-        ))
+        return Language.get(
+            detailTranslationKey,
+            listOf(value1, operatorSymbols[operator], value2)
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -58,12 +59,14 @@ class ComparisonString(var value1: String = "", var operator: Int = EQUALS, var 
             NOT_CONTAINS -> value2 !in value1
             STARTS_WITH -> value1.startsWith(value2)
             ENDS_WITH -> value2.endsWith(value2)
-            else -> throw InvalidFlowValueException(Language.get("action.calculate.operator.unknown", listOf(operator.toString())))
+            else -> throw InvalidFlowValueException(
+                Language.get("action.calculate.operator.unknown", listOf(operator.toString()))
+            )
         }
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@condition.comparisonNumber.form.value1", "10", value1, true),
             Dropdown("@condition.comparisonNumber.form.operator", operatorSymbols, operator),

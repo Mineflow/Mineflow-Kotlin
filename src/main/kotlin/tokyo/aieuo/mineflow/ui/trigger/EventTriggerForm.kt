@@ -13,7 +13,7 @@ import tokyo.aieuo.mineflow.ui.RecipeForm
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.Session
 
-object EventTriggerForm: TriggerForm {
+object EventTriggerForm : TriggerForm {
 
     override fun sendAddedTriggerMenu(player: Player, recipe: Recipe, trigger: Trigger, messages: List<String>) {
         (ListForm(Language.get("form.trigger.addedTriggerMenu.title", listOf(recipe.name, trigger.key))))
@@ -89,9 +89,11 @@ object EventTriggerForm: TriggerForm {
         val buttons = mutableListOf(
             Button("@form.back") { sendSelectEvent(player) },
             Button("@form.add") {
-                MineflowForm.selectRecipe(player, Language.get("form.recipes.add", listOf(Language.get(
-                    "trigger.event.$event"
-                ))), { recipe ->
+                MineflowForm.selectRecipe(player, Language.get(
+                    "form.recipes.add", listOf(
+                        Language.get("trigger.event.$event")
+                    )
+                ), { recipe ->
                     val trigger = EventTrigger.create(event)
                     if (recipe.existsTrigger(trigger)) {
                         sendRecipeList(player, event, listOf("@trigger.alreadyExists"))

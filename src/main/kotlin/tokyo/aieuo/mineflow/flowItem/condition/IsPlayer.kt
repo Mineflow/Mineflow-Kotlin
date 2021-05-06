@@ -5,7 +5,7 @@ import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.utils.Category
 import tokyo.aieuo.mineflow.utils.EntityHolder
 
-class IsPlayer(entityId: String = ""): IsActiveEntity(entityId) {
+class IsPlayer(entityId: String = "") : IsActiveEntity(entityId) {
 
     override val id = FlowItemIds.IS_PLAYER
 

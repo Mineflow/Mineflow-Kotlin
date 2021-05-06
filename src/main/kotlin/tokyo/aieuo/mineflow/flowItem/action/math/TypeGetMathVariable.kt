@@ -5,10 +5,11 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 
-abstract class TypeGetMathVariable(var resultName: String = ""): FlowItem() {
+abstract class TypeGetMathVariable(var resultName: String = "") : FlowItem() {
 
     override val detailDefaultReplaces = listOf("result")
 
@@ -23,7 +24,7 @@ abstract class TypeGetMathVariable(var resultName: String = ""): FlowItem() {
         return Language.get(detailTranslationKey, listOf(resultName))
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.form.resultVariableName", "result", resultName, true),
         )
@@ -37,7 +38,7 @@ abstract class TypeGetMathVariable(var resultName: String = ""): FlowItem() {
         return listOf(resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER)
         )

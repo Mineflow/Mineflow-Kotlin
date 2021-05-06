@@ -21,7 +21,7 @@ object CustomListFormForm {
             .addButton(
                 Button("@form.back") {
                     val prev = Session.getSession(player).get<SimpleCallable>("form_menu_prev")
-                if (prev !== null) prev() else (CustomFormForm).sendMenu(player)
+                    if (prev !== null) prev() else (CustomFormForm).sendMenu(player)
                 }
             ).addButton(
                 Button("@form.form.formMenu.preview") {
@@ -80,20 +80,24 @@ object CustomListFormForm {
 
     fun sendSelectButtonType(player: Player, form: ListForm) {
         (ListForm("@customForm.list.addButton"))
-            .setButtons(mutableListOf(
-                Button("@form.back") { sendMenu(player, form) },
-                Button("@customForm.list.button.type.normal") { sendAddButton(player, form) },
-                Button("@customForm.list.button.type.command") { sendAddCommandButton(player, form) },
-            )).show(player)
+            .setButtons(
+                mutableListOf(
+                    Button("@form.back") { sendMenu(player, form) },
+                    Button("@customForm.list.button.type.normal") { sendAddButton(player, form) },
+                    Button("@customForm.list.button.type.command") { sendAddCommandButton(player, form) },
+                )
+            ).show(player)
     }
 
     fun sendAddButton(player: Player, form: ListForm) {
         (CustomForm("@customForm.list.addButton"))
-            .setContents(mutableListOf(
-                Input("@customForm.text", required = true),
-                Input("@customForm.image", Language.get("form.example", listOf("textures/items/apple"))),
-                CancelToggle { sendButtonList(player, form, listOf("@form.canceled")) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.text", required = true),
+                    Input("@customForm.image", Language.get("form.example", listOf("textures/items/apple"))),
+                    CancelToggle { sendButtonList(player, form, listOf("@form.canceled")) },
+                )
+            ).onReceive { data ->
                 val image = data.getString(1).let { if (it == "") null else ButtonImage(it) }
                 form.addButton(Button(data.getString(0), image = image))
                 Main.formManager.addForm(form.getName(), form)
@@ -103,12 +107,14 @@ object CustomListFormForm {
 
     fun sendAddCommandButton(player: Player, form: ListForm) {
         (CustomForm("@customForm.list.addButton"))
-            .setContents(mutableListOf(
-                Input("@customForm.text", required = true),
-                Input("@customForm.list.commandButton.command", required = true),
-                Input("@customForm.image", Language.get("form.example", listOf("textures/items/apple")), ""),
-                CancelToggle(fun() { sendButtonList(player, form, listOf("@form.canceled")) }),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.text", required = true),
+                    Input("@customForm.list.commandButton.command", required = true),
+                    Input("@customForm.image", Language.get("form.example", listOf("textures/items/apple")), ""),
+                    CancelToggle(fun() { sendButtonList(player, form, listOf("@form.canceled")) }),
+                )
+            ).onReceive { data ->
                 val image = data.getString(2).let { if (it == "") null else ButtonImage(it) }
                 form.addButton(CommandButton(data.getString(1), data.getString(0), image))
                 Main.formManager.addForm(form.getName(), form)
@@ -123,12 +129,22 @@ object CustomListFormForm {
         }
 
         (CustomForm(button.text))
-            .setContents(mutableListOf(
-                Label("${Language.get("customForm.receive", listOf(index.toString()))}\n${Language.get("customForm.receive.list.button", listOf(button.text))}"),
-                Input("@customForm.text", default = button.text, required = true),
-                Input("@customForm.image", Language.get("form.example", listOf("textures/items/apple")), button.image?.image ?: ""),
-                CancelToggle(null, "@form.delete"),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Label(
+                        Language.get("customForm.receive", listOf(index.toString()))
+                                + "\n"
+                                + Language.get("customForm.receive.list.button", listOf(button.text))
+                    ),
+                    Input("@customForm.text", default = button.text, required = true),
+                    Input(
+                        "@customForm.image",
+                        Language.get("form.example", listOf("textures/items/apple")),
+                        button.image?.image ?: ""
+                    ),
+                    CancelToggle(null, "@form.delete"),
+                )
+            ).onReceive { data ->
                 val text = data.getString(1)
                 val image = data.getString(2)
                 val delete = data.getBoolean(3)
@@ -146,13 +162,23 @@ object CustomListFormForm {
 
     fun sendEditCommandButton(player: Player, form: ListForm, button: CommandButton, index: Int) {
         (CustomForm(button.text))
-            .setContents(mutableListOf(
-                Label("${Language.get("customForm.receive", listOf(index.toString()))}\n${Language.get("customForm.receive.list.button", listOf(button.text))}"),
-                Input("@customForm.text", default = button.text, required = true),
-                Input("@customForm.list.commandButton.command", default = button.command, required = true),
-                Input("@customForm.image", Language.get("form.example", listOf("textures/items/apple")), button.image?.image ?: ""),
-                CancelToggle(null, "@form.delete"),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Label(
+                        Language.get("customForm.receive", listOf(index.toString()))
+                                + "\n"
+                                + Language.get("customForm.receive.list.button", listOf(button.text))
+                    ),
+                    Input("@customForm.text", default = button.text, required = true),
+                    Input("@customForm.list.commandButton.command", default = button.command, required = true),
+                    Input(
+                        "@customForm.image",
+                        Language.get("form.example", listOf("textures/items/apple")),
+                        button.image?.image ?: ""
+                    ),
+                    CancelToggle(null, "@form.delete"),
+                )
+            ).onReceive { data ->
                 val text = data.getString(1)
                 val command = data.getString(2)
                 val image = data.getString(3)

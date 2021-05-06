@@ -11,12 +11,17 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SendTitle(player: String = "", var title: String = "", var subTitle: String = "",
-                var fadeIn: String = "-1", var stay: String = "-1", var fadeOut: String = "-1")
-    : FlowItem(), PlayerFlowItem {
+class SendTitle(
+    player: String = "",
+    var title: String = "",
+    var subTitle: String = "",
+    var fadeIn: String = "-1",
+    var stay: String = "-1",
+    var fadeOut: String = "-1"
+) : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.SEND_TITLE
 
@@ -38,7 +43,10 @@ class SendTitle(player: String = "", var title: String = "", var subTitle: Strin
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getPlayerVariableName(), title, subTitle, fadeIn, stay, fadeOut))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getPlayerVariableName(), title, subTitle, fadeIn, stay, fadeOut)
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -67,7 +75,7 @@ class SendTitle(player: String = "", var title: String = "", var subTitle: Strin
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleInput("@action.sendTitle.form.title", "aieuo", title),

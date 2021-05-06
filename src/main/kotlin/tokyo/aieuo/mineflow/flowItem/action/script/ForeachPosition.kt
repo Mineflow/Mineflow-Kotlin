@@ -16,13 +16,19 @@ import tokyo.aieuo.mineflow.recipe.Recipe
 import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.ui.FlowItemForm
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Session
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.PositionObjectVariable
 import kotlin.math.max
 import kotlin.math.min
 
-class ForeachPosition(pos1: String = "pos1", pos2: String = "pos2", actions: List<FlowItem> = listOf(), override var customName: String = ""): FlowItem(), FlowItemContainer, PositionFlowItem {
+class ForeachPosition(
+    pos1: String = "pos1",
+    pos2: String = "pos2",
+    actions: List<FlowItem> = listOf(),
+    override var customName: String = ""
+) : FlowItem(), FlowItemContainer, PositionFlowItem {
 
     override val id = FlowItemIds.FOREACH_POSITION
 
@@ -75,9 +81,11 @@ class ForeachPosition(pos1: String = "pos1", pos2: String = "pos2", actions: Lis
                     val pos = Position(x.toDouble(), y.toDouble(), z.toDouble(), pos1.level)
 
                     yieldAll(
-                        FlowItemExecutor(getActions(), source.target, mutableMapOf(
-                            counterName to PositionObjectVariable(pos, counterName)
-                        ), source).executeGenerator()
+                        FlowItemExecutor(
+                            getActions(), source.target, mutableMapOf(
+                                counterName to PositionObjectVariable(pos, counterName)
+                            ), source
+                        ).executeGenerator()
                     )
                 }
             }
@@ -104,14 +112,24 @@ class ForeachPosition(pos1: String = "pos1", pos2: String = "pos2", actions: Lis
         )
     }
 
-    fun sendSettingCounter(player: Player, variables: Map<String, DummyVariable<DummyVariable.Type>>) {
+    fun sendSettingCounter(player: Player, variables: DummyVariableMap) {
         val action = this
         (CustomForm("@action.for.setting"))
-            .setContents(mutableListOf(
-                PositionVariableDropdown(variables, getPositionVariableName("pos1"), "@action.foreachPosition.form.pos1"),
-                PositionVariableDropdown(variables, getPositionVariableName("pos2"), "@action.foreachPosition.form.pos2"),
-                ExampleInput("@action.for.counterName", "pos", counterName, true),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    PositionVariableDropdown(
+                        variables,
+                        getPositionVariableName("pos1"),
+                        "@action.foreachPosition.form.pos1"
+                    ),
+                    PositionVariableDropdown(
+                        variables,
+                        getPositionVariableName("pos2"),
+                        "@action.foreachPosition.form.pos2"
+                    ),
+                    ExampleInput("@action.for.counterName", "pos", counterName, true),
+                )
+            ).onReceive { data ->
                 setPositionVariableName(data.getString(0), "pos1")
                 setPositionVariableName(data.getString(1), "pos2")
                 counterName = data.getString(2)
@@ -140,7 +158,7 @@ class ForeachPosition(pos1: String = "pos1", pos2: String = "pos2", actions: Lis
         )
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             counterName to DummyVariable(DummyVariable.Type.POSITION),
         )

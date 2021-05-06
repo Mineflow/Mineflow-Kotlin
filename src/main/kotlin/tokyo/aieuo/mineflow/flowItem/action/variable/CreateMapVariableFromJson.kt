@@ -2,21 +2,23 @@ package tokyo.aieuo.mineflow.flowItem.action.variable
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.ObjectMapper
+import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.exception.InvalidFlowValueException
 import tokyo.aieuo.mineflow.flowItem.FlowItem
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
-import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
-import tokyo.aieuo.mineflow.formAPI.element.Toggle
-import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.element.Element
+import tokyo.aieuo.mineflow.formAPI.element.Toggle
+import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.MapVariable
 
-class CreateMapVariableFromJson(var variableName: String = "", var json: String = "", var isLocal: Boolean = true): FlowItem() {
+class CreateMapVariableFromJson(var variableName: String = "", var json: String = "", var isLocal: Boolean = true) :
+    FlowItem() {
 
     override val id = FlowItemIds.CREATE_MAP_VARIABLE_FROM_JSON
 
@@ -57,7 +59,7 @@ class CreateMapVariableFromJson(var variableName: String = "", var json: String 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.variable.form.name", "aieuo", variableName, true),
             ExampleInput("@action.variable.form.value", "aeiuo", json, true),
@@ -79,7 +81,7 @@ class CreateMapVariableFromJson(var variableName: String = "", var json: String 
         return listOf(variableName, json, isLocal)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             variableName to DummyVariable(DummyVariable.Type.MAP, json)
         )

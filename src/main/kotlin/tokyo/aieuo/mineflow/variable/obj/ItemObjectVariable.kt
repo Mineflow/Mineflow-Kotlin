@@ -1,9 +1,10 @@
 package tokyo.aieuo.mineflow.variable.obj
 
 import cn.nukkit.item.Item
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.*
 
-class ItemObjectVariable(value: Item, showString: String? = null): ObjectVariable<Item>(value, showString) {
+class ItemObjectVariable(value: Item, showString: String? = null) : ObjectVariable<Item>(value, showString) {
 
     override fun getValueFromIndex(index: String): Variable<Any>? {
         return when (index) {
@@ -21,7 +22,7 @@ class ItemObjectVariable(value: Item, showString: String? = null): ObjectVariabl
     }
 
     companion object {
-        fun getValuesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
+        fun getValuesDummy(): DummyVariableMap {
             return mapOf(
                 "name" to DummyVariable(DummyVariable.Type.STRING),
                 "id" to DummyVariable(DummyVariable.Type.NUMBER),

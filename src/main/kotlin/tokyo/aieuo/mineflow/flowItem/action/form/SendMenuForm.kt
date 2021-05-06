@@ -14,14 +14,19 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.MapVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 
-class SendMenuForm(player: String = "", var formText: String = "", var options: List<String> = listOf(), var resultName: String = "menu")
-    : FlowItem(), PlayerFlowItem {
+class SendMenuForm(
+    player: String = "",
+    var formText: String = "",
+    var options: List<String> = listOf(),
+    var resultName: String = "menu"
+) : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.SEND_MENU
 
@@ -45,7 +50,10 @@ class SendMenuForm(player: String = "", var formText: String = "", var options: 
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getPlayerVariableName(), formText, options.joinToString(";"), resultName))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getPlayerVariableName(), formText, options.joinToString(";"), resultName)
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -71,10 +79,12 @@ class SendMenuForm(player: String = "", var formText: String = "", var options: 
             .setContent(text)
             .setButtons(buttons)
             .onReceive { data ->
-                val variable = MapVariable(mapOf(
+                val variable = MapVariable(
+                    mapOf(
                         "id" to NumberVariable(data),
                         "text" to StringVariable(options[data]),
-                    ), options[data])
+                    ), options[data]
+                )
                 source.addVariable(resultName, variable)
                 source.resume()
             }.onClose {
@@ -82,14 +92,20 @@ class SendMenuForm(player: String = "", var formText: String = "", var options: 
             }.show(player)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         val contents = mutableListOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleInput("@action.form.resultVariableName", "input", resultName, true),
             ExampleInput("@action.sendInput.form.text", "aieuo", formText, true),
         )
         for ((i, option) in options.withIndex()) {
-            contents.add(Input(Language.get("customForm.dropdown.option", listOf(i.toString())), Language.get("form.example", listOf("aieuo")), option))
+            contents.add(
+                Input(
+                    Language.get("customForm.dropdown.option", listOf(i.toString())),
+                    Language.get("form.example", listOf("aieuo")),
+                    option
+                )
+            )
         }
         contents.add(ExampleInput("@customForm.dropdown.option.add", "aeiuo"))
         contents.add(Toggle("@action.sendInput.form.resendOnClose", resendOnClose))
@@ -131,7 +147,7 @@ class SendMenuForm(player: String = "", var formText: String = "", var options: 
         )
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.MAP)
         )

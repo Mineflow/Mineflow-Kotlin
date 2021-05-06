@@ -6,7 +6,7 @@ import tokyo.aieuo.mineflow.utils.microtime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class ServerStartEvent(plugin: Main): PluginEvent(plugin) {
+class ServerStartEvent(plugin: Main) : PluginEvent(plugin) {
 
     private val microtime = microtime()
     private val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

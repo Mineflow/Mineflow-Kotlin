@@ -8,13 +8,14 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class GetDate(var format: String = "H:i:s", var resultName: String = "date"): FlowItem() {
+class GetDate(var format: String = "H:i:s", var resultName: String = "date") : FlowItem() {
 
     override val id = FlowItemIds.GET_DATE
 
@@ -48,7 +49,7 @@ class GetDate(var format: String = "H:i:s", var resultName: String = "date"): Fl
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.getDate.form.format", "H:i:s", format, true),
             ExampleInput("@action.form.resultVariableName", "date", resultName, true),
@@ -64,7 +65,7 @@ class GetDate(var format: String = "H:i:s", var resultName: String = "date"): Fl
         return listOf(format, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.STRING)
         )

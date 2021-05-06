@@ -8,10 +8,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class ExistsVariable(var variableName: String = ""): FlowItem(), Condition {
+class ExistsVariable(var variableName: String = "") : FlowItem(), Condition {
 
     override val id = FlowItemIds.EXISTS_VARIABLE
 
@@ -40,7 +40,7 @@ class ExistsVariable(var variableName: String = ""): FlowItem(), Condition {
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.variable.form.name", "aieuo", variableName, true),
         )

@@ -1,6 +1,8 @@
 package tokyo.aieuo.mineflow.variable
 
-abstract class ObjectVariable<out T>(val value: T, val showString: String? = null): Variable<T> {
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
+
+abstract class ObjectVariable<out T>(val value: T, val showString: String? = null) : Variable<T> {
 
     override val type: Int = Variable.OBJECT
 
@@ -11,7 +13,7 @@ abstract class ObjectVariable<out T>(val value: T, val showString: String? = nul
     }
 
     companion object {
-        fun getValuesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
+        fun getValuesDummy(): DummyVariableMap {
             return mapOf()
         }
     }

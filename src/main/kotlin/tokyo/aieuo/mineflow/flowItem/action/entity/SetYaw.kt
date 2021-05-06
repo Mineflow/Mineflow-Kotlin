@@ -11,10 +11,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SetYaw(entity: String = "", var yaw: String = ""): FlowItem(), EntityFlowItem {
+class SetYaw(entity: String = "", var yaw: String = "") : FlowItem(), EntityFlowItem {
 
     override val id = FlowItemIds.SET_YAW
 
@@ -53,7 +53,7 @@ class SetYaw(entity: String = "", var yaw: String = ""): FlowItem(), EntityFlowI
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             ExampleNumberInput("@action.setYaw.form.yaw", "180", yaw, true),

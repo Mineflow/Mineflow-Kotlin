@@ -11,13 +11,15 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.PositionObjectVariable
 import kotlin.math.max
 import kotlin.math.min
 
-class GenerateRandomPosition(min: String = "", max: String = "", var resultName: String = "position"): FlowItem(), PositionFlowItem {
+class GenerateRandomPosition(min: String = "", max: String = "", var resultName: String = "position") :
+    FlowItem(), PositionFlowItem {
 
     override val id = FlowItemIds.GENERATE_RANDOM_POSITION
 
@@ -40,7 +42,10 @@ class GenerateRandomPosition(min: String = "", max: String = "", var resultName:
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getPositionVariableName("pos1"), getPositionVariableName("pos2"), resultName))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getPositionVariableName("pos1"), getPositionVariableName("pos2"), resultName)
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -62,7 +67,7 @@ class GenerateRandomPosition(min: String = "", max: String = "", var resultName:
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PositionVariableDropdown(variables, getPositionVariableName("pos1"), "@action.form.target.position 1"),
             PositionVariableDropdown(variables, getPositionVariableName("pos2"), "@action.form.target.position 2"),
@@ -80,7 +85,7 @@ class GenerateRandomPosition(min: String = "", max: String = "", var resultName:
         return listOf(getPositionVariableName("pos1"), getPositionVariableName("pos2"), resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.POSITION)
         )

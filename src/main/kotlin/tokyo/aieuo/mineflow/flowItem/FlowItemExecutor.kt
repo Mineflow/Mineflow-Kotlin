@@ -7,6 +7,7 @@ import tokyo.aieuo.mineflow.exception.*
 import tokyo.aieuo.mineflow.recipe.Recipe
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.Logger
+import tokyo.aieuo.mineflow.utils.VariableMap
 import tokyo.aieuo.mineflow.variable.Variable
 
 class FlowItemExecutor(
@@ -77,7 +78,10 @@ class FlowItemExecutor(
             when (e) {
                 is InvalidFlowValueException -> currentFlowItem?.let {
                     val message = e.message
-                    if (message?.isNotEmpty() == true) Logger.warning(Language.get("action.error", listOf(it.getName(), message)), target)
+                    if (message?.isNotEmpty() == true) Logger.warning(
+                        Language.get("action.error", listOf(it.getName(), message)),
+                        target
+                    )
                     if (onError !== null) (onError)(it, target)
                 }
                 is UndefinedMineflowVariableException,
@@ -133,7 +137,7 @@ class FlowItemExecutor(
         return variable
     }
 
-    fun getVariables(): Map<String, Variable<Any>> {
+    fun getVariables(): VariableMap {
         val variables = localVariables.toMutableMap()
         if (parent !== null) {
             variables.putAll(parent.getVariables())

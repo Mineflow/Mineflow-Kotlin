@@ -30,15 +30,19 @@ object CustomFormForm {
 
     fun sendAddForm(player: Player, defaultName: String = "") {
         (CustomForm("@form.form.addForm.title"))
-            .setContents(mutableListOf(
-                Input("@customForm.name", "", defaultName, true),
-                Dropdown("@form.form.addForm.type", listOf(
-                    Language.get("customForm.modal"),
-                    Language.get("customForm.form"),
-                    Language.get("customForm.custom_form"),
-                )),
-                CancelToggle { sendMenu(player) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.name", "", defaultName, true),
+                    Dropdown(
+                        "@form.form.addForm.type", listOf(
+                            Language.get("customForm.modal"),
+                            Language.get("customForm.form"),
+                            Language.get("customForm.custom_form"),
+                        )
+                    ),
+                    CancelToggle { sendMenu(player) },
+                )
+            ).onReceive { data ->
                 val name = data.getString(0)
                 val form = when (data.getInt(1)) {
                     0 -> ModalForm(name)
@@ -72,10 +76,12 @@ object CustomFormForm {
 
     fun sendSelectForm(player: Player) {
         (CustomForm("@form.form.select.title"))
-            .setContents(mutableListOf(
-                Input("@customForm.name", required = true),
-                CancelToggle { sendMenu(player) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.name", required = true),
+                    CancelToggle { sendMenu(player) },
+                )
+            ).onReceive { data ->
                 val manager = Main.formManager
                 val name = data.getString(0)
                 val form = manager.getForm(name)
@@ -123,10 +129,12 @@ object CustomFormForm {
 
     fun sendChangeFormTitle(player: Player, form: Form) {
         (CustomForm("@form.form.formMenu.changeTitle"))
-            .setContents(mutableListOf(
-                Input("@customForm.title", default = form.getTitle()),
-                CancelToggle(fun() { sendFormMenu(player, form, listOf("@form.cancelled")) }),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.title", default = form.getTitle()),
+                    CancelToggle(fun() { sendFormMenu(player, form, listOf("@form.cancelled")) }),
+                )
+            ).onReceive { data ->
                 form.setTitle(data.getString(0))
                 Main.formManager.addForm(form.getName(), form)
                 sendFormMenu(player, form, listOf("@form.changed"))
@@ -135,10 +143,12 @@ object CustomFormForm {
 
     fun sendChangeFormContent(player: Player, form: ModalForm) {
         (CustomForm("@form.form.formMenu.editContent"))
-            .setContents(mutableListOf(
-                Input("@customForm.content", default = form.getContent()),
-                CancelToggle { sendFormMenu(player, form, listOf("@form.cancelled")) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.content", default = form.getContent()),
+                    CancelToggle { sendFormMenu(player, form, listOf("@form.cancelled")) },
+                )
+            ).onReceive { data ->
                 form.setContent(data.getString(0))
                 Main.formManager.addForm(form.getName(), form)
                 sendFormMenu(player, form, listOf("@form.changed"))
@@ -147,10 +157,12 @@ object CustomFormForm {
 
     fun sendChangeFormContent(player: Player, form: ListForm) {
         (CustomForm("@form.form.formMenu.editContent"))
-            .setContents(mutableListOf(
-                Input("@customForm.content", default = form.getContent()),
-                CancelToggle { sendFormMenu(player, form, listOf("@form.cancelled")) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.content", default = form.getContent()),
+                    CancelToggle { sendFormMenu(player, form, listOf("@form.cancelled")) },
+                )
+            ).onReceive { data ->
                 form.setContent(data.getString(0))
                 Main.formManager.addForm(form.getName(), form)
                 sendFormMenu(player, form, listOf("@form.changed"))
@@ -159,10 +171,12 @@ object CustomFormForm {
 
     fun sendChangeFormName(player: Player, form: Form) {
         (CustomForm("@form.form.formMenu.changeName"))
-            .setContents(mutableListOf(
-                Input("@customForm.name", required = true),
-                CancelToggle { sendFormMenu(player, form, listOf("@form.cancelled")) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@customForm.name", required = true),
+                    CancelToggle { sendFormMenu(player, form, listOf("@form.cancelled")) },
+                )
+            ).onReceive { data ->
                 val name = data.getString(0)
                 val manager = Main.formManager
                 if (manager.existsForm(name)) {
@@ -199,10 +213,12 @@ object CustomFormForm {
 
     fun sendSelectRecipe(player: Player, form: Form) {
         (CustomForm(Language.get("form.recipes.add", listOf(form.getName()))))
-            .setContents(mutableListOf(
-                Input("@form.recipe.recipeName", required = true),
-                CancelToggle { sendRecipeList(player, form) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@form.recipe.recipeName", required = true),
+                    CancelToggle { sendRecipeList(player, form) },
+                )
+            ).onReceive { data ->
                 val manager = Main.recipeManager
                 val (name, group) = manager.parseName(data.getString(0))
                 val recipe = manager.get(name, group)

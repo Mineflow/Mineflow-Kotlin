@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.formAPI.element
 
 import cn.nukkit.utils.TextFormat
 
-abstract class ElementBase(text: String): Element, Cloneable {
+abstract class ElementBase(text: String) : Element, Cloneable {
 
     override var text: String = text.replace("\\n", "\n")
         set(value) {

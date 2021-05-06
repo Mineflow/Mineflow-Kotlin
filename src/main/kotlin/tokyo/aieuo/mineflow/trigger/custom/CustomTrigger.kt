@@ -4,7 +4,7 @@ import tokyo.aieuo.mineflow.trigger.Trigger
 import tokyo.aieuo.mineflow.trigger.Triggers
 import tokyo.aieuo.mineflow.utils.Language
 
-class CustomTrigger(key: String, subKey: String = ""): Trigger(Triggers.CUSTOM, key, subKey) {
+class CustomTrigger(key: String, subKey: String = "") : Trigger(Triggers.CUSTOM, key, subKey) {
 
     companion object {
         fun create(key: String, subKey: String = ""): CustomTrigger {

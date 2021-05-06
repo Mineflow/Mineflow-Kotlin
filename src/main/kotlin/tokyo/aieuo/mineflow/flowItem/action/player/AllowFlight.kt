@@ -10,10 +10,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Toggle
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class AllowFlight(player: String = "", var allow: Boolean = true): FlowItem(), PlayerFlowItem {
+class AllowFlight(player: String = "", var allow: Boolean = true) : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.ALLOW_FLIGHT
 
@@ -37,7 +37,10 @@ class AllowFlight(player: String = "", var allow: Boolean = true): FlowItem(), P
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getPlayerVariableName(), Language.get("action.allowFlight.${if (allow) "allow" else "notAllow"}")))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getPlayerVariableName(), Language.get("action.allowFlight.${if (allow) "allow" else "notAllow"}"))
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -53,7 +56,7 @@ class AllowFlight(player: String = "", var allow: Boolean = true): FlowItem(), P
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             Toggle("@action.allowFlight.form.allow", allow),

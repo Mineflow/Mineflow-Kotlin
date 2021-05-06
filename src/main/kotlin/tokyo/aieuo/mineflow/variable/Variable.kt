@@ -1,6 +1,7 @@
 package tokyo.aieuo.mineflow.variable
 
 import tokyo.aieuo.mineflow.exception.UnsupportedCalculationException
+import tokyo.aieuo.mineflow.utils.VariableMap
 
 interface Variable<out T> {
 
@@ -21,7 +22,7 @@ interface Variable<out T> {
                 STRING -> StringVariable(if (value is String) value else value.toString())
                 NUMBER -> NumberVariable(if (value is Number) value else value.toString().toDoubleOrNull() ?: return null)
                 LIST -> ListVariable((if (value is Map<*, *>) value.values.toList() else value) as List<Variable<Any>>)
-                MAP -> MapVariable((if (value is List<*>) value.withIndex().map { (k, v) -> k to v }.toMap() else value) as Map<String, Variable<Any>>)
+                MAP -> MapVariable((if (value is List<*>) value.withIndex().map { (k, v) -> k to v }.toMap() else value) as VariableMap)
                 else -> null
             }
         }

@@ -28,7 +28,7 @@ object ImportForm {
         val result = mutableListOf<File>()
 
         for (file in files) {
-            if(file.isFile && file.extension == extension) {
+            if (file.isFile && file.extension == extension) {
                 result.add(file)
             }
         }
@@ -58,23 +58,28 @@ object ImportForm {
         val data = try {
             ObjectMapper().readValue(file.readText(), mutableMapOf<String, Any>().javaClass)
         } catch (e: JsonParseException) {
-            sendSelectImportFile(player, listOf(Language.get("recipe.json.decode.failed", listOf(file.name, e.message ?: ""))))
+            sendSelectImportFile(
+                player,
+                listOf(Language.get("recipe.json.decode.failed", listOf(file.name, e.message ?: "")))
+            )
             return
         }
 
         (ListForm(file.name))
             .setContent("name: ${data["name"]}\ndetail: ${data["detail"]}\nauthor: ${data["author"]}")
-            .setButtons(mutableListOf(
-                Button("@form.back") { sendSelectImportFile(player) },
-                Button("@form.import.selectFile") {
-                    val pack = RecipePack.import(file.path) ?: return@Button
-                    if (Version(Main.instance.description.version) < Version(pack.version)) {
-                        player.sendMessage(Language.get("import.plugin.outdated"))
-                        return@Button
-                    }
-                    importPack(player, pack)
-                },
-            )).show(player)
+            .setButtons(
+                mutableListOf(
+                    Button("@form.back") { sendSelectImportFile(player) },
+                    Button("@form.import.selectFile") {
+                        val pack = RecipePack.import(file.path) ?: return@Button
+                        if (Version(Main.instance.description.version) < Version(pack.version)) {
+                            player.sendMessage(Language.get("import.plugin.outdated"))
+                            return@Button
+                        }
+                        importPack(player, pack)
+                    },
+                )
+            ).show(player)
 
     }
 
@@ -90,7 +95,12 @@ object ImportForm {
         }
     }
 
-    fun importRecipes(player: Player, recipes: MutableList<Recipe>, onComplete: SimpleCallable? = null, start: Int = 0) {
+    fun importRecipes(
+        player: Player,
+        recipes: MutableList<Recipe>,
+        onComplete: SimpleCallable? = null,
+        start: Int = 0
+    ) {
         val manager = Main.recipeManager
         for (i in start until recipes.size) {
             val recipe = recipes[i]
@@ -114,7 +124,12 @@ object ImportForm {
         importRecipes(player, recipes, onComplete, 0)
     }
 
-    fun importCommands(player: Player, commands: List<CustomCommandData>, onComplete: SimpleCallable? = null, start: Int = 0) {
+    fun importCommands(
+        player: Player,
+        commands: List<CustomCommandData>,
+        onComplete: SimpleCallable? = null,
+        start: Int = 0
+    ) {
         val manager = Main.commandManager
         for (i in start until commands.size) {
             val data = commands[i]
@@ -161,10 +176,15 @@ object ImportForm {
     }
 
     fun importForms(player: Player, forms: List<Form>, onComplete: SimpleCallable? = null) {
-         importForms(player, forms, onComplete, 0)
+        importForms(player, forms, onComplete, 0)
     }
 
-    fun importConfigs(player: Player, configs: LinkedHashMap<String, Map<String, Any?>>, onComplete: SimpleCallable? = null, start: Int = 0) {
+    fun importConfigs(
+        player: Player,
+        configs: LinkedHashMap<String, Map<String, Any?>>,
+        onComplete: SimpleCallable? = null,
+        start: Int = 0
+    ) {
         val names = configs.keys.toList()
         for (i in start until configs.size) {
             val name = names[i]

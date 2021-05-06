@@ -9,7 +9,7 @@ import tokyo.aieuo.mineflow.formAPI.utils.ButtonImage
 import tokyo.aieuo.mineflow.utils.JsonSerializable
 import tokyo.aieuo.mineflow.utils.Language
 
-abstract class Form(title: String): JsonSerializable, Cloneable {
+abstract class Form(title: String) : JsonSerializable, Cloneable {
 
     open val type: String = LIST_FORM
 
@@ -108,13 +108,14 @@ abstract class Form(title: String): JsonSerializable, Cloneable {
                         .setContent(data["content"] as String).apply {
                             for (buttonData in (data["buttons"] as List<Map<String, Any>>)) {
                                 if (!buttonData.containsKey("text")) return null
+                                val text = buttonData["text"] as String
 
                                 val button = if (buttonData.containsKey("mineflow")) {
                                     val mfData = buttonData["mineflow"] as? Map<String, Any>
                                     if (mfData === null || !mfData.containsKey("command")) {
-                                        Button(buttonData["text"] as String)
+                                        Button(text)
                                     } else {
-                                        CommandButton(mfData["command"] as String, buttonData["text"] as String)
+                                        CommandButton(mfData["command"] as String, text)
                                     }
                                 } else {
                                     Button(buttonData["text"] as String)

@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.condition
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-open class NandScript: AndScript() {
+open class NandScript : AndScript() {
 
     override val id = FlowItemIds.CONDITION_NAND
 

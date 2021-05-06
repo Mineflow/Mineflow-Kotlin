@@ -11,6 +11,7 @@ import tokyo.aieuo.mineflow.formAPI.element.Dropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponse
 import tokyo.aieuo.mineflow.recipe.Recipe
 import tokyo.aieuo.mineflow.ui.FlowItemForm
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.Session
 import tokyo.aieuo.mineflow.variable.DummyVariable
@@ -19,10 +20,11 @@ import kotlin.collections.ArrayDeque
 
 abstract class VariableDropdown(
     text: String,
-    variables: Map<String, DummyVariable<DummyVariable.Type>>,
+    variables: DummyVariableMap,
     val variableTypes: List<DummyVariable.Type> = listOf(),
     var defaultText: String = "",
-    val optional: Boolean = false): Dropdown(text) {
+    val optional: Boolean = false
+) : Dropdown(text) {
 
     protected open val variableType = DummyVariable.Type.UNKNOWN
     protected open val actions = listOf<String>()
@@ -32,7 +34,7 @@ abstract class VariableDropdown(
     var createVariableOptionIndex = -1
     var inputManuallyOptionIndex = -1
 
-    fun updateOptions(variables: Map<String, DummyVariable<DummyVariable.Type>>) {
+    fun updateOptions(variables: DummyVariableMap) {
         val default = defaultText
 
         val options = LinkedList<String>()
@@ -90,7 +92,7 @@ abstract class VariableDropdown(
         return actions.isNotEmpty()
     }
 
-    fun flattenVariables(variables: Map<String, DummyVariable<DummyVariable.Type>>): Map<String, DummyVariable<DummyVariable.Type>> {
+    fun flattenVariables(variables: DummyVariableMap): DummyVariableMap {
         val flat = mutableMapOf<String, DummyVariable<DummyVariable.Type>>()
         for ((baseName, variable) in variables) {
             flat[baseName] = variable
@@ -115,7 +117,11 @@ abstract class VariableDropdown(
                     val parents = ArrayDeque(Session.getSession(player).getDeque<FlowItemContainer>("parents"))
                     val container = parents.last()
                     val recipe = parents.removeFirst() as Recipe
-                    val variables = recipe.getAddingVariablesBefore(action, parents, FlowItemContainer.ACTION).toMutableMap()
+                    val variables = recipe.getAddingVariablesBefore(
+                        action,
+                        parents,
+                        FlowItemContainer.ACTION
+                    ).toMutableMap()
 
                     val form = action.getEditForm(variables)
                     form.onReceive { data ->

@@ -1,23 +1,23 @@
 package tokyo.aieuo.mineflow.formAPI.response
 
-class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
+class CustomFormResponseList(values: List<Any?>) : ArrayList<Any?>(values) {
 
     fun getString(index: Int): String {
-        return when(val value = get(index)) {
+        return when (val value = get(index)) {
             is String -> value
             else -> value.toString()
         }
     }
 
     fun getStringOrNull(index: Int): String? {
-        return when(val value = getOrNull(index) ?: return null) {
+        return when (val value = getOrNull(index) ?: return null) {
             is String -> value
             else -> value.toString()
         }
     }
 
     fun getInt(index: Int): Int {
-        return when(val value = get(index)) {
+        return when (val value = get(index)) {
             is Int -> value
             is Float -> value.toInt()
             is Double -> value.toInt()
@@ -27,7 +27,7 @@ class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
     }
 
     fun getIntOrNull(index: Int): Int? {
-        return when(val value = getOrNull(index) ?: return null) {
+        return when (val value = getOrNull(index) ?: return null) {
             is Int -> value
             is Float -> value.toInt()
             is Double -> value.toInt()
@@ -37,7 +37,7 @@ class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
     }
 
     fun getFloat(index: Int): Float {
-        return when(val value = get(index)) {
+        return when (val value = get(index)) {
             is Int -> value.toFloat()
             is Float -> value
             is Double -> value.toFloat()
@@ -47,7 +47,7 @@ class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
     }
 
     fun getFloatOrNull(index: Int): Float? {
-        return when(val value = getOrNull(index) ?: return null) {
+        return when (val value = getOrNull(index) ?: return null) {
             is Int -> value.toFloat()
             is Float -> value
             is Double -> value.toFloat()
@@ -57,7 +57,7 @@ class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
     }
 
     fun getDouble(index: Int): Double {
-        return when(val value = get(index)) {
+        return when (val value = get(index)) {
             is Int -> value.toDouble()
             is Float -> value.toDouble()
             is Double -> value
@@ -67,7 +67,7 @@ class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
     }
 
     fun getDoubleOrNull(index: Int): Double? {
-        return when(val value = getOrNull(index) ?: return null) {
+        return when (val value = getOrNull(index) ?: return null) {
             is Int -> value.toDouble()
             is Float -> value.toDouble()
             is Double -> value
@@ -77,7 +77,7 @@ class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
     }
 
     fun getBoolean(index: Int): Boolean {
-        return when(val value = get(index)) {
+        return when (val value = get(index)) {
             is Boolean -> value
             is String -> when (value) {
                 "yes", "on", "true" -> true
@@ -88,7 +88,7 @@ class CustomFormResponseList(values: List<Any?>): ArrayList<Any?>(values) {
     }
 
     fun getBooleanOrNull(index: Int): Boolean? {
-        return when(val value = getOrNull(index) ?: return null) {
+        return when (val value = getOrNull(index) ?: return null) {
             is Boolean -> value
             is String -> when (value) {
                 "yes", "on", "true" -> true

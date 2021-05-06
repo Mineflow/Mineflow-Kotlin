@@ -11,13 +11,13 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class LookAt(var entity: String = "", var position: String = ""): FlowItem(), EntityFlowItem, PositionFlowItem {
+class LookAt(var entity: String = "", var position: String = "") : FlowItem(), EntityFlowItem, PositionFlowItem {
 
     override val id = FlowItemIds.LOOK_AT
 
@@ -66,7 +66,7 @@ class LookAt(var entity: String = "", var position: String = ""): FlowItem(), En
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             PositionVariableDropdown(variables, getPositionVariableName()),

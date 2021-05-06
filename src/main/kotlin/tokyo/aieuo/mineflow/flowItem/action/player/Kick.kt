@@ -11,10 +11,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class Kick(player: String = "", var reason: String = "", var isAdmin: Boolean = false): FlowItem(), PlayerFlowItem {
+class Kick(player: String = "", var reason: String = "", var isAdmin: Boolean = false) : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.KICK
 
@@ -55,7 +55,7 @@ class Kick(player: String = "", var reason: String = "", var isAdmin: Boolean = 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleInput("@action.kick.form.reason", "aieuo", reason),

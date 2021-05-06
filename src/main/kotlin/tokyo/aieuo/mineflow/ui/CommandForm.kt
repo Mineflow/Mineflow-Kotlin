@@ -29,16 +29,20 @@ object CommandForm {
 
     fun sendAddCommand(player: Player, defaultTitle: String = "", defaultDesc: String = "", defaultPerm: Int = 0) {
         (CustomForm("@form.command.addCommand.title"))
-            .setContents(mutableListOf(
-                Input("@form.command.menu.title", "@trigger.command.select.placeholder", defaultTitle, true),
-                Input("@form.command.description", default = defaultDesc),
-                Dropdown("@form.command.permission", listOf(
-                    Language.get("form.command.addCommand.permission.op"),
-                    Language.get("form.command.addCommand.permission.true"),
-                    Language.get("form.command.addCommand.permission.custom"),
-                ), defaultPerm),
-                CancelToggle { sendMenu(player) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@form.command.menu.title", "@trigger.command.select.placeholder", defaultTitle, true),
+                    Input("@form.command.description", default = defaultDesc),
+                    Dropdown(
+                        "@form.command.permission", listOf(
+                            Language.get("form.command.addCommand.permission.op"),
+                            Language.get("form.command.addCommand.permission.true"),
+                            Language.get("form.command.addCommand.permission.custom"),
+                        ), defaultPerm
+                    ),
+                    CancelToggle { sendMenu(player) },
+                )
+            ).onReceive { data ->
                 val command = data.getString(0)
 
                 val manager = Main.commandManager
@@ -74,10 +78,12 @@ object CommandForm {
 
     fun sendSelectCommand(player: Player, defaultCommand: String = "") {
         (CustomForm("@form.command.select.title"))
-            .setContents(mutableListOf(
-                Input("@form.command.name", default = defaultCommand, required = true),
-                CancelToggle { sendMenu(player) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@form.command.name", default = defaultCommand, required = true),
+                    CancelToggle { sendMenu(player) },
+                )
+            ).onReceive { data ->
                 val command = data.getString(0)
                 val manager = Main.commandManager
                 val commandData = manager.getCommand(manager.getOriginCommand(command))
@@ -118,8 +124,11 @@ object CommandForm {
         )
         val permission = permissions[command.permission] ?: command.permission
         ListForm("/${command.command}")
-            .setContent("/${command.command}\n${Language.get("form.command.permission")}: ${permission}\n${Language.get("form.command.description")}: ${command.description}")
-            .addButtons(
+            .setContent(
+                "/${command.command}\n"
+                        + "${Language.get("form.command.permission")}: ${permission}\n"
+                        + "${Language.get("form.command.description")}: ${command.description}"
+            ).addButtons(
                 Button("@form.back") {
                     val prev = Session.getSession(player).get<SimpleCallable>("command_menu_prev")
                     if (prev !== null) prev() else sendMenu(player)
@@ -133,10 +142,12 @@ object CommandForm {
 
     fun changeDescription(player: Player, command: CustomCommandData) {
         (CustomForm(Language.get("form.command.changeDescription.title", listOf("/${command.command}"))))
-            .setContents(mutableListOf(
-                Input("@form.command.description", default = command.description),
-                CancelToggle { sendCommandMenu(player, command) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@form.command.description", default = command.description),
+                    CancelToggle { sendCommandMenu(player, command) },
+                )
+            ).onReceive { data ->
                 command.description = data.getString(0)
                 Main.commandManager.updateCommand(command)
                 sendCommandMenu(player, command)
@@ -146,14 +157,18 @@ object CommandForm {
     fun changePermission(player: Player, command: CustomCommandData) {
         val permissions = mutableMapOf("mineflow.customcommand.op" to 0, "mineflow.customcommand.true" to 1)
         (CustomForm(Language.get("form.command.changePermission.title", listOf("/${command.command}"))))
-            .setContents(mutableListOf(
-                Dropdown("@form.command.permission", listOf(
-                    Language.get("form.command.addCommand.permission.op"),
-                    Language.get("form.command.addCommand.permission.true"),
-                    Language.get("form.command.addCommand.permission.custom"),
-                ), permissions[command.permission] ?: 2),
-                CancelToggle { sendCommandMenu(player, command) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Dropdown(
+                        "@form.command.permission", listOf(
+                            Language.get("form.command.addCommand.permission.op"),
+                            Language.get("form.command.addCommand.permission.true"),
+                            Language.get("form.command.addCommand.permission.custom"),
+                        ), permissions[command.permission] ?: 2
+                    ),
+                    CancelToggle { sendCommandMenu(player, command) },
+                )
+            ).onReceive { data ->
                 val index = data.getInt(0)
                 if (index == 2) {
                     sendSelectPermissionName(player, command)
@@ -168,10 +183,16 @@ object CommandForm {
 
     fun sendSelectPermissionName(player: Player, command: CustomCommandData) {
         (CustomForm(Language.get("form.command.changePermission.title", listOf("/${command.command}"))))
-            .setContents(mutableListOf(
-                Input("@form.command.addCommand.permission.custom.input", default = command.permission, required = true),
-                CancelToggle { changePermission(player, command) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input(
+                        "@form.command.addCommand.permission.custom.input",
+                        default = command.permission,
+                        required = true
+                    ),
+                    CancelToggle { changePermission(player, command) },
+                )
+            ).onReceive { data ->
                 command.permission = data.getString(0)
                 Main.commandManager.updateCommand(command)
                 sendCommandMenu(player, command)

@@ -8,12 +8,18 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.Scoreboard
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.ScoreboardObjectVariable
 
-class CreateScoreboardVariable(var boardId: String = "", var displayName: String = "", var displayType: String = Scoreboard.DISPLAY_SIDEBAR, var variableName: String = "board"): FlowItem() {
+class CreateScoreboardVariable(
+    var boardId: String = "",
+    var displayName: String = "",
+    var displayType: String = Scoreboard.DISPLAY_SIDEBAR,
+    var variableName: String = "board"
+) : FlowItem() {
 
     override val id = FlowItemIds.CREATE_SCOREBOARD_VARIABLE
 
@@ -48,7 +54,7 @@ class CreateScoreboardVariable(var boardId: String = "", var displayName: String
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.createScoreboardVariable.form.id", "aieuo", boardId, true),
             ExampleInput("@action.createScoreboardVariable.form.displayName", "auieo", displayName, true),
@@ -72,7 +78,7 @@ class CreateScoreboardVariable(var boardId: String = "", var displayName: String
         return listOf(variableName, boardId, displayName, displayType)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             variableName to DummyVariable(DummyVariable.Type.SCOREBOARD, displayName)
         )

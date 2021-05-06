@@ -2,21 +2,22 @@ package tokyo.aieuo.mineflow.trigger.event
 
 import cn.nukkit.event.Event
 import cn.nukkit.event.inventory.FurnaceBurnEvent
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
+import tokyo.aieuo.mineflow.utils.VariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
-import tokyo.aieuo.mineflow.variable.Variable
 import tokyo.aieuo.mineflow.variable.obj.ItemObjectVariable
 
-class FurnaceBurnEventTrigger(subKey: String = ""): EventTrigger(FurnaceBurnEvent::class, subKey) {
+class FurnaceBurnEventTrigger(subKey: String = "") : EventTrigger(FurnaceBurnEvent::class, subKey) {
 
-    override fun getVariables(event: Event): Map<String, Variable<Any>> = getVariables(event as FurnaceBurnEvent)
+    override fun getVariables(event: Event): VariableMap = getVariables(event as FurnaceBurnEvent)
 
-    fun getVariables(event: FurnaceBurnEvent): Map<String, Variable<Any>> {
+    fun getVariables(event: FurnaceBurnEvent): VariableMap {
         return mapOf(
             "fuel" to ItemObjectVariable(event.fuel)
         )
     }
 
-    override fun getVariablesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getVariablesDummy(): DummyVariableMap {
         return mapOf(
             "fuel" to DummyVariable(DummyVariable.Type.ITEM)
         )

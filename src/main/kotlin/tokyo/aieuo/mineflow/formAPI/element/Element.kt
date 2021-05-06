@@ -5,7 +5,7 @@ import cn.nukkit.utils.TextFormat
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponse
 import tokyo.aieuo.mineflow.utils.JsonSerializable
 
-interface Element: JsonSerializable {
+interface Element : JsonSerializable {
 
     val type: Type
     var text: String

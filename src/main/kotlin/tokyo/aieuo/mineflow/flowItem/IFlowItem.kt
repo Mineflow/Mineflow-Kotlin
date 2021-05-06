@@ -7,11 +7,11 @@ import tokyo.aieuo.mineflow.formAPI.element.CancelToggle
 import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.Label
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.JsonSerializable
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-interface IFlowItem: JsonSerializable {
+interface IFlowItem : JsonSerializable {
 
     val id: String
     val nameTranslationKey: String
@@ -55,7 +55,12 @@ interface IFlowItem: JsonSerializable {
         }
     }
 
-    fun throwIfInvalidNumber(numberStr: String, min: Double? = null, max: Double? = null, exclude: List<Double> = listOf()) {
+    fun throwIfInvalidNumber(
+        numberStr: String,
+        min: Double? = null,
+        max: Double? = null,
+        exclude: List<Double> = listOf()
+    ) {
         val number = numberStr.toDoubleOrNull()
         if (number === null) {
             throw InvalidFlowValueException(Language.get("action.error.notNumber", listOf(numberStr)))
@@ -67,20 +72,24 @@ interface IFlowItem: JsonSerializable {
             throw InvalidFlowValueException(Language.get("action.error.overValue", listOf(max.toString(), numberStr)))
         }
         if (exclude.isNotEmpty() && exclude.contains(number)) {
-            throw InvalidFlowValueException(Language.get("action.error.excludedNumber", listOf(
-                exclude.joinToString(", "), numberStr
-            )))
+            throw InvalidFlowValueException(
+                Language.get(
+                    "action.error.excludedNumber", listOf(
+                        exclude.joinToString(", "), numberStr
+                    )
+                )
+            )
         }
     }
 
-    fun getEditForm(variables: Map<String, DummyVariable<DummyVariable.Type>>): CustomForm {
+    fun getEditForm(variables: DummyVariableMap): CustomForm {
         return (CustomForm(getName()))
             .addContent(Label(getDescription()))
             .addContents(getEditFormElements(variables))
             .addContent(CancelToggle())
     }
 
-    fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf()
     }
 
@@ -100,7 +109,7 @@ interface IFlowItem: JsonSerializable {
         return true
     }
 
-    fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    fun getAddingVariables(): DummyVariableMap {
         return mapOf()
     }
 

@@ -5,8 +5,8 @@ import tokyo.aieuo.mineflow.formAPI.element.Button
 import tokyo.aieuo.mineflow.formAPI.utils.ButtonImage
 import tokyo.aieuo.mineflow.utils.Language
 
-class CommandButton(var command: String, text: String? = null, image: ButtonImage? = null)
-    : Button(text ?: "/${command}", { Server.getInstance().dispatchCommand(it, command) }, image) {
+class CommandButton(var command: String, text: String? = null, image: ButtonImage? = null) :
+    Button(text ?: "/${command}", { Server.getInstance().dispatchCommand(it, command) }, image) {
 
     override val type = TYPE_COMMAND
 

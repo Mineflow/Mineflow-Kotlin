@@ -10,10 +10,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ItemVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class DropItem(position: String = "", item: String = ""): FlowItem(), PositionFlowItem, ItemFlowItem {
+class DropItem(position: String = "", item: String = "") : FlowItem(), PositionFlowItem, ItemFlowItem {
 
     override val id = FlowItemIds.DROP_ITEM
 
@@ -51,7 +51,7 @@ class DropItem(position: String = "", item: String = ""): FlowItem(), PositionFl
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PositionVariableDropdown(variables, getPositionVariableName()),
             ItemVariableDropdown(variables, getItemVariableName()),

@@ -9,12 +9,13 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class CountListVariable(var variableName: String = "", var resultName: String = "count"): FlowItem() {
+class CountListVariable(var variableName: String = "", var resultName: String = "count") : FlowItem() {
 
     override val id = FlowItemIds.COUNT_LIST_VARIABLE
 
@@ -51,7 +52,7 @@ class CountListVariable(var variableName: String = "", var resultName: String = 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.countList.form.name", "list", variableName, true),
             ExampleInput("@action.form.resultVariableName", "result", resultName, true),
@@ -67,7 +68,7 @@ class CountListVariable(var variableName: String = "", var resultName: String = 
         return listOf(variableName, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER)
         )

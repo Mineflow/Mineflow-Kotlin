@@ -14,10 +14,12 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.ui.FlowItemForm
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.*
 
-class ForeachAction(actions: List<FlowItem> = listOf(), override var customName: String = ""): FlowItem(), FlowItemContainer {
+class ForeachAction(actions: List<FlowItem> = listOf(), override var customName: String = "") :
+    FlowItem(), FlowItemContainer {
 
     override val id = FlowItemIds.ACTION_FOREACH
 
@@ -67,10 +69,14 @@ class ForeachAction(actions: List<FlowItem> = listOf(), override var customName:
 
         for ((keyVariable, valueVariable) in value) {
 
-            yieldAll(FlowItemExecutor(getActions(), source.target, mutableMapOf(
-                keyName to keyVariable,
-                valueName to valueVariable
-            ), source).executeGenerator())
+            yieldAll(
+                FlowItemExecutor(
+                    getActions(), source.target, mutableMapOf(
+                        keyName to keyVariable,
+                        valueName to valueVariable
+                    ), source
+                ).executeGenerator()
+            )
         }
         source.resume()
         yield(FlowItemExecutor.Result.CONTINUE)
@@ -94,11 +100,13 @@ class ForeachAction(actions: List<FlowItem> = listOf(), override var customName:
     fun sendSettingCounter(player: Player) {
         val action = this
         (CustomForm("@action.for.setting"))
-            .setContents(mutableListOf(
-                ExampleInput("@action.foreach.listVariableName", "list", listVariableName, true),
-                ExampleInput("@action.foreach.keyVariableName", "key", keyVariableName, true),
-                ExampleInput("@action.foreach.valueVariableName", "value", valueVariableName, true),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    ExampleInput("@action.foreach.listVariableName", "list", listVariableName, true),
+                    ExampleInput("@action.foreach.keyVariableName", "key", keyVariableName, true),
+                    ExampleInput("@action.foreach.valueVariableName", "value", valueVariableName, true),
+                )
+            ).onReceive { data ->
                 listVariableName = data.getString(0)
                 keyVariableName = data.getString(1)
                 valueVariableName = data.getString(2)
@@ -118,7 +126,7 @@ class ForeachAction(actions: List<FlowItem> = listOf(), override var customName:
         valueVariableName = contents.getString(3)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             keyVariableName to DummyVariable(DummyVariable.Type.UNKNOWN),
             valueVariableName to DummyVariable(DummyVariable.Type.UNKNOWN),

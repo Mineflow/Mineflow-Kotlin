@@ -10,11 +10,13 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.BlockObjectVariable
 
-class GetTargetBlock(player: String = "", var max: String = "100", var resultName: String = "block"): FlowItem(), PlayerFlowItem {
+class GetTargetBlock(player: String = "", var max: String = "100", var resultName: String = "block") :
+    FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.GET_TARGET_BLOCK
 
@@ -54,7 +56,7 @@ class GetTargetBlock(player: String = "", var max: String = "100", var resultNam
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleNumberInput("@action.getTargetBlock.form.max", "100", max, true),
@@ -72,7 +74,7 @@ class GetTargetBlock(player: String = "", var max: String = "100", var resultNam
         return listOf(getPlayerVariableName(), max, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.BLOCK)
         )

@@ -1,13 +1,13 @@
 package tokyo.aieuo.mineflow.flowItem.condition
 
+import cn.nukkit.utils.TextFormat
 import tokyo.aieuo.mineflow.economy.Economy
 import tokyo.aieuo.mineflow.exception.InvalidFlowValueException
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
-import cn.nukkit.utils.TextFormat
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.utils.Language
 
-class OverMoney(playerName: String = "{target.name}", amount: String = ""): TypeMoney(playerName, amount) {
+class OverMoney(playerName: String = "{target.name}", amount: String = "") : TypeMoney(playerName, amount) {
 
     override val id = FlowItemIds.OVER_MONEY
 

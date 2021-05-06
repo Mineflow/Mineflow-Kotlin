@@ -10,10 +10,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.BossBar
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class RemoveBossBar(player: String = "", var barId: String = ""): FlowItem(), PlayerFlowItem {
+class RemoveBossBar(player: String = "", var barId: String = "") : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.REMOVE_BOSSBAR
 
@@ -50,7 +50,7 @@ class RemoveBossBar(player: String = "", var barId: String = ""): FlowItem(), Pl
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleInput("@action.showBossbar.form.id", "aieuo", barId, true),

@@ -1,5 +1,6 @@
 package tokyo.aieuo.mineflow.flowItem
 
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 
 interface FlowItemContainer {
@@ -43,13 +44,19 @@ interface FlowItemContainer {
 
     fun getConditions() = getItems(CONDITION)
 
-    fun getAddingVariablesBefore(flowItem: FlowItem, containers: MutableList<FlowItemContainer>, type: String): Map<String, DummyVariable<DummyVariable.Type>> {
+    fun getAddingVariablesBefore(
+        flowItem: FlowItem,
+        containers: List<FlowItemContainer>,
+        type: String
+    ): DummyVariableMap {
         val variables = mutableMapOf<String, DummyVariable<DummyVariable.Type>>()
 
-        val target = containers.removeFirstOrNull()?.also {
-            if (it is FlowItem) variables.putAll(it.getAddingVariables())
-            variables.putAll(it.getAddingVariablesBefore(flowItem, containers, type))
-        } ?: flowItem
+        val target = containers.toMutableList().let {
+            it.removeFirstOrNull()?.also { item ->
+                if (item is FlowItem) variables.putAll(item.getAddingVariables())
+                variables.putAll(item.getAddingVariablesBefore(flowItem, it, type))
+            } ?: flowItem
+        }
 
         for (item in getItems(type)) {
             if (item === target) break

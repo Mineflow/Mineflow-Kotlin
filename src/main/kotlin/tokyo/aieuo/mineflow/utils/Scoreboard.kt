@@ -27,13 +27,13 @@ class Scoreboard(val type: String = DISPLAY_SIDEBAR, val id: String = "objective
 
     fun setScore(name: String, value: Int, id: Long? = null) {
         scores[name] = value
-        if (!scoreIds.containsKey(name)) scoreIds[name] = id ?: scoreId ++
+        if (!scoreIds.containsKey(name)) scoreIds[name] = id ?: scoreId++
 
         updateScoreToAllPlayer(name, value, scoreIds[name]!!)
     }
 
     fun setScoreName(name: String, score: Int) {
-        val oldNames = scores.filterValues{ it == score }.keys
+        val oldNames = scores.filterValues { it == score }.keys
         if (oldNames.isEmpty()) {
             setScore(name, score)
             return
@@ -47,7 +47,7 @@ class Scoreboard(val type: String = DISPLAY_SIDEBAR, val id: String = "objective
     }
 
     fun removeScoreName(score: Int) {
-        val oldNames = scores.filterValues{ it == score }.keys
+        val oldNames = scores.filterValues { it == score }.keys
         if (oldNames.isEmpty()) return
 
         for (oldName in oldNames) {

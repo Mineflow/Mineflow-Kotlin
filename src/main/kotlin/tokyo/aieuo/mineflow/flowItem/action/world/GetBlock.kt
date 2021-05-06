@@ -9,11 +9,12 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.BlockObjectVariable
 
-class GetBlock(position: String = "", var resultName: String = "block"): FlowItem(), PositionFlowItem {
+class GetBlock(position: String = "", var resultName: String = "block") : FlowItem(), PositionFlowItem {
 
     override val id = FlowItemIds.GET_BLOCK
 
@@ -51,7 +52,7 @@ class GetBlock(position: String = "", var resultName: String = "block"): FlowIte
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PositionVariableDropdown(variables, getPositionVariableName()),
             ExampleInput("@action.form.resultVariableName", "block", resultName, true),
@@ -67,7 +68,7 @@ class GetBlock(position: String = "", var resultName: String = "block"): FlowIte
         return listOf(getPositionVariableName(), resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.BLOCK)
         )

@@ -11,10 +11,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SetPitch(var entity: String = "", var pitch: String = ""): FlowItem(), EntityFlowItem {
+class SetPitch(var entity: String = "", var pitch: String = "") : FlowItem(), EntityFlowItem {
 
     override val id = FlowItemIds.SET_PITCH
 
@@ -53,7 +53,7 @@ class SetPitch(var entity: String = "", var pitch: String = ""): FlowItem(), Ent
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             ExampleNumberInput("@action.setPitch.form.pitch", "180", pitch, true),

@@ -29,7 +29,7 @@ object Triggers {
         add(CUSTOM, CustomTriggerForm) { key, subKey -> CustomTrigger.create(key, subKey) }
     }
 
-    fun <T: Trigger> add(type: String, form: TriggerForm, creation: (String, String) -> T) {
+    fun <T : Trigger> add(type: String, form: TriggerForm, creation: (String, String) -> T) {
         forms[type] = form
         list[type] = creation
     }

@@ -9,12 +9,12 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import java.nio.file.Files
 import java.nio.file.Path
 
-class ExistsConfigFile(var fileName: String = ""): FlowItem(), Condition {
+class ExistsConfigFile(var fileName: String = "") : FlowItem(), Condition {
 
     override val id = FlowItemIds.EXISTS_CONFIG_FILE
 
@@ -43,7 +43,7 @@ class ExistsConfigFile(var fileName: String = ""): FlowItem(), Condition {
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.createConfigVariable.form.name", "config", fileName, true),
         )

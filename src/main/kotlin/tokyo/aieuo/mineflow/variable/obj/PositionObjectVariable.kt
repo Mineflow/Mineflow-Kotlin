@@ -1,10 +1,12 @@
 package tokyo.aieuo.mineflow.variable.obj
 
+import cn.nukkit.level.Position
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.Variable
-import cn.nukkit.level.Position
 
-open class PositionObjectVariable<T: Position>(value: T, showString: String? = null): Vector3ObjectVariable<T>(value, showString) {
+open class PositionObjectVariable<T : Position>(value: T, showString: String? = null) :
+    Vector3ObjectVariable<T>(value, showString) {
 
     override fun getValueFromIndex(index: String): Variable<Any>? {
         super.getValueFromIndex(index).let { if (it !== null) return it }
@@ -21,10 +23,12 @@ open class PositionObjectVariable<T: Position>(value: T, showString: String? = n
     }
 
     companion object {
-        fun getValuesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
-            return Vector3ObjectVariable.getValuesDummy().plus(mapOf(
-                "world" to DummyVariable(DummyVariable.Type.WORLD),
-            ))
+        fun getValuesDummy(): DummyVariableMap {
+            return Vector3ObjectVariable.getValuesDummy().plus(
+                mapOf(
+                    "world" to DummyVariable(DummyVariable.Type.WORLD),
+                )
+            )
         }
     }
 }

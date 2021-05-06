@@ -6,7 +6,7 @@ import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
 
-class ExitRecipe: FlowItem() {
+class ExitRecipe : FlowItem() {
 
     override val id = FlowItemIds.EXIT_RECIPE
 

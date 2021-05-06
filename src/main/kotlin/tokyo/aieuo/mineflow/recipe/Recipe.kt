@@ -14,10 +14,7 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.trigger.Trigger
 import tokyo.aieuo.mineflow.trigger.TriggerHolder
 import tokyo.aieuo.mineflow.trigger.Triggers
-import tokyo.aieuo.mineflow.utils.JsonSerializable
-import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.utils.Logger
-import tokyo.aieuo.mineflow.utils.json_encode
+import tokyo.aieuo.mineflow.utils.*
 import tokyo.aieuo.mineflow.variable.DefaultVariables
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.Variable
@@ -28,10 +25,11 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
 
-class Recipe(var name: String, group: String = "", var author: String = "", var version: String? = null): FlowItemContainer, JsonSerializable, Cloneable {
+class Recipe(var name: String, group: String = "", var author: String = "", var version: String? = null) :
+    FlowItemContainer, JsonSerializable, Cloneable {
 
     var group: String = group
-        set (value) {
+        set(value) {
             field = value.replace(Regex("""/+"""), "/")
         }
 
@@ -93,7 +91,7 @@ class Recipe(var name: String, group: String = "", var author: String = "", var 
                 }
                 targets
             }
-            TARGET_ON_WORLD -> if (player === null) listOf() else  player.level.players.values.toList()
+            TARGET_ON_WORLD -> if (player === null) listOf() else player.level.players.values.toList()
             TARGET_BROADCAST -> Server.getInstance().onlinePlayers.values.toList()
             TARGET_RANDOM -> {
                 val targets = mutableListOf<Entity?>()
@@ -142,7 +140,13 @@ class Recipe(var name: String, group: String = "", var author: String = "", var 
         triggers.clear()
     }
 
-    fun executeAllTargets(player: Entity? = null, _variables: Map<String, Variable<Any>> = mapOf(), event: Event? = null, args: List<Variable<Any>> = listOf(), callbackExecutor: FlowItemExecutor? = null): Boolean {
+    fun executeAllTargets(
+        player: Entity? = null,
+        _variables: VariableMap = mapOf(),
+        event: Event? = null,
+        args: List<Variable<Any>> = listOf(),
+        callbackExecutor: FlowItemExecutor? = null
+    ): Boolean {
         val targets = getTargets(player)
         val variables = _variables + DefaultVariables.getServerVariables()
 
@@ -153,7 +157,13 @@ class Recipe(var name: String, group: String = "", var author: String = "", var 
         return true
     }
 
-    fun execute(target: Entity?, event: Event? = null, _variables: Map<String, Variable<Any>> = mapOf(), args: List<Variable<Any>> = listOf(), callbackExecutor: FlowItemExecutor? = null): Boolean {
+    fun execute(
+        target: Entity?,
+        event: Event? = null,
+        _variables: VariableMap = mapOf(),
+        args: List<Variable<Any>> = listOf(),
+        callbackExecutor: FlowItemExecutor? = null
+    ): Boolean {
         val variables = _variables.toMutableMap()
         for ((i, argument) in arguments.withIndex()) {
             if (args.size < i) continue
@@ -183,7 +193,11 @@ class Recipe(var name: String, group: String = "", var author: String = "", var 
         return true
     }
 
-    override fun getAddingVariablesBefore(flowItem: FlowItem, containers: MutableList<FlowItemContainer>, type: String): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariablesBefore(
+        flowItem: FlowItem,
+        containers: List<FlowItemContainer>,
+        type: String
+    ): DummyVariableMap {
         val variables = mutableMapOf(
             "target" to DummyVariable(DummyVariable.Type.PLAYER)
         )
@@ -202,11 +216,13 @@ class Recipe(var name: String, group: String = "", var author: String = "", var 
             } catch (e: Exception) {
                 when (e) {
                     is IndexOutOfBoundsException -> throw FlowItemLoadException(
-                        Language.get("recipe.load.failed.action", listOf(
-                            i.toString(),
-                            content.getOrDefault("id", "id?") as String,
-                            Language.get("recipe.json.key.missing")
-                        ))
+                        Language.get(
+                            "recipe.load.failed.action", listOf(
+                                i.toString(),
+                                content.getOrDefault("id", "id?") as String,
+                                Language.get("recipe.json.key.missing")
+                            )
+                        )
                     )
                     else -> throw e
                 }
@@ -299,13 +315,15 @@ class Recipe(var name: String, group: String = "", var author: String = "", var 
     private fun replaceLevelToWorld(action: FlowItem) {
         val newContents = mutableListOf<Any>()
         for (data in action.serializeContents()) {
-            newContents.add(if (data is String) {
-                data.replace("origin_level", "origin_world")
-                    .replace("target_level", "target_world")
-                    .replace(Regex("""(\{.+.)level((.?.+)*})"""), "$1world$2")
-            } else {
-                data
-            })
+            newContents.add(
+                if (data is String) {
+                    data.replace("origin_level", "origin_world")
+                        .replace("target_level", "target_world")
+                        .replace(Regex("""(\{.+.)level((.?.+)*})"""), "$1world$2")
+                } else {
+                    data
+                }
+            )
         }
         action.loadSaveData(CustomFormResponseList(newContents))
     }

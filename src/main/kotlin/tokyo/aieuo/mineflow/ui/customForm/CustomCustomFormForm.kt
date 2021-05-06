@@ -71,16 +71,18 @@ object CustomCustomFormForm {
     fun sendAddElement(player: Player, form: CustomForm) {
         (CustomForm("@customForm.custom.element.add"))
             .setContents(mutableListOf(
-                Dropdown("@customForm.custom.element.select", listOf(
-                    Language.get("customForm.label", listOf(" (label)")),
-                    Language.get("customForm.input", listOf(" (input)")),
-                    Language.get("customForm.numberInput", listOf(" (number input)")),
-                    Language.get("customForm.slider", listOf(" (slider)")),
-                    Language.get("customForm.step_slider", listOf(" (step_slider)")),
-                    Language.get("customForm.dropdown", listOf(" (dropdown)")),
-                    Language.get("customForm.toggle", listOf(" (toggle)")),
-                    Language.get("customForm.cancelToggle", listOf(" (cancel toggle)")),
-                )),
+                Dropdown(
+                    "@customForm.custom.element.select", listOf(
+                        Language.get("customForm.label", listOf(" (label)")),
+                        Language.get("customForm.input", listOf(" (input)")),
+                        Language.get("customForm.numberInput", listOf(" (number input)")),
+                        Language.get("customForm.slider", listOf(" (slider)")),
+                        Language.get("customForm.step_slider", listOf(" (step_slider)")),
+                        Language.get("customForm.dropdown", listOf(" (dropdown)")),
+                        Language.get("customForm.toggle", listOf(" (toggle)")),
+                        Language.get("customForm.cancelToggle", listOf(" (cancel toggle)")),
+                    )
+                ),
                 Input("@customForm.text"),
                 CancelToggle { sendElementList(player, form) }
             )).onReceive { data ->

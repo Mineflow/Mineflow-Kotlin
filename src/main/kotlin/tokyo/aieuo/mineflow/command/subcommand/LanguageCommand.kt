@@ -1,10 +1,10 @@
 package tokyo.aieuo.mineflow.command.subcommand
 
+import cn.nukkit.command.CommandSender
 import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.utils.Language
-import cn.nukkit.command.CommandSender
 
-class LanguageCommand: MineflowSubcommand {
+class LanguageCommand : MineflowSubcommand {
     override fun execute(sender: CommandSender, args: Array<String>) {
         if (args.isEmpty()) {
             sender.sendMessage(Language.get("command.language.usage"))
@@ -12,7 +12,12 @@ class LanguageCommand: MineflowSubcommand {
         }
 
         if (!Language.isAvailableLanguage(args[0])) {
-            sender.sendMessage(Language.get("command.language.notfound", listOf(args[0], Language.getAvailableLanguages().joinToString(", "))))
+            sender.sendMessage(
+                Language.get(
+                    "command.language.notfound",
+                    listOf(args[0], Language.getAvailableLanguages().joinToString(", "))
+                )
+            )
             return
         }
         Language.language = args[0]

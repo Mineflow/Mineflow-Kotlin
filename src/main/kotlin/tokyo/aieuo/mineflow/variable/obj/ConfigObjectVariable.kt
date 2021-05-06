@@ -2,10 +2,11 @@ package tokyo.aieuo.mineflow.variable.obj
 
 import cn.nukkit.utils.Config
 import tokyo.aieuo.mineflow.Main
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.is_numeric
 import tokyo.aieuo.mineflow.variable.*
 
-class ConfigObjectVariable<T: Config>(value: T, showString: String? = null): ObjectVariable<T>(value, showString) {
+class ConfigObjectVariable<T : Config>(value: T, showString: String? = null) : ObjectVariable<T>(value, showString) {
 
     override fun getValueFromIndex(index: String): Variable<Any>? {
         val data = value.get(index)
@@ -23,7 +24,7 @@ class ConfigObjectVariable<T: Config>(value: T, showString: String? = null): Obj
     }
 
     companion object {
-        fun getValuesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
+        fun getValuesDummy(): DummyVariableMap {
             return mapOf()
         }
     }

@@ -1,9 +1,9 @@
 package tokyo.aieuo.mineflow.formAPI
 
-import tokyo.aieuo.mineflow.utils.Language
 import cn.nukkit.Player
+import tokyo.aieuo.mineflow.utils.Language
 
-class ModalForm(title: String = ""): Form(title) {
+class ModalForm(title: String = "") : Form(title) {
 
     override val type: String = MODAL_FORM
 

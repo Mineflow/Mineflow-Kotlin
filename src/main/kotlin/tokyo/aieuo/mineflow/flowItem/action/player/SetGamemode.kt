@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SetGamemode(player: String = "", var gamemode: String = ""): FlowItem(), PlayerFlowItem {
+class SetGamemode(player: String = "", var gamemode: String = "") : FlowItem(), PlayerFlowItem {
 
     override val id = FlowItemIds.SET_GAMEMODE
 
@@ -41,7 +41,10 @@ class SetGamemode(player: String = "", var gamemode: String = ""): FlowItem(), P
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getPlayerVariableName(), Language.get(gamemodes[gamemode.toInt()])))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getPlayerVariableName(), Language.get(gamemodes[gamemode.toInt()]))
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -57,10 +60,10 @@ class SetGamemode(player: String = "", var gamemode: String = ""): FlowItem(), P
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
-            Dropdown("@action.setGamemode.form.gamemode", gamemodes.map{ Language.get(it) }, gamemode.toInt()),
+            Dropdown("@action.setGamemode.form.gamemode", gamemodes.map { Language.get(it) }, gamemode.toInt()),
         )
     }
 

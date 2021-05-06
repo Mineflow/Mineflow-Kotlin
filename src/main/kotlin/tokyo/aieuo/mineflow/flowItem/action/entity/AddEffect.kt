@@ -14,11 +14,11 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class AddEffect(var entity: String = "", var effectId: String = "", var time: String = "300", var power: String = "1")
-    : FlowItem(), EntityFlowItem {
+class AddEffect(var entity: String = "", var effectId: String = "", var time: String = "300", var power: String = "1") :
+    FlowItem(), EntityFlowItem {
 
     override val id = FlowItemIds.ADD_EFFECT
 
@@ -78,7 +78,7 @@ class AddEffect(var entity: String = "", var effectId: String = "", var time: St
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             ExampleInput("@action.addEffect.form.effect", "1", effectId, true),

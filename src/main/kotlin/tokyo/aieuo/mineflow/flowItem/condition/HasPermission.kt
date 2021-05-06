@@ -9,10 +9,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class HasPermission(player: String = "", var playerPermission: String = ""): FlowItem(), Condition, PlayerFlowItem {
+class HasPermission(player: String = "", var playerPermission: String = "") : FlowItem(), Condition, PlayerFlowItem {
 
     override val id = FlowItemIds.HAS_PERMISSION
 
@@ -34,10 +34,12 @@ class HasPermission(player: String = "", var playerPermission: String = ""): Flo
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(
-            getPlayerVariableName(),
-            playerPermission
-        ))
+        return Language.get(
+            detailTranslationKey, listOf(
+                getPlayerVariableName(),
+                playerPermission
+            )
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -52,10 +54,15 @@ class HasPermission(player: String = "", var playerPermission: String = ""): Flo
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
-            ExampleInput("@condition.hasPermission.form.permission", "mineflow.customcommand.op", playerPermission, true),
+            ExampleInput(
+                "@condition.hasPermission.form.permission",
+                "mineflow.customcommand.op",
+                playerPermission,
+                true
+            ),
         )
     }
 

@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.action.player
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class AddXpLevel(player: String = "", xp: String = ""): AddXpProgress(player, xp) {
+class AddXpLevel(player: String = "", xp: String = "") : AddXpProgress(player, xp) {
 
     override val id = FlowItemIds.ADD_XP_LEVEL
 

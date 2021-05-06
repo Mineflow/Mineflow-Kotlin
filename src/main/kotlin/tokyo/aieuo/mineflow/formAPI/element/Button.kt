@@ -6,7 +6,8 @@ import tokyo.aieuo.mineflow.utils.JsonSerializable
 import tokyo.aieuo.mineflow.utils.Language
 import java.util.*
 
-open class Button(text: String, var onClick: ((Player) -> Unit)? = null, var image: ButtonImage? = null): JsonSerializable, Cloneable {
+open class Button(text: String, var onClick: ((Player) -> Unit)? = null, var image: ButtonImage? = null) :
+    JsonSerializable, Cloneable {
 
     companion object {
         const val TYPE_NORMAL = "button"
@@ -26,7 +27,7 @@ open class Button(text: String, var onClick: ((Player) -> Unit)? = null, var ima
     /** @var bool */
     open val skipIfCallOnClick: Boolean = true // TODO: 名前...
 
-    constructor(text: String, onClick: ((Player) -> Unit)): this(text, onClick, null)
+    constructor(text: String, onClick: ((Player) -> Unit)) : this(text, onClick, null)
 
     fun uuid(id: String) = apply {
         _uuid = id

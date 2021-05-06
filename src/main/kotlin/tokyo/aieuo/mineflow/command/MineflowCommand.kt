@@ -14,7 +14,12 @@ import tokyo.aieuo.mineflow.ui.SettingForm
 import tokyo.aieuo.mineflow.ui.customForm.CustomFormForm
 import tokyo.aieuo.mineflow.utils.Language
 
-class MineflowCommand : Command("mineflow", Language.get("command.mineflow.description"), Language.get("command.mineflow.usage"), arrayOf("mf")), PluginIdentifiableCommand {
+class MineflowCommand : Command(
+    "mineflow",
+    Language.get("command.mineflow.description"),
+    Language.get("command.mineflow.usage"),
+    arrayOf("mf")
+), PluginIdentifiableCommand {
 
     init {
         permission = "mineflow.command.mineflow"

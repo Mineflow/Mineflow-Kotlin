@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.flowItem.action.inventory
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class RemoveItem(player: String = "", item: String = ""): TypeItem(player, item) {
+class RemoveItem(player: String = "", item: String = "") : TypeItem(player, item) {
 
     override val id = FlowItemIds.REMOVE_ITEM
 

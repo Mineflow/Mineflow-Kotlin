@@ -29,10 +29,13 @@ interface PlayerFlowItem {
         }
 
         throw InvalidFlowValueException(
-            Language.get("action.target.not.valid", listOf(
-            Language.get("action.target.require.player"),
-            rawName
-        )))
+            Language.get(
+                "action.target.not.valid", listOf(
+                    Language.get("action.target.require.player"),
+                    rawName
+                )
+            )
+        )
     }
 
     fun throwIfInvalidPlayer(player: Player, checkOnline: Boolean = true) {

@@ -25,7 +25,11 @@ object ExportForm {
             Button("@form.export.execution") { sendExportMenu(player, recipes) },
             Button("@form.add") {
                 MineflowForm.selectRecipe(player, "@form.export.selectRecipe.title", { recipe ->
-                    sendRecipeList(player, (recipes + Main.recipeManager.getWithLinkedRecipes(recipe, recipe).values).toMutableList(), listOf("@form.added"))
+                    sendRecipeList(
+                        player,
+                        (recipes + Main.recipeManager.getWithLinkedRecipes(recipe, recipe).values).toMutableList(),
+                        listOf("@form.added")
+                    )
                 }, {
                     sendRecipeList(player, recipes, listOf("@form.cancelled"))
                 })
@@ -46,10 +50,18 @@ object ExportForm {
     fun sendRecipeMenu(player: Player, recipes: MutableList<Recipe>, index: Int) {
         val recipe = recipes[index]
         (ListForm(recipe.name))
-            .setButtons(mutableListOf(
-                Button("@form.back") { sendRecipeList(player, recipes) },
-                Button("@form.delete") { sendRecipeList(player, recipes.also { it.removeAt(index) }, listOf("@form.deleted")) },
-            )).show(player)
+            .setButtons(
+                mutableListOf(
+                    Button("@form.back") { sendRecipeList(player, recipes) },
+                    Button("@form.delete") {
+                        sendRecipeList(
+                            player,
+                            recipes.also { it.removeAt(index) },
+                            listOf("@form.deleted")
+                        )
+                    },
+                )
+            ).show(player)
     }
 
     fun sendExportMenu(player: Player, recipes: MutableList<Recipe>) {
@@ -59,13 +71,15 @@ object ExportForm {
         }
 
         (CustomForm("@mineflow.export"))
-            .setContents(mutableListOf(
-                Input("@form.export.name", required = true),
-                Input("@form.export.author", default = player.name, required = true),
-                Input("@form.export.detail"),
-                Toggle("@form.export.includeConfig", true),
-                CancelToggle { sendRecipeList(player, recipes, listOf("@form.cancelled")) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input("@form.export.name", required = true),
+                    Input("@form.export.author", default = player.name, required = true),
+                    Input("@form.export.detail"),
+                    Toggle("@form.export.includeConfig", true),
+                    CancelToggle { sendRecipeList(player, recipes, listOf("@form.cancelled")) },
+                )
+            ).onReceive { data ->
                 val name = data.getString(0)
                 val author = data.getString(1)
                 val detail = data.getString(2)

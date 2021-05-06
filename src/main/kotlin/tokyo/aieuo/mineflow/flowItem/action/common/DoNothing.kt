@@ -6,7 +6,7 @@ import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
 
-class DoNothing: FlowItem() {
+class DoNothing : FlowItem() {
 
     override val id = FlowItemIds.DO_NOTHING
 

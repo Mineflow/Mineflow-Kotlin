@@ -10,11 +10,14 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class AddDamage(var entity: String = "", var damage: String = "", var cause: EntityDamageEvent.DamageCause = EntityDamageEvent.DamageCause.ENTITY_ATTACK)
-    : FlowItem(), EntityFlowItem {
+class AddDamage(
+    var entity: String = "",
+    var damage: String = "",
+    var cause: EntityDamageEvent.DamageCause = EntityDamageEvent.DamageCause.ENTITY_ATTACK
+) : FlowItem(), EntityFlowItem {
 
     override val id = FlowItemIds.ADD_DAMAGE
 
@@ -54,7 +57,7 @@ class AddDamage(var entity: String = "", var damage: String = "", var cause: Ent
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             ExampleNumberInput("@action.addDamage.form.damage", "10", damage, true, 1.0),

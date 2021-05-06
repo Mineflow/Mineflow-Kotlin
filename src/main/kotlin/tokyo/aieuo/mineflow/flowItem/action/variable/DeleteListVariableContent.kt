@@ -10,12 +10,16 @@ import tokyo.aieuo.mineflow.formAPI.element.Toggle
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.MapVariable
 
-class DeleteListVariableContent(var variableName: String = "", var variableKey: String = "", var isLocal: Boolean = true): FlowItem() {
+class DeleteListVariableContent(
+    var variableName: String = "",
+    var variableKey: String = "",
+    var isLocal: Boolean = true
+) : FlowItem() {
 
     override val id = FlowItemIds.DELETE_LIST_VARIABLE_CONTENT
 
@@ -46,7 +50,7 @@ class DeleteListVariableContent(var variableName: String = "", var variableKey: 
             throw InvalidFlowValueException(Language.get("variable.notFound", listOf(name)))
         }
 
-        when(variable) { // TODO check variable is ListVariable
+        when (variable) { // TODO check variable is ListVariable
             is MapVariable -> {
                 val values = variable.value.toMutableMap()
                 values.remove(key)
@@ -56,12 +60,18 @@ class DeleteListVariableContent(var variableName: String = "", var variableKey: 
                 val values = variable.value.toMutableList()
                 values.removeAt(key.toInt())
                 variable.value = values
-            } else -> throw InvalidFlowValueException(Language.get("action.addListVariable.error.existsOtherType", listOf(name, variable.toString())))
+            }
+            else -> throw InvalidFlowValueException(
+                Language.get(
+                    "action.addListVariable.error.existsOtherType",
+                    listOf(name, variable.toString())
+                )
+            )
         }
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.variable.form.name", "aieuo", variableName, true),
             ExampleInput("@action.variable.form.key", "auieo", variableKey, true),

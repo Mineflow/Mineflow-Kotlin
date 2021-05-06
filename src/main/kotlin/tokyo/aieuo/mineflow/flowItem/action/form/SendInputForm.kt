@@ -13,11 +13,13 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 
-class SendInputForm(player: String = "", var formText: String = "", var resultName: String = "input") : FlowItem(), PlayerFlowItem {
+class SendInputForm(player: String = "", var formText: String = "", var resultName: String = "input") : FlowItem(),
+    PlayerFlowItem {
 
     override val id = FlowItemIds.SEND_INPUT
 
@@ -59,9 +61,11 @@ class SendInputForm(player: String = "", var formText: String = "", var resultNa
 
     private fun sendForm(source: FlowItemExecutor, player: Player, text: String, resultName: String) {
         (CustomForm(text))
-            .setContents(mutableListOf(
-                Input(text, "", "", true),
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Input(text, "", "", true),
+                )
+            ).onReceive { data ->
                 val variable = StringVariable(data.getString(0))
                 source.addVariable(resultName, variable)
                 source.resume()
@@ -70,7 +74,7 @@ class SendInputForm(player: String = "", var formText: String = "", var resultNa
             }.show(player)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             ExampleInput("@action.form.resultVariableName", "input", resultName, true),
@@ -90,7 +94,7 @@ class SendInputForm(player: String = "", var formText: String = "", var resultNa
         return listOf(getPlayerVariableName(), resultName, formText, resendOnClose)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.STRING)
         )

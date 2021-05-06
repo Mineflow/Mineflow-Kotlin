@@ -42,7 +42,10 @@ object FormAPI {
             when (form) {
                 is ModalForm -> form.handleResponse(player, formData == "true")
                 is ListForm -> form.handleResponse(player, formData.toInt())
-                is CustomForm -> form.handleResponse(player, ObjectMapper().readValue(formData, mutableListOf<Any?>().javaClass))
+                is CustomForm -> form.handleResponse(
+                    player,
+                    ObjectMapper().readValue(formData, mutableListOf<Any?>().javaClass)
+                )
             }
         }
     }

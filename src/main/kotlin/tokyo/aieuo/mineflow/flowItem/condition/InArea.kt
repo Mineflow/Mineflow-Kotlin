@@ -10,12 +10,13 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import kotlin.math.max
 import kotlin.math.min
 
-class InArea(entity: String = "", pos1: String = "", pos2: String = ""): FlowItem(), Condition, EntityFlowItem, PositionFlowItem {
+class InArea(entity: String = "", pos1: String = "", pos2: String = "") :
+    FlowItem(), Condition, EntityFlowItem, PositionFlowItem {
 
     override val id = FlowItemIds.IN_AREA
 
@@ -40,11 +41,13 @@ class InArea(entity: String = "", pos1: String = "", pos2: String = ""): FlowIte
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(
-            getEntityVariableName(),
-            getPositionVariableName("pos1"),
-            getPositionVariableName("pos2")
-        ))
+        return Language.get(
+            detailTranslationKey, listOf(
+                getEntityVariableName(),
+                getPositionVariableName("pos1"),
+                getPositionVariableName("pos2")
+            )
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -58,12 +61,12 @@ class InArea(entity: String = "", pos1: String = "", pos2: String = ""): FlowIte
         val pos = entity.floor()
 
         val result = pos.x >= min(pos1.x, pos2.x) && pos.x <= max(pos1.x, pos2.x)
-            && pos.y >= min(pos1.y, pos2.y) && pos.y <= max(pos1.y, pos2.y)
-            && pos.z >= min(pos1.z, pos2.z) && pos.z <= max(pos1.z, pos2.z)
+                && pos.y >= min(pos1.y, pos2.y) && pos.y <= max(pos1.y, pos2.y)
+                && pos.z >= min(pos1.z, pos2.z) && pos.z <= max(pos1.z, pos2.z)
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             PositionVariableDropdown(variables, getPositionVariableName("pos1"), "@condition.inArea.form.pos1"),

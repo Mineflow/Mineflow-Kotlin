@@ -7,7 +7,7 @@ import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.utils.Language
 
-class AddMoney(playerName: String = "{target.name}", amount: String = ""): TypeMoney(playerName, amount) {
+class AddMoney(playerName: String = "{target.name}", amount: String = "") : TypeMoney(playerName, amount) {
 
     override val id = FlowItemIds.ADD_MONEY
 

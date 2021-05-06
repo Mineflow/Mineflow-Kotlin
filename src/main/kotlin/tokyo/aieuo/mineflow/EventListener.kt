@@ -25,7 +25,7 @@ import tokyo.aieuo.mineflow.trigger.command.CommandTrigger
 import tokyo.aieuo.mineflow.ui.trigger.BlockTriggerForm
 import tokyo.aieuo.mineflow.utils.Session
 
-class EventListener: Listener {
+class EventListener : Listener {
 
     fun registerEvents() {
         Server.getInstance().pluginManager.registerEvents(this, Main.instance)
@@ -157,11 +157,13 @@ class EventListener: Listener {
     fun onProjectileHit(event: ProjectileHitEvent) {
         val pos = event.movingObjectPosition
         if (pos.typeOfHit == 1) {
-            Server.getInstance().pluginManager.callEvent(ProjectileHitEntityEvent(
-                event.entity,
-                event.movingObjectPosition,
-                pos.entityHit
-            ))
+            Server.getInstance().pluginManager.callEvent(
+                ProjectileHitEntityEvent(
+                    event.entity,
+                    event.movingObjectPosition,
+                    pos.entityHit
+                )
+            )
         }
     }
 }

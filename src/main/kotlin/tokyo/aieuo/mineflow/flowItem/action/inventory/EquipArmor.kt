@@ -12,10 +12,11 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.EntityVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ItemVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class EquipArmor(entity: String = "", item: String = "", var index: String = ""): FlowItem(), EntityFlowItem, ItemFlowItem {
+class EquipArmor(entity: String = "", item: String = "", var index: String = "") :
+    FlowItem(), EntityFlowItem, ItemFlowItem {
 
     override val id = FlowItemIds.EQUIP_ARMOR
 
@@ -46,7 +47,10 @@ class EquipArmor(entity: String = "", item: String = "", var index: String = "")
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(getEntityVariableName(), getItemVariableName(), Language.get(places[index.toInt()])))
+        return Language.get(
+            detailTranslationKey,
+            listOf(getEntityVariableName(), getItemVariableName(), Language.get(places[index.toInt()]))
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -67,7 +71,7 @@ class EquipArmor(entity: String = "", item: String = "", var index: String = "")
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             ItemVariableDropdown(variables, getItemVariableName()),

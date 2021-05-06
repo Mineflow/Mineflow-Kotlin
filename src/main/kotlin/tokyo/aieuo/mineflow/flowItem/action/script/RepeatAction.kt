@@ -13,10 +13,11 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.ui.FlowItemForm
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class RepeatAction(actions: List<FlowItem> = listOf(), var repeatCount: String = "1"): FlowItem(), FlowItemContainer {
+class RepeatAction(actions: List<FlowItem> = listOf(), var repeatCount: String = "1") : FlowItem(), FlowItemContainer {
 
     override val id = FlowItemIds.ACTION_REPEAT
 
@@ -59,9 +60,13 @@ class RepeatAction(actions: List<FlowItem> = listOf(), var repeatCount: String =
         val end = start.toInt() + count.toInt()
 
         for (i in start.toInt() until end) {
-            yieldAll(FlowItemExecutor(getActions(), source.target, mutableMapOf(
-                counterName to NumberVariable(i)
-            ), source).executeGenerator())
+            yieldAll(
+                FlowItemExecutor(
+                    getActions(), source.target, mutableMapOf(
+                        counterName to NumberVariable(i)
+                    ), source
+                ).executeGenerator()
+            )
         }
         source.resume()
     }
@@ -86,7 +91,14 @@ class RepeatAction(actions: List<FlowItem> = listOf(), var repeatCount: String =
         (CustomForm("@action.repeat.editCount"))
             .setContents(mutableListOf(
                 ExampleNumberInput("@action.repeat.repeatCount", "10", repeatCount, true, 1.0),
-                CancelToggle { FlowItemForm.sendFlowItemCustomMenu(player, this, FlowItemContainer.ACTION, listOf("@form.cancelled")) }
+                CancelToggle {
+                    FlowItemForm.sendFlowItemCustomMenu(
+                        player,
+                        this,
+                        FlowItemContainer.ACTION,
+                        listOf("@form.cancelled")
+                    )
+                }
             )).onReceive { data ->
                 repeatCount = data.getString(0)
                 FlowItemForm.sendFlowItemCustomMenu(player, action, FlowItemContainer.ACTION, listOf("@form.changed"))
@@ -115,7 +127,7 @@ class RepeatAction(actions: List<FlowItem> = listOf(), var repeatCount: String =
         )
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             counterName to DummyVariable(DummyVariable.Type.NUMBER)
         )

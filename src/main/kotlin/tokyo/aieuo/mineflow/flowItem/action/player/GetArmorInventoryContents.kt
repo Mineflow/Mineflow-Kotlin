@@ -1,11 +1,12 @@
 package tokyo.aieuo.mineflow.flowItem.action.player
 
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
+import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.obj.ItemObjectVariable
-import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 
-class GetArmorInventoryContents(player: String = "", resultName: String = "inventory"): GetInventoryContents(player, resultName) {
+class GetArmorInventoryContents(player: String = "", resultName: String = "inventory") :
+    GetInventoryContents(player, resultName) {
 
     override val id = FlowItemIds.GET_ARMOR_INVENTORY_CONTENTS
 

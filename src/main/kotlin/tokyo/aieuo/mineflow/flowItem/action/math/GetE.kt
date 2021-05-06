@@ -4,7 +4,7 @@ import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class GetE(resultName: String = "e"): TypeGetMathVariable(resultName) {
+class GetE(resultName: String = "e") : TypeGetMathVariable(resultName) {
 
     override val id = FlowItemIds.GET_E
 

@@ -2,8 +2,8 @@ package tokyo.aieuo.mineflow.formAPI.element
 
 import tokyo.aieuo.mineflow.utils.Language
 
-class StepSlider(text: String, options: MutableList<String> = mutableListOf(), default: Int = 0)
-    : Dropdown(text, options, default) {
+class StepSlider(text: String, options: MutableList<String> = mutableListOf(), default: Int = 0) :
+    Dropdown(text, options, default) {
 
     override val type = Element.Type.STEP_SLIDER
 

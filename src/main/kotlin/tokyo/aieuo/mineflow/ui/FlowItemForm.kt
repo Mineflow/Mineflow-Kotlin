@@ -21,7 +21,13 @@ import tokyo.aieuo.mineflow.utils.Session
 
 object FlowItemForm {
 
-    fun sendAddedItemMenu(player: Player, container: FlowItemContainer, type: String, action: FlowItem, messages: List<String> = listOf()) {
+    fun sendAddedItemMenu(
+        player: Player,
+        container: FlowItemContainer,
+        type: String,
+        action: FlowItem,
+        messages: List<String> = listOf()
+    ) {
         if (action.hasCustomMenu()) {
             sendFlowItemCustomMenu(player, action, type)
             return
@@ -35,7 +41,7 @@ object FlowItemForm {
                 Button("@form.move"),
                 Button("@form.duplicate"),
                 Button("@form.delete"),
-            ).onReceive(fun (player: Player, data: Int) {
+            ).onReceive { data ->
                 when (data) {
                     0 -> {
                         Session.getSession(player).pop<FlowItemContainer>("parents")
@@ -48,11 +54,22 @@ object FlowItemForm {
                         val form = action.getEditForm(variables)
                         form.onReceive { data1 ->
                             onUpdateAction(player, data1, form, action) { result ->
-                                sendAddedItemMenu(player, container, type, action, listOf(if (result) "@form.changed" else "@form.cancelled"))
+                                sendAddedItemMenu(
+                                    player,
+                                    container,
+                                    type,
+                                    action,
+                                    listOf(if (result) "@form.changed" else "@form.cancelled")
+                                )
                             }
                         }.show(player)
                     }
-                    2 -> FlowItemContainerForm.sendMoveAction(player, container, type, container.getItems(type).indexOf(action))
+                    2 -> FlowItemContainerForm.sendMoveAction(
+                        player,
+                        container,
+                        type,
+                        container.getItems(type).indexOf(action)
+                    )
                     3 -> {
                         val newItem = action.clone()
                         container.addItem(newItem, type)
@@ -61,7 +78,7 @@ object FlowItemForm {
                     }
                     4 -> sendConfirmDelete(player, action, container, type)
                 }
-            }).addMessages(messages).show(player)
+            }.addMessages(messages).show(player)
     }
 
     fun sendFlowItemCustomMenu(player: Player, action: FlowItem, type: String, messages: List<String> = listOf()) {
@@ -188,7 +205,12 @@ object FlowItemForm {
     fun sendSearchAction(player: Player, container: FlowItemContainer, type: String) {
         (CustomForm(Language.get("form.${type}.search.title", listOf(container.getContainerName()))))
             .setContents(mutableListOf(
-                Input("@form.items.search.keyword", "", Session.getSession(player).getString("flowItem_search"), true),
+                Input(
+                    "@form.items.search.keyword",
+                    "",
+                    Session.getSession(player).getString("flowItem_search"),
+                    true
+                ),
                 CancelToggle { selectActionCategory(player, container, type) }
             )).onReceive { data ->
                 val name = data.getString(0)
@@ -199,7 +221,8 @@ object FlowItemForm {
                 }
 
                 Session.getSession(player).set("flowItem_search", name)
-                Session.getSession(player).set("flowItem_category", Language.get("form.items.category.search", listOf(name)))
+                Session.getSession(player)
+                    .set("flowItem_category", Language.get("form.items.category.search", listOf(name)))
                 sendSelectAction(player, container, type, actions)
             }.show(player)
     }
@@ -222,7 +245,13 @@ object FlowItemForm {
             }.show(player)
     }
 
-    fun sendActionMenu(player: Player, container: FlowItemContainer, type: String, item: FlowItem, messages: List<String> = listOf()) {
+    fun sendActionMenu(
+        player: Player,
+        container: FlowItemContainer,
+        type: String,
+        item: FlowItem,
+        messages: List<String> = listOf()
+    ) {
         val favorites = Main.instance.playerSettings.getFavorites(player.name, type)
 
         (ListForm(Language.get("form.${type}.menu.title", listOf(container.getContainerName(), item.id))))
@@ -231,7 +260,7 @@ object FlowItemForm {
                 Button("@form.back"),
                 Button("@form.add"),
                 Button(if (item.id in favorites) "@form.items.removeFavorite" else "@form.items.addFavorite"),
-            ).onReceive(fun (player: Player, data: Int) {
+            ).onReceive { data ->
                 when (data) {
                     0 -> {
                         val actions = Session.getSession(player).getList<FlowItem>("${type}s")
@@ -241,7 +270,7 @@ object FlowItemForm {
                         if (item.hasCustomMenu()) {
                             container.addItem(item, type)
                             sendFlowItemCustomMenu(player, item, type)
-                            return
+                            return@onReceive
                         }
 
                         val parents = ArrayDeque(Session.getSession(player).getDeque<FlowItemContainer>("parents"))
@@ -269,7 +298,7 @@ object FlowItemForm {
                         sendActionMenu(player, container, type, item, listOf("@form.changed"))
                     }
                 }
-            }).addMessages(messages).show(player)
+            }.addMessages(messages).show(player)
     }
 
     fun sendConfirmDelete(player: Player, action: FlowItem, container: FlowItemContainer, type: String) {

@@ -45,11 +45,13 @@ internal fun jsonSerializableToMap(data: List<*>): List<Any?> {
     val list = mutableListOf<Any?>()
     for (v in data) {
         val values = if (v is JsonSerializable) v.jsonSerialize() else v
-        list.add(when (values) {
-            is List<*> -> jsonSerializableToMap(values)
-            is Map<*, *> -> jsonSerializableToMap(values)
-            else -> values
-        })
+        list.add(
+            when (values) {
+                is List<*> -> jsonSerializableToMap(values)
+                is Map<*, *> -> jsonSerializableToMap(values)
+                else -> values
+            }
+        )
     }
     return list
 }

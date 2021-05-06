@@ -16,10 +16,10 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SetSitting(player: String = "", position: String = ""): FlowItem(), PlayerFlowItem, PositionFlowItem {
+class SetSitting(player: String = "", position: String = "") : FlowItem(), PlayerFlowItem, PositionFlowItem {
 
     override val id = FlowItemIds.SET_SITTING
 
@@ -72,7 +72,7 @@ class SetSitting(player: String = "", position: String = ""): FlowItem(), Player
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
             PositionVariableDropdown(variables, getPositionVariableName()),

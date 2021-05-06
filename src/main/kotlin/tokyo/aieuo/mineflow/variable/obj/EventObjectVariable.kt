@@ -1,9 +1,10 @@
 package tokyo.aieuo.mineflow.variable.obj
 
 import cn.nukkit.event.Event
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.*
 
-class EventObjectVariable<T: Event>(value: T, showString: String? = null): ObjectVariable<T>(value, showString) {
+class EventObjectVariable<T : Event>(value: T, showString: String? = null) : ObjectVariable<T>(value, showString) {
 
     override fun getValueFromIndex(index: String): Variable<Any>? {
         return when (index) {
@@ -19,7 +20,7 @@ class EventObjectVariable<T: Event>(value: T, showString: String? = null): Objec
 
 
     companion object {
-        fun getValuesDummy(): Map<String, DummyVariable<DummyVariable.Type>> {
+        fun getValuesDummy(): DummyVariableMap {
             return mapOf(
                 "name" to DummyVariable(DummyVariable.Type.STRING),
                 "isCanceled" to DummyVariable(DummyVariable.Type.BOOLEAN),

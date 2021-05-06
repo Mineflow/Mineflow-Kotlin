@@ -5,6 +5,7 @@ import cn.nukkit.Server
 import cn.nukkit.block.Block
 import cn.nukkit.blockentity.BlockEntitySign
 import cn.nukkit.entity.Entity
+import tokyo.aieuo.mineflow.utils.VariableMap
 import tokyo.aieuo.mineflow.utils.microtime
 import tokyo.aieuo.mineflow.variable.obj.BlockObjectVariable
 import tokyo.aieuo.mineflow.variable.obj.EntityObjectVariable
@@ -14,7 +15,7 @@ import java.time.format.DateTimeFormatter
 
 object DefaultVariables {
 
-    fun getServerVariables(): Map<String, Variable<Any>> {
+    fun getServerVariables(): VariableMap {
         val server = Server.getInstance()
         val onlines = server.onlinePlayers.map { (_, player) -> PlayerObjectVariable(player) }
         val date = LocalDateTime.now()
@@ -25,20 +26,20 @@ object DefaultVariables {
             "date" to StringVariable(date.format(DateTimeFormatter.ofPattern("MM/dd"))),
             "default_world" to StringVariable(server.defaultLevel.folderName),
             "onlines" to ListVariable(onlines),
-            "ops" to ListVariable(server.ops.all.map { (k, _) -> StringVariable(k) } ),
+            "ops" to ListVariable(server.ops.all.map { (k, _) -> StringVariable(k) }),
         )
     }
 
-    fun getEntityVariables(target: Entity, name: String = "target"): Map<String, Variable<Any>> {
+    fun getEntityVariables(target: Entity, name: String = "target"): VariableMap {
         if (target is Player) return getPlayerVariables(target, name)
         return mapOf(name to EntityObjectVariable(target, target.nameTag))
     }
 
-    fun getPlayerVariables(target: Player, name: String = "target"): Map<String, Variable<Any>> {
+    fun getPlayerVariables(target: Player, name: String = "target"): VariableMap {
         return mapOf(name to PlayerObjectVariable(target, target.name))
     }
 
-    fun getBlockVariables(block: Block, name: String = "block"): Map<String, Variable<Any>> {
+    fun getBlockVariables(block: Block, name: String = "block"): VariableMap {
         val variables = mutableMapOf<String, Variable<Any>>(
             name to BlockObjectVariable(block, "${block.id}:${block.damage}")
         )
@@ -49,7 +50,7 @@ object DefaultVariables {
         return variables
     }
 
-    fun getCommandVariables(command: String): Map<String, Variable<Any>> {
+    fun getCommandVariables(command: String): VariableMap {
         val commands = ArrayDeque(command.split(" "))
         return mapOf(
             "cmd" to StringVariable(commands.removeFirstOrNull() ?: command),

@@ -12,11 +12,16 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class MoveTo(var entity: String = "", var position: String = "", var x: String = "0.1", var y: String = "0", var z: String = "0.1")
-    : FlowItem(), EntityFlowItem, PositionFlowItem {
+class MoveTo(
+    var entity: String = "",
+    var position: String = "",
+    var x: String = "0.1",
+    var y: String = "0",
+    var z: String = "0.1"
+) : FlowItem(), EntityFlowItem, PositionFlowItem {
 
     override val id = FlowItemIds.MOVE_TO
 
@@ -72,7 +77,7 @@ class MoveTo(var entity: String = "", var position: String = "", var x: String =
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             EntityVariableDropdown(variables, getEntityVariableName()),
             PositionVariableDropdown(variables, getPositionVariableName()),

@@ -1,8 +1,8 @@
 package tokyo.aieuo.mineflow.utils
 
-import cn.nukkit.entity.Entity
 import cn.nukkit.Player
 import cn.nukkit.Server
+import cn.nukkit.entity.Entity
 
 object EntityHolder {
 

@@ -5,10 +5,7 @@ import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.exception.UndefinedMineflowPropertyException
 import tokyo.aieuo.mineflow.exception.UndefinedMineflowVariableException
 import tokyo.aieuo.mineflow.exception.UnsupportedCalculationException
-import tokyo.aieuo.mineflow.utils.JsonSerializable
-import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.utils.is_numeric
-import tokyo.aieuo.mineflow.utils.jsonSerializableToMap
+import tokyo.aieuo.mineflow.utils.*
 
 class VariableHelper(val file: Config) {
 
@@ -87,12 +84,12 @@ class VariableHelper(val file: Config) {
                     foundBracket = false
                 }
             }
-            index ++
+            index++
         }
         return variables
     }
 
-    fun replaceVariables(_string: String, variables: Map<String, Variable<Any>> = mapOf(), global: Boolean = true): String {
+    fun replaceVariables(_string: String, variables: VariableMap = mapOf(), global: Boolean = true): String {
         var string = _string
 
         for (i in 0..10) {
@@ -104,7 +101,12 @@ class VariableHelper(val file: Config) {
         return string
     }
 
-    fun replaceVariable(string: String, replace: String, variables: Map<String, Variable<Any>> = mapOf(), global: Boolean = true): String {
+    fun replaceVariable(
+        string: String,
+        replace: String,
+        variables: VariableMap = mapOf(),
+        global: Boolean = true
+    ): String {
         if (!string.contains("{$replace}")) return string
 
         val tokens = lexer(replace)
@@ -133,9 +135,9 @@ class VariableHelper(val file: Config) {
                     token = ""
 
                     if (char == '(') {
-                        brackets ++
+                        brackets++
                     } else if (char == ')') {
-                        brackets --
+                        brackets--
                     }
                 }
                 ',' -> {
@@ -217,7 +219,7 @@ class VariableHelper(val file: Config) {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun run(ast: Map<String, Any>, variables: Map<String, Variable<Any>> = mapOf(), global: Boolean = false): Variable<Any> {
+    fun run(ast: Map<String, Any>, variables: VariableMap = mapOf(), global: Boolean = false): Variable<Any> {
         var left = if (ast["left"] is Map<*, *>) run(ast["left"] as Map<String, Any>, variables, global) else ast["left"]
         var right = if (ast["right"] is Map<*, *>) run(ast["right"] as Map<String, Any>, variables, global) else ast["right"]
         val op = ast["op"]
@@ -244,7 +246,7 @@ class VariableHelper(val file: Config) {
         }
     }
 
-    fun mustGetVariableNested(_name: String, variables: Map<String, Variable<Any>> = mapOf(), global: Boolean = false): Variable<Any> {
+    fun mustGetVariableNested(_name: String, variables: VariableMap = mapOf(), global: Boolean = false): Variable<Any> {
         val names = ArrayDeque(_name.split("."))
         val name = names.removeFirstOrNull() ?: _name
         if (!variables.containsKey(name) && !exists(name)) throw UndefinedMineflowVariableException(name)
@@ -292,8 +294,8 @@ class VariableHelper(val file: Config) {
         }
     }
 
-    fun toVariableArray(data: Map<*, *>): Map<String, Variable<Any>> {
-        val result = HashMap<String, Variable<Any>>()
+    fun toVariableArray(data: Map<*, *>): VariableMap {
+        val result = mutableMapOf<String, Variable<Any>>()
         for ((key, value) in data) {
             if (key !is String) continue
 
@@ -310,12 +312,14 @@ class VariableHelper(val file: Config) {
     fun toVariableArray(data: List<*>): List<Variable<Any>> {
         val result = mutableListOf<Variable<Any>>()
         for (value in data) {
-            result.add(when {
-                value is List<*> -> ListVariable(toVariableArray(value))
-                value is Map<*, *> -> MapVariable(toVariableArray(value))
-                value is String && is_numeric(value) -> NumberVariable(value.toFloat())
-                else -> StringVariable(value.toString())
-            })
+            result.add(
+                when {
+                    value is List<*> -> ListVariable(toVariableArray(value))
+                    value is Map<*, *> -> MapVariable(toVariableArray(value))
+                    value is String && is_numeric(value) -> NumberVariable(value.toFloat())
+                    else -> StringVariable(value.toString())
+                }
+            )
         }
         return result
     }

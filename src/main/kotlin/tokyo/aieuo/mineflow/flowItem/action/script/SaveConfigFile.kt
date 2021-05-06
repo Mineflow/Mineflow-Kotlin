@@ -8,10 +8,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ConfigVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class SaveConfigFile(config: String = ""): FlowItem(), ConfigFileFlowItem {
+class SaveConfigFile(config: String = "") : FlowItem(), ConfigFileFlowItem {
 
     override val id = FlowItemIds.SAVE_CONFIG_FILE
 
@@ -47,7 +47,7 @@ class SaveConfigFile(config: String = ""): FlowItem(), ConfigFileFlowItem {
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ConfigVariableDropdown(variables, getConfigVariableName()),
         )

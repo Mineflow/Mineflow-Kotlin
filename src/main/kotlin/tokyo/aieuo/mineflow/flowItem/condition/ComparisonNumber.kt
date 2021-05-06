@@ -9,10 +9,11 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class ComparisonNumber(var value1: String = "", var operator: Int = EQUAL, var value2: String = ""): FlowItem(), Condition {
+class ComparisonNumber(var value1: String = "", var operator: Int = EQUAL, var value2: String = "") :
+    FlowItem(), Condition {
 
     override val id = FlowItemIds.COMPARISON_NUMBER
 
@@ -60,12 +61,14 @@ class ComparisonNumber(var value1: String = "", var operator: Int = EQUAL, var v
             LESS -> value1 < value2
             GREATER_EQUAL -> value1 >= value2
             LESS_EQUAL -> value1 <= value2
-            else -> throw InvalidFlowValueException(Language.get("action.calculate.operator.unknown", listOf(operator.toString())))
+            else -> throw InvalidFlowValueException(
+                Language.get("action.calculate.operator.unknown", listOf(operator.toString()))
+            )
         }
         yield(if (result) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleNumberInput("@condition.comparisonNumber.form.value1", "10", value1, true),
             Dropdown("@condition.comparisonNumber.form.operator", operatorSymbols, operator),

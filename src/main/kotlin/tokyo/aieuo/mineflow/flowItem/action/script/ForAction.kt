@@ -13,10 +13,11 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.ui.FlowItemForm
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class ForAction(actions: List<FlowItem> = listOf()): FlowItem(), FlowItemContainer {
+class ForAction(actions: List<FlowItem> = listOf()) : FlowItem(), FlowItemContainer {
 
     override val id = FlowItemIds.ACTION_FOR
 
@@ -39,7 +40,8 @@ class ForAction(actions: List<FlowItem> = listOf()): FlowItem(), FlowItemContain
     }
 
     override fun getDetail(): String {
-        val repeat = "${counterName}=${startIndex}; ${counterName}<=${endIndex}; ${counterName}+=${fluctuation}".replace("+=-", "-=")
+        val repeat = "${counterName}=${startIndex}; ${counterName}<=${endIndex}; ${counterName}+=${fluctuation}"
+            .replace("+=-", "-=")
 
         val details = mutableListOf("", "§7====§f for(${repeat}) §7====§f")
         for (action in getActions()) {
@@ -66,10 +68,14 @@ class ForAction(actions: List<FlowItem> = listOf()): FlowItem(), FlowItemContain
         throwIfInvalidNumber(fluctuation, exclude = listOf(0.0))
 
         for (i in start.toInt() until end.toInt() step fluctuation.toInt()) {
-            yieldAll(FlowItemExecutor(getActions(), source.target, mutableMapOf(
-                counterName to NumberVariable(i)
-            ), source).executeGenerator())
-    }
+            yieldAll(
+                FlowItemExecutor(
+                    getActions(), source.target, mutableMapOf(
+                        counterName to NumberVariable(i)
+                    ), source
+                ).executeGenerator()
+            )
+        }
         source.resume()
         yield(FlowItemExecutor.Result.CONTINUE)
     }
@@ -92,12 +98,14 @@ class ForAction(actions: List<FlowItem> = listOf()): FlowItem(), FlowItemContain
     fun sendCounterSetting(player: Player) {
         val action = this
         (CustomForm("@action.for.setting"))
-            .setContents(mutableListOf(
-                ExampleInput("@action.for.counterName", "i", counterName, true),
-                ExampleNumberInput("@action.for.start", "0", startIndex, true),
-                ExampleNumberInput("@action.for.end", "9", endIndex, true),
-                ExampleNumberInput("@action.for.fluctuation", "1", fluctuation, true, null, null, listOf(0.0))
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    ExampleInput("@action.for.counterName", "i", counterName, true),
+                    ExampleNumberInput("@action.for.start", "0", startIndex, true),
+                    ExampleNumberInput("@action.for.end", "9", endIndex, true),
+                    ExampleNumberInput("@action.for.fluctuation", "1", fluctuation, true, null, null, listOf(0.0))
+                )
+            ).onReceive { data ->
                 counterName = data.getString(0)
                 startIndex = data.getString(1)
                 endIndex = data.getString(2)
@@ -129,7 +137,7 @@ class ForAction(actions: List<FlowItem> = listOf()): FlowItem(), FlowItemContain
         )
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             counterName to DummyVariable(DummyVariable.Type.NUMBER)
         )

@@ -12,6 +12,7 @@ import tokyo.aieuo.mineflow.formAPI.element.Toggle
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.is_numeric
 import tokyo.aieuo.mineflow.variable.DummyVariable
@@ -19,7 +20,12 @@ import tokyo.aieuo.mineflow.variable.NumberVariable
 import tokyo.aieuo.mineflow.variable.StringVariable
 import tokyo.aieuo.mineflow.variable.Variable
 
-class AddVariable(var variableName: String = "", var variableValue: String = "", var variableType: Int = Variable.STRING, var isLocal: Boolean = true): FlowItem() {
+class AddVariable(
+    var variableName: String = "",
+    var variableValue: String = "",
+    var variableType: Int = Variable.STRING,
+    var isLocal: Boolean = true
+) : FlowItem() {
 
     override val id = FlowItemIds.ADD_VARIABLE
 
@@ -38,7 +44,10 @@ class AddVariable(var variableName: String = "", var variableValue: String = "",
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(variableName, variableValue, variableTypes[variableType], if (isLocal) "local" else "global"))
+        return Language.get(
+            detailTranslationKey,
+            listOf(variableName, variableValue, variableTypes[variableType], if (isLocal) "local" else "global")
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -64,7 +73,7 @@ class AddVariable(var variableName: String = "", var variableValue: String = "",
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.variable.form.name", "aieuo", variableName, true),
             ExampleInput("@action.variable.form.value", "aeiuo", variableValue, true),
@@ -93,7 +102,7 @@ class AddVariable(var variableName: String = "", var variableValue: String = "",
         return listOf(variableName, variableValue, variableType, isLocal)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             variableName to DummyVariable(dummyVariableTypes[variableType], variableValue)
         )

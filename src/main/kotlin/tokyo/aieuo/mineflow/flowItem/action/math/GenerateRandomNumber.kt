@@ -5,11 +5,12 @@ import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class GenerateRandomNumber(var min: String = "", var max: String = "", resultName: String = "random"): TypeGetMathVariable(resultName) {
+class GenerateRandomNumber(var min: String = "", var max: String = "", resultName: String = "random") :
+    TypeGetMathVariable(resultName) {
 
     override val id = FlowItemIds.GENERATE_RANDOM_NUMBER
 
@@ -41,7 +42,7 @@ class GenerateRandomNumber(var min: String = "", var max: String = "", resultNam
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.generateRandomNumber.form.min", "0", min, true),
             ExampleInput("@action.generateRandomNumber.form.max", "10", max, true),

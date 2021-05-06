@@ -9,7 +9,7 @@ import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.trigger.TriggerHolder
 import tokyo.aieuo.mineflow.trigger.Triggers
 
-class EventTriggerListener: Listener {
+class EventTriggerListener : Listener {
 
     private val registeredEvents = mutableListOf<Class<out Event>>()
 

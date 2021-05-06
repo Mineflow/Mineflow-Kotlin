@@ -7,7 +7,8 @@ import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.utils.Category
 
 @Suppress("LeakingThis")
-open class IFAction(conditions: List<FlowItem> = listOf(), actions: List<FlowItem> = listOf()): FlowItem(), FlowItemContainer {
+open class IFAction(conditions: List<FlowItem> = listOf(), actions: List<FlowItem> = listOf()) :
+    FlowItem(), FlowItemContainer {
 
     override val id = FlowItemIds.ACTION_IF
 

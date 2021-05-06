@@ -1,15 +1,15 @@
 package tokyo.aieuo.mineflow.flowItem.action.event
 
+import cn.nukkit.event.Cancellable
 import tokyo.aieuo.mineflow.exception.InvalidFlowValueException
 import tokyo.aieuo.mineflow.flowItem.FlowItem
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
-import tokyo.aieuo.mineflow.utils.Category
-import tokyo.aieuo.mineflow.utils.Language
-import cn.nukkit.event.Cancellable
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
+import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.Language
 
-class EventCancel: FlowItem() {
+class EventCancel : FlowItem() {
 
     override val id = FlowItemIds.EVENT_CANCEL
 

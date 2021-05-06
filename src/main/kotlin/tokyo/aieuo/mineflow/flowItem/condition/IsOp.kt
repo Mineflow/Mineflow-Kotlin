@@ -8,10 +8,10 @@ import tokyo.aieuo.mineflow.formAPI.element.Element
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PlayerVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class IsOp(player: String = ""): FlowItem(), Condition, PlayerFlowItem {
+class IsOp(player: String = "") : FlowItem(), Condition, PlayerFlowItem {
 
     override val id = FlowItemIds.IS_OP
 
@@ -45,7 +45,7 @@ class IsOp(player: String = ""): FlowItem(), Condition, PlayerFlowItem {
         yield(if (player.isOp) FlowItemExecutor.Result.SUCCESS else FlowItemExecutor.Result.FAILURE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PlayerVariableDropdown(variables, getPlayerVariableName()),
         )

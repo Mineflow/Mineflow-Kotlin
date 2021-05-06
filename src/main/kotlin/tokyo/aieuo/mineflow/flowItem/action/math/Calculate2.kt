@@ -10,12 +10,18 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 import kotlin.math.*
 
-class Calculate2(var value1: String = "", var value2: String = "", var operator: Int = CALC_MIN, var resultName: String = "result"): FlowItem() {
+class Calculate2(
+    var value1: String = "",
+    var value2: String = "",
+    var operator: Int = CALC_MIN,
+    var resultName: String = "result"
+) : FlowItem() {
 
     override val id = FlowItemIds.CALCULATE2
 
@@ -24,6 +30,7 @@ class Calculate2(var value1: String = "", var value2: String = "", var operator:
     override val detailDefaultReplaces = listOf("value1", "value2", "operator", "result")
 
     override val category = Category.MATH
+
     companion object {
         const val CALC_MIN = 0
         const val CALC_MAX = 1
@@ -74,14 +81,19 @@ class Calculate2(var value1: String = "", var value2: String = "", var operator:
             CALC_HYPOT -> hypot(value1, value2)
             CALC_ATAN2 -> atan2(value1, value2)
             CALC_ROUND -> 10.0.pow(value2.toInt()).let { (value1 / it).roundToInt() * it }
-            else -> throw InvalidFlowValueException(Language.get("action.calculate.operator.unknown", listOf(operator.toString())))
+            else -> throw InvalidFlowValueException(
+                Language.get(
+                    "action.calculate.operator.unknown",
+                    listOf(operator.toString())
+                )
+            )
         }
 
         source.addVariable(resultName, NumberVariable(result))
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleNumberInput("@action.calculate2.form.value1", "10", value1, true),
             ExampleNumberInput("@action.calculate2.form.value2", "20", value2, true),
@@ -101,7 +113,7 @@ class Calculate2(var value1: String = "", var value2: String = "", var operator:
         return listOf(value1, value2, operator, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.NUMBER)
         )

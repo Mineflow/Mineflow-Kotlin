@@ -1,13 +1,13 @@
 package tokyo.aieuo.mineflow.flowItem.action.script
 
+import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.flowItem.FlowItem
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
-import tokyo.aieuo.mineflow.Main
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
 
-class SaveData: FlowItem() {
+class SaveData : FlowItem() {
 
     override val id = FlowItemIds.SAVE_DATA
 

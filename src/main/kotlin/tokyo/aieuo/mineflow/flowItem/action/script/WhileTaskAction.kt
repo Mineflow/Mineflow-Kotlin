@@ -10,10 +10,16 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.ui.FlowItemForm
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class WhileTaskAction(conditions: List<FlowItem> = listOf(), actions: List<FlowItem> = listOf(), var interval: Int = 20, override var customName: String = ""): FlowItem(), FlowItemContainer {
+class WhileTaskAction(
+    conditions: List<FlowItem> = listOf(),
+    actions: List<FlowItem> = listOf(),
+    var interval: Int = 20,
+    override var customName: String = ""
+) : FlowItem(), FlowItemContainer {
 
     override val id = FlowItemIds.ACTION_WHILE_TASK
 
@@ -93,7 +99,14 @@ class WhileTaskAction(conditions: List<FlowItem> = listOf(), actions: List<FlowI
         (CustomForm("@action.repeat.editCount"))
             .setContents(mutableListOf(
                 ExampleNumberInput("@action.whileTask.interval", "20", interval.toString(), true, 1.0),
-                CancelToggle { FlowItemForm.sendFlowItemCustomMenu(player, this, FlowItemContainer.ACTION, listOf("@form.cancelled")) }
+                CancelToggle {
+                    FlowItemForm.sendFlowItemCustomMenu(
+                        player,
+                        this,
+                        FlowItemContainer.ACTION,
+                        listOf("@form.cancelled")
+                    )
+                }
             )).onReceive { data ->
                 interval = data.getInt(0)
                 FlowItemForm.sendFlowItemCustomMenu(player, action, FlowItemContainer.ACTION, listOf("@form.changed"))
@@ -125,7 +138,7 @@ class WhileTaskAction(conditions: List<FlowItem> = listOf(), actions: List<FlowI
         )
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             "i" to DummyVariable(DummyVariable.Type.NUMBER)
         )

@@ -3,7 +3,7 @@ package tokyo.aieuo.mineflow.formAPI.response
 import tokyo.aieuo.mineflow.formAPI.CustomForm
 import tokyo.aieuo.mineflow.formAPI.element.Element
 
-class CustomFormResponse(val customForm: CustomForm, response: List<*>): FormResponse<List<*>>(response) {
+class CustomFormResponse(val customForm: CustomForm, response: List<*>) : FormResponse<List<*>>(response) {
 
     val responseOverrides = mutableMapOf<Int, Any>()
     val defaultOverrides = mutableMapOf<Int, Any>()

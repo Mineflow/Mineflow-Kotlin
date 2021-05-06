@@ -5,16 +5,21 @@ import tokyo.aieuo.mineflow.flowItem.FlowItem
 import tokyo.aieuo.mineflow.flowItem.FlowItemExecutor
 import tokyo.aieuo.mineflow.flowItem.FlowItemIds
 import tokyo.aieuo.mineflow.formAPI.element.Element
-import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.element.Toggle
+import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.Variable
 
-class CreateListVariable(var variableValue: List<String> = listOf(), var variableName: String = "", var isLocal: Boolean = true): FlowItem() {
+class CreateListVariable(
+    var variableValue: List<String> = listOf(),
+    var variableName: String = "",
+    var isLocal: Boolean = true
+) : FlowItem() {
 
     override val id = FlowItemIds.CREATE_LIST_VARIABLE
 
@@ -30,7 +35,10 @@ class CreateListVariable(var variableValue: List<String> = listOf(), var variabl
 
     override fun getDetail(): String {
         if (!isDataValid()) return getName()
-        return Language.get(detailTranslationKey, listOf(variableName, if (isLocal) "local" else "global", variableValue.joinToString(",")))
+        return Language.get(
+            detailTranslationKey,
+            listOf(variableName, if (isLocal) "local" else "global", variableValue.joinToString(","))
+        )
     }
 
     override fun execute(source: FlowItemExecutor) = sequence {
@@ -45,11 +53,15 @@ class CreateListVariable(var variableValue: List<String> = listOf(), var variabl
             if (value == "") continue
 
             contents.add(if (helper.isVariableString(value)) {
-                source.getVariable(value.substring(1, value.length - 1)) ?: helper.get(value.substring(1, value.length - 1))?.let {
-                    return@let it
-                }
-                val v = helper.replaceVariables(value, source.getVariables())
-                Variable.create(helper.currentType(v), helper.getType(v)) ?: continue
+                val inside = value.substring(1, value.length - 1)
+                source.getVariable(inside) ?: helper.get(inside).let {
+                    if (it === null) {
+                        val v = helper.replaceVariables(value, source.getVariables())
+                        Variable.create(helper.currentType(v), helper.getType(v))
+                    } else {
+                        it
+                    }
+                } ?: continue
             } else {
                 val v = helper.replaceVariables(value, source.getVariables())
                 Variable.create(helper.currentType(v), helper.getType(v)) ?: continue
@@ -65,7 +77,7 @@ class CreateListVariable(var variableValue: List<String> = listOf(), var variabl
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.variable.form.name", "aieuo", variableName, true),
             ExampleInput("@action.variable.form.value", "aiueo", variableValue.joinToString(","), true),
@@ -88,7 +100,7 @@ class CreateListVariable(var variableValue: List<String> = listOf(), var variabl
         return listOf(variableName, variableValue, isLocal)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             variableName to DummyVariable(DummyVariable.Type.LIST)
         )

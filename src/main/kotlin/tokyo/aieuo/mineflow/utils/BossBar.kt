@@ -15,7 +15,7 @@ class BossBar(var title: String, var max: Float = 1f, percentage: Float = 1f) {
             field = if (field > max) max else field
         }
 
-    private val entityId: Long = Entity.entityCount ++
+    private val entityId: Long = Entity.entityCount++
 
     companion object {
         val bars: MutableMap<Pair<String, String>, BossBar> = mutableMapOf()

@@ -6,7 +6,7 @@ import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.ui.FlowItemContainerForm
 import tokyo.aieuo.mineflow.utils.Category
 
-open class AndScript: FlowItem(), Condition, FlowItemContainer {
+open class AndScript : FlowItem(), Condition, FlowItemContainer {
 
     override val id = FlowItemIds.CONDITION_AND
 

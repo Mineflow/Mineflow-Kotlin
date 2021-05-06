@@ -10,14 +10,14 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ConfigVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.utils.is_numeric
-import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.ListVariable
 import tokyo.aieuo.mineflow.variable.MapVariable
 import tokyo.aieuo.mineflow.variable.NumberVariable
 
-class SetConfigData(config: String = "", var key: String = "", var value: String = ""): FlowItem(),
+class SetConfigData(config: String = "", var key: String = "", var value: String = "") : FlowItem(),
     ConfigFileFlowItem {
 
     override val id = FlowItemIds.SET_CONFIG_VALUE
@@ -55,8 +55,11 @@ class SetConfigData(config: String = "", var key: String = "", var value: String
 
         val helper = Main.variableHelper
         if (helper.isVariableString(valueStr)) {
-            val variable = valueStr.substring(1, valueStr.length - 1).let { source.getVariable(it) ?: helper.get(it) } ?: value
-            value = when(variable) {
+            val variable = valueStr.substring(1, valueStr.length - 1).let {
+                source.getVariable(it) ?: helper.get(it)
+            } ?: value
+
+            value = when (variable) {
                 is MapVariable -> variable.toArray()
                 is ListVariable -> variable.toArray()
                 is NumberVariable -> variable.value
@@ -73,7 +76,7 @@ class SetConfigData(config: String = "", var key: String = "", var value: String
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ConfigVariableDropdown(variables, getConfigVariableName()),
             ExampleInput("@action.setConfigData.form.key", "aieuo", key, true),

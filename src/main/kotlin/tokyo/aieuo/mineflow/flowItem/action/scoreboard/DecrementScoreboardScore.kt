@@ -10,10 +10,11 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.ScoreboardVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
-import tokyo.aieuo.mineflow.variable.DummyVariable
 
-class DecrementScoreboardScore(scoreboard: String = "", var scoreName: String = "", var score: String = ""): FlowItem(), ScoreboardFlowItem {
+class DecrementScoreboardScore(scoreboard: String = "", var scoreName: String = "", var score: String = "") :
+    FlowItem(), ScoreboardFlowItem {
 
     override val id = FlowItemIds.DECREMENT_SCOREBOARD_SCORE
 
@@ -52,7 +53,7 @@ class DecrementScoreboardScore(scoreboard: String = "", var scoreName: String = 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ScoreboardVariableDropdown(variables, getScoreboardVariableName()),
             ExampleInput("@action.setScore.form.name", "aieuo", scoreName, true),

@@ -9,11 +9,12 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleInput
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
 import tokyo.aieuo.mineflow.utils.ConfigHolder
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.ConfigObjectVariable
 
-class CreateConfigVariable(var fileName: String = "", var variableName: String = "config"): FlowItem() {
+class CreateConfigVariable(var fileName: String = "", var variableName: String = "config") : FlowItem() {
 
     override val id = FlowItemIds.CREATE_CONFIG_VARIABLE
 
@@ -46,7 +47,7 @@ class CreateConfigVariable(var fileName: String = "", var variableName: String =
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             ExampleInput("@action.createConfigVariable.form.name", "config", fileName, true),
             ExampleInput("@action.form.resultVariableName", "config", variableName, true),
@@ -66,7 +67,7 @@ class CreateConfigVariable(var fileName: String = "", var variableName: String =
         return listOf(variableName, fileName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             variableName to DummyVariable(DummyVariable.Type.CONFIG, fileName)
         )

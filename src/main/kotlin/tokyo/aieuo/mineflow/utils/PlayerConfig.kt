@@ -2,7 +2,7 @@ package tokyo.aieuo.mineflow.utils
 
 import cn.nukkit.utils.Config
 
-class PlayerConfig(file: String): Config(file) {
+class PlayerConfig(file: String) : Config(file) {
 
     fun getFavorites(name: String, type: String): MutableList<String> {
         return get("$name.favorite.$type", mutableListOf())

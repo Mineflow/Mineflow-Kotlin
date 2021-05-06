@@ -60,13 +60,20 @@ object CustomModalFormForm {
 
     fun sendEditButton(player: Player, form: ModalForm, index: Int) {
         (CustomForm("@form.form.formMenu.modal.button$index"))
-            .setContents(mutableListOf(
-                Label(Language.get("customForm.receive", listOf("true"))+"\n"+
-                    Language.get("customForm.receive.modal.button", listOf(index.toString()))+"\n"+
-                    Language.get("customForm.receive.modal.button.text", listOf(index.toString(), form.getButtonText(index)))),
-                Input("@customForm.text", default = form.getButtonText(index)),
-                CancelToggle { sendMenu(player, form, listOf("@form.cancelled")) },
-            )).onReceive { data ->
+            .setContents(
+                mutableListOf(
+                    Label(
+                        Language.get("customForm.receive", listOf("true")) + "\n" +
+                                Language.get("customForm.receive.modal.button", listOf(index.toString())) + "\n" +
+                                Language.get(
+                                    "customForm.receive.modal.button.text",
+                                    listOf(index.toString(), form.getButtonText(index))
+                                )
+                    ),
+                    Input("@customForm.text", default = form.getButtonText(index)),
+                    CancelToggle { sendMenu(player, form, listOf("@form.cancelled")) },
+                )
+            ).onReceive { data ->
                 form.setButton(index, data.getString(1))
                 Main.formManager.addForm(form.getName(), form)
                 sendMenu(player, form, listOf("@form.changed"))

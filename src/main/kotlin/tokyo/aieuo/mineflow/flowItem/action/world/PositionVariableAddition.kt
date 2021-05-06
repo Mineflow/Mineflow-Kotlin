@@ -11,11 +11,18 @@ import tokyo.aieuo.mineflow.formAPI.element.mineflow.ExampleNumberInput
 import tokyo.aieuo.mineflow.formAPI.element.mineflow.PositionVariableDropdown
 import tokyo.aieuo.mineflow.formAPI.response.CustomFormResponseList
 import tokyo.aieuo.mineflow.utils.Category
+import tokyo.aieuo.mineflow.utils.DummyVariableMap
 import tokyo.aieuo.mineflow.utils.Language
 import tokyo.aieuo.mineflow.variable.DummyVariable
 import tokyo.aieuo.mineflow.variable.obj.PositionObjectVariable
 
-class PositionVariableAddition(name: String = "pos", var x: String = "", var y: String = "", var z: String = "", var resultName: String = "pos"): FlowItem(), PositionFlowItem {
+class PositionVariableAddition(
+    name: String = "pos",
+    var x: String = "",
+    var y: String = "",
+    var z: String = "",
+    var resultName: String = "pos"
+) : FlowItem(), PositionFlowItem {
 
     override val id = FlowItemIds.POSITION_VARIABLE_ADDITION
 
@@ -61,7 +68,7 @@ class PositionVariableAddition(name: String = "pos", var x: String = "", var y: 
         yield(FlowItemExecutor.Result.CONTINUE)
     }
 
-    override fun getEditFormElements(variables: Map<String, DummyVariable<DummyVariable.Type>>): List<Element> {
+    override fun getEditFormElements(variables: DummyVariableMap): List<Element> {
         return listOf(
             PositionVariableDropdown(variables),
             ExampleNumberInput("@action.positionAddition.form.x", "0", x, true),
@@ -83,7 +90,7 @@ class PositionVariableAddition(name: String = "pos", var x: String = "", var y: 
         return listOf(getPositionVariableName(), x, y, z, resultName)
     }
 
-    override fun getAddingVariables(): Map<String, DummyVariable<DummyVariable.Type>> {
+    override fun getAddingVariables(): DummyVariableMap {
         return mapOf(
             resultName to DummyVariable(DummyVariable.Type.POSITION, "${getPositionVariableName()} + ($x,$y,$z)")
         )
