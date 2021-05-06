@@ -23,11 +23,9 @@ open class HumanObjectVariable<T : EntityHuman>(value: T, showString: String? = 
 
     companion object {
         fun getValuesDummy(): DummyVariableMap {
-            return EntityObjectVariable.getValuesDummy().plus(
-                mapOf(
-                    "hand" to DummyVariable(DummyVariable.Type.ITEM),
-                    "food" to DummyVariable(DummyVariable.Type.NUMBER),
-                )
+            return EntityObjectVariable.getValuesDummy() + mapOf(
+                "hand" to DummyVariable(DummyVariable.Type.ITEM),
+                "food" to DummyVariable(DummyVariable.Type.NUMBER),
             )
         }
     }

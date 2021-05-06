@@ -24,12 +24,10 @@ class EntityAttackEventTrigger(subKey: String = "") :
     fun getVariables(event: EntityAttackEvent): VariableMap {
         val entityDamageEvent = event.damageEvent
         val target = entityDamageEvent.entity
-        return DefaultVariables.getEntityVariables(entityDamageEvent.damager, "target").plus(
-            mapOf(
-                "damage" to NumberVariable(entityDamageEvent.damage),
-                "cause" to NumberVariable(entityDamageEvent.cause.ordinal),
-            )
-        ).plus(DefaultVariables.getEntityVariables(target, "damaged"))
+        return DefaultVariables.getEntityVariables(entityDamageEvent.damager, "target") + mapOf(
+            "damage" to NumberVariable(entityDamageEvent.damage),
+            "cause" to NumberVariable(entityDamageEvent.cause.ordinal),
+        ) + DefaultVariables.getEntityVariables(target, "damaged")
     }
 
     override fun getVariablesDummy(): DummyVariableMap {

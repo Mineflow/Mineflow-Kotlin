@@ -24,10 +24,8 @@ open class PositionObjectVariable<T : Position>(value: T, showString: String? = 
 
     companion object {
         fun getValuesDummy(): DummyVariableMap {
-            return Vector3ObjectVariable.getValuesDummy().plus(
-                mapOf(
-                    "world" to DummyVariable(DummyVariable.Type.WORLD),
-                )
+            return Vector3ObjectVariable.getValuesDummy() + mapOf(
+                "world" to DummyVariable(DummyVariable.Type.WORLD),
             )
         }
     }

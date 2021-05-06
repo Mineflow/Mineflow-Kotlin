@@ -21,8 +21,7 @@ class PlayerInteractEventTrigger(subKey: String = "") : EventTrigger(PlayerInter
     fun getVariables(event: PlayerInteractEvent): VariableMap {
         val target = event.player
         val block = event.block
-        return DefaultVariables.getPlayerVariables(target)
-            .plus(DefaultVariables.getBlockVariables(block))
+        return DefaultVariables.getPlayerVariables(target) + DefaultVariables.getBlockVariables(block)
     }
 
     override fun getVariablesDummy(): DummyVariableMap {

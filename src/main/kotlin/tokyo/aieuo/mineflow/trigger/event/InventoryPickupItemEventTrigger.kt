@@ -25,12 +25,10 @@ class InventoryPickupItemEventTrigger(subKey: String = "") : EventTrigger(Invent
         var variables = mapOf<String, Variable<Any>>()
         val inventory = event.inventory
         if (inventory is PlayerInventory) {
-            variables = variables.plus(DefaultVariables.getEntityVariables(inventory.holder))
+            variables = variables + DefaultVariables.getEntityVariables(inventory.holder)
         }
-        return variables.plus(
-            mapOf(
-                "item" to ItemObjectVariable(event.item.item),
-            )
+        return variables + mapOf(
+            "item" to ItemObjectVariable(event.item.item),
         )
     }
 

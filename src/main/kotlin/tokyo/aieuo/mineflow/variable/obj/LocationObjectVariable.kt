@@ -25,11 +25,9 @@ class LocationObjectVariable<T : Location>(value: T, showString: String? = null)
 
     companion object {
         fun getValuesDummy(): DummyVariableMap {
-            return PositionObjectVariable.getValuesDummy().plus(
-                mapOf(
-                    "yaw" to DummyVariable(DummyVariable.Type.NUMBER),
-                    "pitch" to DummyVariable(DummyVariable.Type.NUMBER),
-                )
+            return PositionObjectVariable.getValuesDummy() + mapOf(
+                "yaw" to DummyVariable(DummyVariable.Type.NUMBER),
+                "pitch" to DummyVariable(DummyVariable.Type.NUMBER),
             )
         }
     }

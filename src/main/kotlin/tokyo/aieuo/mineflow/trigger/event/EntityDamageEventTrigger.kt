@@ -27,7 +27,7 @@ class EntityDamageEventTrigger(subKey: String = "") : EventTrigger(EntityDamageE
         variables["cause"] = NumberVariable(event.cause.ordinal)
 
         return if (event is EntityDamageByEntityEvent) {
-            variables.plus(DefaultVariables.getEntityVariables(event.damager, "damager"))
+            variables + DefaultVariables.getEntityVariables(event.damager, "damager")
         } else {
             variables
         }

@@ -21,10 +21,8 @@ class PlayerToggleSneakEventTrigger(subKey: String = "") : EventTrigger(PlayerTo
 
     fun getVariables(event: PlayerToggleSneakEvent): VariableMap {
         val target = event.player
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "state" to BoolVariable(event.isSneaking)
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "state" to BoolVariable(event.isSneaking)
         )
     }
 

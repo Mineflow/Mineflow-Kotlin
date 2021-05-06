@@ -20,8 +20,7 @@ class BlockPlaceEventTrigger(subKey: String = "") : EventTrigger(BlockPlaceEvent
     fun getVariables(event: BlockPlaceEvent): VariableMap {
         val target = event.player
         val block = event.block
-        return DefaultVariables.getPlayerVariables(target)
-            .plus(DefaultVariables.getBlockVariables(block))
+        return DefaultVariables.getPlayerVariables(target) + DefaultVariables.getBlockVariables(block)
     }
 
     override fun getVariablesDummy(): DummyVariableMap {

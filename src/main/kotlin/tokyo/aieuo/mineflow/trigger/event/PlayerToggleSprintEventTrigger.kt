@@ -21,10 +21,8 @@ class PlayerToggleSprintEventTrigger(subKey: String = "") : EventTrigger(PlayerT
 
     fun getVariables(event: PlayerToggleSprintEvent): VariableMap {
         val target = event.player
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "state" to BoolVariable(event.isSprinting)
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "state" to BoolVariable(event.isSprinting)
         )
     }
 

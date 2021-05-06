@@ -27,16 +27,14 @@ open class EntityObjectVariable<T : Entity>(value: T, showString: String? = null
 
     companion object {
         fun getValuesDummy(): DummyVariableMap {
-            return PositionObjectVariable.getValuesDummy().plus(
-                mapOf(
-                    "id" to DummyVariable(DummyVariable.Type.NUMBER),
-                    "nameTag" to DummyVariable(DummyVariable.Type.STRING),
-                    "health" to DummyVariable(DummyVariable.Type.NUMBER),
-                    "maxHealth" to DummyVariable(DummyVariable.Type.NUMBER),
-                    "yaw" to DummyVariable(DummyVariable.Type.NUMBER),
-                    "pitch" to DummyVariable(DummyVariable.Type.NUMBER),
-                    "direction" to DummyVariable(DummyVariable.Type.NUMBER),
-                )
+            return PositionObjectVariable.getValuesDummy() + mapOf(
+                "id" to DummyVariable(DummyVariable.Type.NUMBER),
+                "nameTag" to DummyVariable(DummyVariable.Type.STRING),
+                "health" to DummyVariable(DummyVariable.Type.NUMBER),
+                "maxHealth" to DummyVariable(DummyVariable.Type.NUMBER),
+                "yaw" to DummyVariable(DummyVariable.Type.NUMBER),
+                "pitch" to DummyVariable(DummyVariable.Type.NUMBER),
+                "direction" to DummyVariable(DummyVariable.Type.NUMBER),
             )
         }
     }

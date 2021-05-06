@@ -21,10 +21,8 @@ class PlayerToggleFlightEventTrigger(subKey: String = "") : EventTrigger(PlayerT
 
     fun getVariables(event: PlayerToggleFlightEvent): VariableMap {
         val target = event.player
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "state" to BoolVariable(event.isFlying)
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "state" to BoolVariable(event.isFlying)
         )
     }
 

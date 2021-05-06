@@ -21,11 +21,9 @@ class EntityLevelChangeEventTrigger(subKey: String = "") : EventTrigger(EntityLe
 
     fun getVariables(event: EntityLevelChangeEvent): VariableMap {
         val target = event.entity
-        return DefaultVariables.getEntityVariables(target).plus(
-            mapOf(
-                "origin_world" to WorldObjectVariable(event.origin),
-                "target_world" to WorldObjectVariable(event.target)
-            )
+        return DefaultVariables.getEntityVariables(target) + mapOf(
+            "origin_world" to WorldObjectVariable(event.origin),
+            "target_world" to WorldObjectVariable(event.target)
         )
     }
 

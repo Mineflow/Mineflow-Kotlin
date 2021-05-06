@@ -22,10 +22,8 @@ class PlayerItemConsumeEventTrigger(subKey: String = "") : EventTrigger(PlayerIt
     fun getVariables(event: PlayerItemConsumeEvent): VariableMap {
         val target = event.player
         val item = event.item
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "item" to ItemObjectVariable(item),
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "item" to ItemObjectVariable(item),
         )
     }
 

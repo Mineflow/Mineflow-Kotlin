@@ -22,10 +22,8 @@ class PlayerDropItemEventTrigger(subKey: String = "") : EventTrigger(PlayerDropI
     fun getVariables(event: PlayerDropItemEvent): VariableMap {
         val target = event.player
         val item = event.item
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "item" to ItemObjectVariable(item),
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "item" to ItemObjectVariable(item),
         )
     }
 

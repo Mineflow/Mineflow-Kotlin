@@ -22,12 +22,9 @@ class SignChangeEventTrigger(subKey: String = "") : EventTrigger(SignChangeEvent
     fun getVariables(event: SignChangeEvent): VariableMap {
         val target = event.player
         val block = event.block
-        return DefaultVariables.getPlayerVariables(target)
-            .plus(DefaultVariables.getBlockVariables(block)).plus(
-                mapOf(
-                    "sign_lines" to ListVariable(event.lines.map { StringVariable(it) })
-                )
-            )
+        return DefaultVariables.getPlayerVariables(target) + DefaultVariables.getBlockVariables(block) + mapOf(
+            "sign_lines" to ListVariable(event.lines.map { StringVariable(it) })
+        )
     }
 
     override fun getVariablesDummy(): DummyVariableMap {

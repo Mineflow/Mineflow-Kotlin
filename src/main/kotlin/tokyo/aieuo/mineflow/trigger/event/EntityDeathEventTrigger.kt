@@ -26,7 +26,7 @@ class EntityDeathEventTrigger(subKey: String = "") : EventTrigger(EntityDeathEve
         if (cause is EntityDamageByEntityEvent) {
             val killer = cause.damager
             if (killer is Player) {
-                variables = variables.plus(DefaultVariables.getPlayerVariables(killer, "killer"))
+                variables = variables + DefaultVariables.getPlayerVariables(killer, "killer")
             }
         }
         return variables

@@ -24,12 +24,10 @@ class BlockObjectVariable<T : Block>(value: T, showString: String? = null) :
 
     companion object {
         fun getValuesDummy(): DummyVariableMap {
-            return PositionObjectVariable.getValuesDummy().plus(
-                mapOf(
-                    "name" to DummyVariable(DummyVariable.Type.STRING),
-                    "id" to DummyVariable(DummyVariable.Type.NUMBER),
-                    "damage" to DummyVariable(DummyVariable.Type.NUMBER),
-                )
+            return PositionObjectVariable.getValuesDummy() + mapOf(
+                "name" to DummyVariable(DummyVariable.Type.STRING),
+                "id" to DummyVariable(DummyVariable.Type.NUMBER),
+                "damage" to DummyVariable(DummyVariable.Type.NUMBER),
             )
         }
     }

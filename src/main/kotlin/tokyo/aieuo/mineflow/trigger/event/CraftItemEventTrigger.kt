@@ -23,11 +23,9 @@ class CraftItemEventTrigger(subKey: String = "") : EventTrigger(CraftItemEvent::
         val target = event.player
         val inputs = event.input.map { item -> ItemObjectVariable(item) }.toMutableList()
         val outputs = mutableListOf(ItemObjectVariable(event.recipe.result))
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "inputs" to ListVariable(inputs),
-                "outputs" to ListVariable(outputs),
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "inputs" to ListVariable(inputs),
+            "outputs" to ListVariable(outputs),
         )
     }
 

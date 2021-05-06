@@ -23,10 +23,8 @@ class PlayerObjectVariable<T : Player>(value: T, showString: String? = null) :
 
     companion object {
         fun getValuesDummy(): DummyVariableMap {
-            return HumanObjectVariable.getValuesDummy().plus(
-                mapOf(
-                    "name" to DummyVariable(DummyVariable.Type.STRING),
-                )
+            return HumanObjectVariable.getValuesDummy() + mapOf(
+                "name" to DummyVariable(DummyVariable.Type.STRING),
             )
         }
     }

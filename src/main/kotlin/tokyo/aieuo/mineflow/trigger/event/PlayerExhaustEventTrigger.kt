@@ -21,10 +21,8 @@ class PlayerExhaustEventTrigger(subKey: String = "") : EventTrigger(PlayerExhaus
 
     fun getVariables(event: PlayerExhaustEvent): VariableMap {
         val target = event.player
-        return DefaultVariables.getEntityVariables(target).plus(
-            mapOf(
-                "amount" to NumberVariable(event.amount),
-            )
+        return DefaultVariables.getEntityVariables(target) + mapOf(
+            "amount" to NumberVariable(event.amount),
         )
     }
 

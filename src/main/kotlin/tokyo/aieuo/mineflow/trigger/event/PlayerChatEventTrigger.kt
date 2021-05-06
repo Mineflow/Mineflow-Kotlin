@@ -20,10 +20,8 @@ class PlayerChatEventTrigger(subKey: String = "") : EventTrigger(PlayerChatEvent
 
     fun getVariables(event: PlayerChatEvent): VariableMap {
         val target = event.player
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "messages" to StringVariable(event.message)
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "messages" to StringVariable(event.message)
         )
     }
 

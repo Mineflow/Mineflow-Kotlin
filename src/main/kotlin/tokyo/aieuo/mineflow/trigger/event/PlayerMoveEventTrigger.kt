@@ -20,11 +20,9 @@ class PlayerMoveEventTrigger(subKey: String = "") : EventTrigger(PlayerMoveEvent
 
     fun getVariables(event: PlayerMoveEvent): VariableMap {
         val target = event.player
-        return DefaultVariables.getPlayerVariables(target).plus(
-            mapOf(
-                "move_from" to LocationObjectVariable(event.from),
-                "move_to" to LocationObjectVariable(event.to)
-            )
+        return DefaultVariables.getPlayerVariables(target) + mapOf(
+            "move_from" to LocationObjectVariable(event.from),
+            "move_to" to LocationObjectVariable(event.to)
         )
     }
 

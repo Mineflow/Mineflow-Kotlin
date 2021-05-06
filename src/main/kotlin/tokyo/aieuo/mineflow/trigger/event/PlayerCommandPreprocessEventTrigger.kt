@@ -21,12 +21,11 @@ class PlayerCommandPreprocessEventTrigger(subKey: String = "") :
 
     fun getVariables(event: PlayerCommandPreprocessEvent): VariableMap {
         val target = event.player
-        return DefaultVariables.getPlayerVariables(target)
-            .plus(DefaultVariables.getCommandVariables(event.message.substring(1))).plus(
-                mapOf(
-                    "message" to StringVariable(event.message)
-                )
-            )
+        return DefaultVariables.getPlayerVariables(target) + DefaultVariables.getCommandVariables(
+            event.message.substring(1)
+        ) + mapOf(
+            "message" to StringVariable(event.message)
+        )
     }
 
     override fun getVariablesDummy(): DummyVariableMap {
